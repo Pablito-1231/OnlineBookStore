@@ -39,18 +39,23 @@ public class EmailServiceImpl implements EmailService {
 			message.setTo(customer.getEmail());
 			message.setSubject("¡Bienvenido a Librería Virtual!");
 			
-			String body = String.format(
-				"Hola %s %s,\n\n" +
-				"¡Gracias por registrarte en Librería Virtual!\n\n" +
-				"Tu cuenta ha sido creada exitosamente.\n" +
-				"Usuario: %s\n\n" +
-				"Ahora puedes explorar nuestro catálogo y realizar compras.\n\n" +
-				"Saludos,\n" +
-				"Equipo de Librería Virtual",
-				customer.getFirstName(),
-				customer.getLastName(),
-				customer.getUsername()
-			);
+			String body = (
+                    """
+                    Hola %s %s,
+                    
+                    ¡Gracias por registrarte en Librería Virtual!
+                    
+                    Tu cuenta ha sido creada exitosamente.
+                    Usuario: %s
+                    
+                    Ahora puedes explorar nuestro catálogo y realizar compras.
+                    
+                    Saludos,
+                    Equipo de Librería Virtual""").formatted(
+                    customer.getFirstName(),
+                    customer.getLastName(),
+                    customer.getUsername()
+            );
 			
 			message.setText(body);
 			mailSender.send(message);
@@ -73,27 +78,27 @@ public class EmailServiceImpl implements EmailService {
 			message.setSubject("Confirmación de Compra - Librería Virtual");
 			
 			StringBuilder body = new StringBuilder();
-			body.append(String.format("Hola %s %s,\n\n", customer.getFirstName(), customer.getLastName()));
+			body.append("Hola %s %s,\n\n".formatted(customer.getFirstName(), customer.getLastName()));
 			body.append("¡Gracias por tu compra!\n\n");
 			body.append("Detalles de tu pedido:\n");
-			body.append(String.format("ID de Transacción: %s\n", purchaseHistory.getId()));
-			body.append(String.format("Fecha: %s\n\n", purchaseHistory.getDate()));
+			body.append("ID de Transacción: %s\n".formatted(purchaseHistory.getId()));
+			body.append("Fecha: %s\n\n".formatted(purchaseHistory.getDate()));
 			body.append("Libros comprados:\n");
 			body.append("----------------------------------------\n");
 			
 			double total = 0;
 			int itemNumber = 1;
 			for (PurchaseDetail detail : purchaseHistory.getPurchaseDetails()) {
-				body.append(String.format("%d. %s\n", itemNumber++, detail.getBook().getName()));
-				body.append(String.format("   Cantidad: %d\n", detail.getQuantity()));
-				body.append(String.format("   Precio unitario: $%.2f\n", detail.getPrice()));
+				body.append("%d. %s\n".formatted(itemNumber++, detail.getBook().getName()));
+				body.append("   Cantidad: %d\n".formatted(detail.getQuantity()));
+				body.append("   Precio unitario: $%.2f\n".formatted(detail.getPrice()));
 				double subtotal = detail.getPrice() * detail.getQuantity();
-				body.append(String.format("   Subtotal: $%.2f\n\n", subtotal));
+				body.append("   Subtotal: $%.2f\n\n".formatted(subtotal));
 				total += subtotal;
 			}
 			
 			body.append("----------------------------------------\n");
-			body.append(String.format("TOTAL: $%.2f\n\n", total));
+			body.append("TOTAL: $%.2f\n\n".formatted(total));
 			body.append("Puedes revisar el detalle completo en tu historial de transacciones.\n\n");
 			body.append("Saludos,\n");
 			body.append("Equipo de Librería Virtual");

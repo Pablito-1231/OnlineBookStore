@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import com.shashirajraja.onlinebookstore.dao.AuthorityRepository;
 import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
 import com.shashirajraja.onlinebookstore.entity.User;
 import com.shashirajraja.onlinebookstore.entity.Customer;
-import com.shashirajraja.onlinebookstore.entity.Authority;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		Optional<User> existingUserOpt = theUserRepository.findById(user.getUsername());
-		if (!existingUserOpt.isPresent()) {
+		if (existingUserOpt.isEmpty()) {
 			return "Error: Usuario no encontrado";
 		}
 		
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		Optional<User> userOpt = theUserRepository.findById(username);
-		if (!userOpt.isPresent()) {
+		if (userOpt.isEmpty()) {
 			return "Error: Usuario no encontrado";
 		}
 		
@@ -120,7 +119,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		Optional<User> userOpt = theUserRepository.findById(username);
-		if (!userOpt.isPresent()) {
+		if (userOpt.isEmpty()) {
 			System.out.println("Usuario NO encontrado en BD");
 			return "Error: Usuario no encontrado";
 		}

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +85,7 @@ public class PaymentServiceImpl implements PaymentService {
 			for(Book item: books) {
 				BookUserId theId = new BookUserId(item, customer);
 				Optional<BookUser> theOpt = bookUserRepos.findById(theId);
-				if(!theOpt.isPresent()) {
+				if(theOpt.isEmpty()) {
 					int y = bookUserRepos.addBookToUser(theId.getBook().getId(), theId.getCustomer().getUsername());
 					if(y <=0) 
 						throw new RuntimeException("¡No se pudo establecer la relación entre libro y usuario!");

@@ -32,38 +32,38 @@ INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (28,'Fiction','Su
 INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (29,'Non-Fiction','Language learning',0);
 INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (30,'Fiction','Cyberpunk tales',0);
 
--- Libros (variedad de precios y cantidades)
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (1,'Mystery of Time', 10, 19.99, 1);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (2,'Galaxy Riders', 15, 29.99, 2);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (3,'World History 101', 5, 24.50, 3);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (4,'Science Sparks', 8, 14.99, 4);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (5,'Bedtime Tales', 20, 9.99, 5);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (6,'Autumn Romance', 12, 12.49, 6);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (7,'Detective Diaries', 0, 7.50, 7);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (8,'Coding in Practice', 6, 49.99, 8);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (9,'Chef Secrets', 0, 21.00, 9);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (10,'Dragon Realms', 30, 39.90, 10);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (11,'Midnight Shorts', 18, 5.99, 11);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (12,'Winning Moves', 3, 99.99, 12);
--- Libros adicionales
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (13,'City Lights', 11, 15.99, 13);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (14,'Design Thinking', 7, 27.50, 14);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (15,'Starbound Fleet', 22, 34.99, 15);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (16,'Shadows & Smoke', 0, 8.49, 16);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (17,'Healthy Habits', 9, 18.00, 17);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (18,'Laugh Out Loud', 5, 6.99, 18);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (19,'ABC Starter', 25, 4.99, 19);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (20,'Money Matters', 10, 12.00, 20);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (21,'Gods Among Us', 13, 21.99, 21);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (22,'Broken World', 14, 16.75, 22);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (23,'Capturing Light', 6, 32.00, 23);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (24,'Tea & Treachery', 12, 11.49, 24);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (25,'Garden Paths', 8, 13.25, 25);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (26,'Empire Rising', 3, 22.99, 26);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (27,'Fix-It Manual', 15, 17.90, 27);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (28,'Heroic Tales', 20, 19.49, 28);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (29,'Speak Easy', 16, 14.00, 29);
-INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (30,'Neon Nights', 4, 23.75, 30);
+-- Libros (títulos reales en COP)
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (1,'Cien años de soledad', 12, 69000, 1);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (2,'El amor en los tiempos del cólera', 10, 62000, 6);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (3,'La sombra del viento', 8, 58000, 26);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (4,'Don Quijote de la Mancha', 6, 85000, 11);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (5,'Rayuela', 9, 54000, 15);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (6,'El alquimista', 14, 52000, 1);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (7,'1984', 7, 49000, 22);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (8,'El señor de los anillos: La comunidad del anillo', 5, 99000, 10);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (9,'Harry Potter y la piedra filosofal', 18, 75000, 10);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (10,'El principito', 20, 35000, 5);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (11,'Pedro Páramo', 11, 42000, 26);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (12,'Ficciones', 10, 48000, 11);
+-- Libros adicionales en COP
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (13,'Crónica de una muerte anunciada', 16, 43000, 24);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (14,'Sapiens: De animales a dioses', 9, 89000, 12);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (15,'Homo Deus', 7, 88000, 12);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (16,'Breves respuestas a las grandes preguntas', 6, 67000, 4);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (17,'Clean Code', 4, 150000, 8);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (18,'El poder del hábito', 13, 68000, 20);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (19,'Cocina colombiana tradicional', 15, 56000, 9);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (20,'El código Da Vinci', 0, 49000, 7);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (21,'El psicoanalista', 8, 52000, 7);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (22,'Dune', 9, 99000, 2);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (23,'El juego de Ender', 10, 59000, 2);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (24,'Fundación', 12, 62000, 2);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (25,'El nombre del viento', 5, 88000, 10);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (26,'El temor de un hombre sabio', 3, 99000, 10);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (27,'La chica del tren', 14, 45000, 24);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (28,'Orgullo y prejuicio', 10, 38000, 26);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (29,'Los pilares de la Tierra', 6, 78000, 26);
+INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (30,'El arte de la guerra', 22, 36000, 20);
 
 -- Usuarios en BD (para login JDBC)
 -- Admin user: admin / admin

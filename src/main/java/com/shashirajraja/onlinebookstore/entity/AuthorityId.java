@@ -1,5 +1,6 @@
 package com.shashirajraja.onlinebookstore.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,7 +11,8 @@ import java.util.Objects;
  */
 public class AuthorityId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 	// Deben llamarse exactamente como en la entidad y con el mismo tipo
 	private User user;

@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
 
     @Autowired
     private DataSource dataSource;
@@ -26,60 +26,59 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-    
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?")
-            .authoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?")
-            .passwordEncoder(passwordEncoder());
-    }
-    
-
-@Override
-protected void configure(HttpSecurity http) throws Exception {
-
-    http
-        .authorizeRequests()
-            .antMatchers(
-                "/css/**",
-                "/js/**",
-                "/images/**",
-                "/vendor/**",
-                "/static/**",
-                "/login",
-                "/register",
-                "/register/customer",
-                "/register/provider"
-            ).permitAll()
-            .antMatchers("/admin/**").hasRole("ADMIN")
-            .antMatchers("/customers/**").hasRole("CUSTOMER")
-            .antMatchers("/books").authenticated()
-            .anyRequest().authenticated()
-        .and()
-        .formLogin()
-            .loginPage("/login")
-            .loginProcessingUrl("/authenticateTheUser")
-            .successHandler(customSuccessHandler)
-            .failureHandler(customAuthenticationFailureHandler)
-            .permitAll()
-        .and()
-        .logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-            .logoutSuccessUrl("/login?logout")
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .deleteCookies("JSESSIONID")
-            .permitAll()
-        .and()
-        .exceptionHandling()
-            .accessDeniedPage("/access-denied");
-}
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    UserDetailsService userDetailsService() {
+        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
+        manager.setUsersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?");
+        manager.setAuthoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
+        return manager;
+    }
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers(
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/vendor/**",
+                    "/static/**",
+                    "/login",
+                    "/register",
+                    "/register/customer",
+                    "/register/provider"
+                ).permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/customers/**").hasRole("CUSTOMER")
+                .requestMatchers("/books").authenticated()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticateTheUser")
+                .successHandler(customSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            )
+            .exceptionHandling(exceptions -> exceptions
+                .accessDeniedPage("/access-denied")
+            );
+        
+        return http.build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
         // DelegatingPasswordEncoder soporta prefijos como {bcrypt}, {noop}, etc.
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }

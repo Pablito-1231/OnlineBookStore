@@ -1,13 +1,12 @@
 package com.shashirajraja.onlinebookstore.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.shashirajraja.onlinebookstore.entity.Book;
 import com.shashirajraja.onlinebookstore.entity.BookDetail;
@@ -31,6 +30,8 @@ import com.shashirajraja.onlinebookstore.service.BookService;
 import com.shashirajraja.onlinebookstore.service.UserService;
 import com.shashirajraja.onlinebookstore.utility.ValidationUtil;
 import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
+import com.shashirajraja.onlinebookstore.dao.PurchaseDetailRepository;
+import com.shashirajraja.onlinebookstore.dao.PurchaseHistoryRepository;
 
 @Controller
 @RequestMapping("/admin")
@@ -66,7 +67,7 @@ public class AdminController {
 
     @PostMapping("/roles/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String crearRol(@RequestParam("roleName") String roleName, Model model) {
+    public String crearRol(@RequestParam String roleName, Model model) {
         if (roleName == null || roleName.trim().isEmpty()) {
             model.addAttribute("message", "El nombre del rol no puede estar vacío.");
             return listarRoles(model);
@@ -91,6 +92,12 @@ public class AdminController {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
+    @Autowired
+    private PurchaseDetailRepository purchaseDetailRepository;
+
+    @Autowired
+    private PurchaseHistoryRepository purchaseHistoryRepository;
+
     // ========== DASHBOARD ==========
     @GetMapping("/dashboard")
     @PreAuthorize("hasRole('ADMIN')")
@@ -98,11 +105,30 @@ public class AdminController {
         Set<Book> allBooks = bookService.getAllBooks();
         long totalUsuarios = userService.getAllUsers().stream().count();
         long librosDisponibles = allBooks.stream().filter(b -> b.getQuantity() > 0).count();
+        long comprasTotales = purchaseHistoryRepository.count();
+        Double ingresosTotales = purchaseDetailRepository.sumIngresosTotales();
+
+        // Rango mes actual
+        java.time.LocalDate now = java.time.LocalDate.now();
+        java.time.LocalDate firstDay = now.withDayOfMonth(1);
+        Date startOfMonth = Date.from(firstDay.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+        Date endDate = new Date();
+        Double ingresosMesActual = purchaseDetailRepository.sumIngresosEntre(startOfMonth, endDate);
+        Long comprasMesActual = purchaseHistoryRepository.countComprasEntre(startOfMonth, endDate);
+
+        // Ticket promedio del mes
+        double ticketPromedioMes = (comprasMesActual != null && comprasMesActual > 0)
+                ? (ingresosMesActual != null ? ingresosMesActual : 0d) / (double) comprasMesActual
+                : 0d;
         
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("librosDisponibles", librosDisponibles);
-        model.addAttribute("comprasTotales", 0); // Se puede implementar después con reportes
+        model.addAttribute("comprasTotales", comprasTotales);
+        model.addAttribute("ingresosTotales", ingresosTotales != null ? ingresosTotales.longValue() : 0L);
+        model.addAttribute("ingresosMesActual", ingresosMesActual != null ? ingresosMesActual.longValue() : 0L);
+        model.addAttribute("comprasMesActual", comprasMesActual != null ? comprasMesActual : 0L);
+        model.addAttribute("ticketPromedioMes", (long) Math.floor(ticketPromedioMes));
         return "admin/dashboard";
     }
 
@@ -118,11 +144,11 @@ public class AdminController {
     @GetMapping("/libros")
     @PreAuthorize("hasRole('ADMIN')")
     public String listarLibros(
-            @RequestParam(name = "stock", required = false) String stock,
-            @RequestParam(name = "sort", required = false, defaultValue = "id") String sort,
-            @RequestParam(name = "order", required = false, defaultValue = "asc") String order,
-            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(required = false) String stock,
+            @RequestParam(required = false, defaultValue = "id") String sort,
+            @RequestParam(required = false, defaultValue = "asc") String order,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
             Model model) {
         Set<Book> books = bookService.getAllBooks();
         List<Book> filtered = new ArrayList<>(books);
@@ -189,11 +215,11 @@ public class AdminController {
     @GetMapping("/libros.json")
     @ResponseBody
     public List<BookSummaryDto> listarLibrosJson(
-            @RequestParam(name = "stock", required = false) String stock,
-            @RequestParam(name = "sort", required = false, defaultValue = "id") String sort,
-            @RequestParam(name = "order", required = false, defaultValue = "asc") String order,
-            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+            @RequestParam(required = false) String stock,
+            @RequestParam(required = false, defaultValue = "id") String sort,
+            @RequestParam(required = false, defaultValue = "asc") String order,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
         Set<Book> books = bookService.getAllBooks();
         List<Book> filtered = new ArrayList<>(books);
 
@@ -262,7 +288,7 @@ public class AdminController {
     // ========== LIBROS - PROCESAR AGREGAR ==========
     @PostMapping("/libros/add/process")
     @PreAuthorize("hasRole('ADMIN')")
-    public String procesarAgregarLibro(@Valid @ModelAttribute("book") Book book,
+    public String procesarAgregarLibro(@Valid @ModelAttribute Book book,
                                         BindingResult bookBindingResult,
                                         @RequestParam(value = "bookDetail.type", required = false) String type,
                                         @RequestParam(value = "bookDetail.detail", required = false) String detail,
@@ -355,7 +381,7 @@ public class AdminController {
     // ========== LIBROS - PROCESAR EDITAR ==========
     @PostMapping("/libros/edit/process")
     @PreAuthorize("hasRole('ADMIN')")
-    public String procesarEditarLibro(@Valid @ModelAttribute("book") Book book,
+    public String procesarEditarLibro(@Valid @ModelAttribute Book book,
                                        BindingResult bookBindingResult,
                                        @RequestParam(value = "bookDetail.type", required = false) String type,
                                        @RequestParam(value = "bookDetail.detail", required = false) String detail,
@@ -468,7 +494,7 @@ public class AdminController {
     // ========== ESTADÍSTICAS ==========
     @GetMapping("/estadisticas")
     @PreAuthorize("hasRole('ADMIN')")
-    public String estadisticas(Model model, javax.servlet.http.HttpServletResponse response) {
+    public String estadisticas(Model model, jakarta.servlet.http.HttpServletResponse response) {
         // Desactivar cache
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
@@ -498,7 +524,7 @@ public class AdminController {
     // ========== USUARIOS - FORMULARIO EDITAR ==========
     @GetMapping("/usuarios/edit")
     @PreAuthorize("hasRole('ADMIN')")
-    public String formularioEditarUsuario(@RequestParam("username") String username, Model model) {
+    public String formularioEditarUsuario(@RequestParam String username, Model model) {
         User user = userService.getUserByUsername(username);
         if (user == null) {
             model.addAttribute("message", "❌ Usuario no encontrado");
@@ -514,13 +540,13 @@ public class AdminController {
     @PostMapping("/usuarios/edit/process")
     @PreAuthorize("hasRole('ADMIN')")
     public String procesarEditarUsuario(
-            @RequestParam("username") String username,
-            @RequestParam(value = "newUsername", required = false) String newUsername,
-            @RequestParam(value = "enabled", required = false, defaultValue = "false") boolean enabled,
-            @RequestParam(value = "role", required = false) String role,
-            @RequestParam(value = "firstName", required = false) String firstName,
-            @RequestParam(value = "lastName", required = false) String lastName,
-            @RequestParam(value = "email", required = false) String email,
+            @RequestParam String username,
+            @RequestParam(required = false) String newUsername,
+            @RequestParam(required = false, defaultValue = "false") boolean enabled,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String email,
             Model model) {
         try {
             User user = userService.getUserByUsername(username);
@@ -587,7 +613,7 @@ public class AdminController {
     // ========== USUARIOS - TOGGLE ENABLED ==========
     @GetMapping("/usuarios/toggle")
     @PreAuthorize("hasRole('ADMIN')")
-    public String toggleUsuario(@RequestParam("username") String username, Model model) {
+    public String toggleUsuario(@RequestParam String username, Model model) {
         try {
             String message = userService.toggleUserEnabled(username);
             
@@ -610,7 +636,7 @@ public class AdminController {
     // ========== USUARIOS - ELIMINAR ==========
     @GetMapping("/usuarios/delete")
     @PreAuthorize("hasRole('ADMIN')")
-    public String eliminarUsuario(@RequestParam("username") String username, Model model) {
+    public String eliminarUsuario(@RequestParam String username, Model model) {
         try {
             String message = userService.deleteUser(username);
             

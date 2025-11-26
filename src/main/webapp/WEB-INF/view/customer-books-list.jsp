@@ -4,6 +4,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*, com.shashirajraja.onlinebookstore.entity.ShoppingCart" %>
 
 <html lang="es">
@@ -28,6 +29,7 @@
 </head>
 
 <body id="page-top">
+  <fmt:setLocale value="es_CO"/>
 
   <!-- Contenedor principal -->
   <div id="wrapper">
@@ -302,8 +304,8 @@
 
                   <!-- Precio y acciones -->
                   <div class="book-price-section">
-                    <div class="book-price-label">Precio</div>
-                    <div class="book-price">$<c:out value="${book.price}"/></div>
+                    <div class="book-price-label">Precio (COP)</div>
+                    <div class="book-price">$ <fmt:formatNumber value="${book.price}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</div>
 
                     <div class="book-actions">
                       <c:choose>

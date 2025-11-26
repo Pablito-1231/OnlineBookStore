@@ -194,9 +194,9 @@
 
             <div class="stat-card">
               <div class="stat-icon total">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill-wave"></i>
               </div>
-              <div class="stat-value">$420</div>
+              <div class="stat-value">$420.000 COP</div>
               <div class="stat-label">Total Invertido</div>
             </div>
 

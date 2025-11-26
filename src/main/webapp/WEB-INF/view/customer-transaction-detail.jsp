@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*, com.shashirajraja.onlinebookstore.entity.ShoppingCart" %>
 <html lang="es">
 
@@ -32,6 +33,7 @@
 </head>
 
 <body id="page-top">
+  <fmt:setLocale value="es_CO"/>
 
   <div id="wrapper">
 
@@ -220,8 +222,8 @@
                         <td><c:out value="${detail.book.name}"/></td>
                         <td><c:out value="${detail.book.bookDetail.type}"/></td>
                         <td><c:out value="${detail.quantity}"/></td>
-                        <td><c:out value="${detail.price}"/></td>
-                        <td><c:out value="${detail.price * detail.quantity}"/></td>
+                        <td>$ <fmt:formatNumber value="${detail.price}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</td>
+                        <td>$ <fmt:formatNumber value="${detail.price * detail.quantity}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</td>
 
                         <c:set var="totalQuantity" value="${totalQuantity + detail.quantity}" />
                         <c:set var="totalPrice" value="${totalPrice + (detail.price * detail.quantity)}" />
@@ -255,7 +257,7 @@
               </tr>
               <tr>
                 <td style="color:red;">Total Pagado:</td>
-                <td><c:out value="${totalPrice}"/></td>
+                <td>$ <fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</td>
               </tr>
             </tbody>
           </table>

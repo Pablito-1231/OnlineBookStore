@@ -107,7 +107,7 @@ public class PaymentController {
 	}
 	
 	@PostMapping("customers/transactions/detail")
-	public String getTransactionDetail(@ModelAttribute("transId") String transId, Model theModel) {
+	public String getTransactionDetail(@ModelAttribute String transId, Model theModel) {
 		
 		if (transId == null || transId.trim().isEmpty()) {
 			theModel.addAttribute("message", "❌ Error: ID de transacción no válido");

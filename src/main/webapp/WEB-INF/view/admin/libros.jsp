@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
@@ -56,6 +57,9 @@
             </button>
         </div>
     </c:if>
+
+    <!-- Locale para formato de moneda COP -->
+    <fmt:setLocale value="es_CO"/>
 
     <!-- Stats Row Mejorado -->
     <div class="row g-3 mb-4">
@@ -147,7 +151,7 @@
                                     <i class="fas fa-sort-alpha-up me-2"></i>Z → A
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><h6 class="dropdown-header"><i class="fas fa-dollar-sign me-2"></i>Por precio</h6></li>
+                                <li><h6 class="dropdown-header"><i class="fas fa-money-bill-wave me-2"></i>Por precio</h6></li>
                                 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/libros?stock=${stockFilter}&sort=price&order=asc">
                                     <i class="fas fa-arrow-down me-2"></i>Menor a Mayor
                                 </a></li>
@@ -200,8 +204,8 @@
                                 Información del Libro
                             </th>
                             <th class="py-3 fw-semibold">
-                                <i class="fas fa-dollar-sign me-2 text-secondary"></i>
-                                Precio
+                                <i class="fas fa-money-bill-wave me-2 text-secondary"></i>
+                                Precio (COP)
                             </th>
                             <th class="py-3 fw-semibold">
                                 <i class="fas fa-boxes me-2 text-secondary"></i>
@@ -239,7 +243,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="fw-bold text-success fs-5">$${book.price}</span>
+                                            <span class="fw-bold text-success fs-6">$ <fmt:formatNumber value="${book.price}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</span>
                                         </td>
                                         <td>
                                             <c:choose>

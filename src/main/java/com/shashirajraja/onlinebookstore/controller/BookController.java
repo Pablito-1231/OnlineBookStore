@@ -36,11 +36,11 @@ public class BookController {
 	
 	@GetMapping({"","/"})
 	public String viewBooks(
-		@RequestParam(value = "page", defaultValue = "0") int page,
-		@RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE + "") int size,
-		@RequestParam(value = "search", defaultValue = "") String search,
-		@RequestParam(value = "minPrice", defaultValue = "0") double minPrice,
-		@RequestParam(value = "maxPrice", defaultValue = "10000") double maxPrice,
+		@RequestParam(defaultValue = "0") int page,
+		@RequestParam(defaultValue = DEFAULT_PAGE_SIZE + "") int size,
+		@RequestParam(defaultValue = "") String search,
+		@RequestParam(defaultValue = "0") double minPrice,
+		@RequestParam(defaultValue = "10000") double maxPrice,
 		Model theModel) {
 		
 		Pageable pageable = PageRequest.of(page, size);

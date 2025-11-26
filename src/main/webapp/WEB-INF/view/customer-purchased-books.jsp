@@ -5,6 +5,7 @@
 <!-- Importacion de librerias JSP necesarias -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Importacion de clases Java para lista de libros y carrito -->
 <%@ page import="java.util.*, com.shashirajraja.onlinebookstore.entity.ShoppingCart" %>
@@ -31,6 +32,7 @@
 </head>
 
 <body id="page-top">
+  <fmt:setLocale value="es_CO"/>
 
   <!-- Contenedor principal de la pagina -->
   <div id="wrapper">
@@ -243,7 +245,7 @@
                         <td><c:out value="${book.name}"/></td>
                         <td><c:out value="${book.bookDetail.type}"/></td>
                         <td><c:out value="${book.bookDetail.detail}"/></td>
-                        <td><c:out value="${book.price}"/></td>
+                        <td>$ <fmt:formatNumber value="${book.price}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</td>
 
                         <!-- Boton LEER -->
                         <td style="color:green;">

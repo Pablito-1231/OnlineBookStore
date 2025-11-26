@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,7 @@
 </head>
 <body class="admin-wrapper">
 <div style="display: flex; margin: 0; padding: 0;">
+<fmt:setLocale value="es_CO"/>
 
 <%@ include file="sidebar.jsp" %>
 
@@ -96,18 +98,64 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div class="stat-icon-modern bg-danger-subtle">
-                                <i class="fas fa-dollar-sign text-danger"></i>
+                                <i class="fas fa-money-bill-wave text-danger"></i>
                             </div>
                             <span class="badge bg-success-subtle text-success">
                                 <i class="fas fa-arrow-up me-1"></i>18%
                             </span>
                         </div>
-                        <h3 class="mb-1 fw-bold display-6">$12,450</h3>
+                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ingresosTotales}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
                         <p class="text-muted mb-0 small">Ingresos Totales</p>
                     </div>
                 </div>
             </div>
 
+        </div>
+
+        <!-- Indicadores adicionales -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-info-subtle">
+                                <i class="fas fa-calendar-check text-info"></i>
+                            </div>
+                            <span class="badge bg-info-subtle text-info">Mes actual</span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">${comprasMesActual}</h3>
+                        <p class="text-muted mb-0 small">Compras del Mes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-success-subtle">
+                                <i class="fas fa-sack-dollar text-success"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">Mes actual</span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ingresosMesActual}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
+                        <p class="text-muted mb-0 small">Ingresos del Mes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-secondary-subtle">
+                                <i class="fas fa-receipt text-secondary"></i>
+                            </div>
+                            <span class="badge bg-secondary-subtle text-secondary">Promedio del mes</span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ticketPromedioMes}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
+                        <p class="text-muted mb-0 small">Ticket Promedio</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Acciones Rápidas -->

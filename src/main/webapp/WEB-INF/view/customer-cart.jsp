@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*, com.shashirajraja.onlinebookstore.entity.ShoppingCart" %>
 <html lang="es">
 
@@ -33,6 +34,7 @@
 </head>
 
 <body id="page-top">
+  <fmt:setLocale value="es_CO"/>
 
   <!-- Contenedor principal -->
   <div id="wrapper">
@@ -265,8 +267,8 @@
                             <c:out value="${shoppingCart.book.bookDetail.type}"/>
                           </span>
                           <span class="cart-item-meta-item">
-                            <i class="fas fa-dollar-sign"></i>
-                            <c:out value="${shoppingCart.book.price}"/> USD
+                            <i class="fas fa-money-bill-wave"></i>
+                            $ <fmt:formatNumber value="${shoppingCart.book.price}" type="number" groupingUsed="true" minFractionDigits="0"/> COP
                           </span>
                         </div>
                       </div>
@@ -325,18 +327,18 @@
 
                   <div class="cart-summary-row subtotal">
                     <span>Subtotal:</span>
-                    <span>$<c:out value="${totalPrice}"/> USD</span>
+                    <span>$ <fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</span>
                   </div>
 
                   <div class="cart-summary-row total">
                     <span>Total:</span>
                     <span class="cart-summary-total-price">
-                      $<c:out value="${totalPrice}"/> USD
+                      $ <fmt:formatNumber value="${totalPrice}" type="number" groupingUsed="true" minFractionDigits="0"/> COP
                     </span>
                   </div>
 
                   <div class="savings-badge">
-                    <i class="fas fa-tag"></i> Envío gratis en pedidos mayores a $50
+                    <i class="fas fa-tag"></i> Envío gratis en pedidos mayores a $150.000 COP
                   </div>
 
                   <div class="cart-summary-actions">

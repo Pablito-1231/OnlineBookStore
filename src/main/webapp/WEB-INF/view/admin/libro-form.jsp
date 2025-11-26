@@ -68,8 +68,8 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <form:input path="price" type="number" step="0.01" class="form-control" id="inputPrice" placeholder="Precio" required="true"/>
-                                        <label for="inputPrice">Precio ($)</label>
+                                        <form:input path="price" type="number" step="1" class="form-control" id="inputPrice" placeholder="Precio" required="true"/>
+                                        <label for="inputPrice">Precio (COP)</label>
                                         <form:errors path="price" class="text-danger small"/>
                                     </div>
                                 </div>

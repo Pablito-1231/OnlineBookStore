@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
 	public String removeBookById(int bookId) {
 		Optional<Book> bookOpt = theBook.findById(bookId);
 		
-		if(!bookOpt.isPresent())
+		if(bookOpt.isEmpty())
 			return "ID de libro inválido";
 		
 		theBook.save(bookOpt.get());

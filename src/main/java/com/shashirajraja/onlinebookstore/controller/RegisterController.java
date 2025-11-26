@@ -29,7 +29,7 @@ public class RegisterController {
 
     @PostMapping("/register/customer")
 public String processCustomerRegistration(
-        @ModelAttribute("customerData") CustomerData customerData,
+        @ModelAttribute CustomerData customerData,
         Model model) {
 
     String message = customerService.registerCustomer(customerData);

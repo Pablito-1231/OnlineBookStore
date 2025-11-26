@@ -1,14 +1,16 @@
 package com.shashirajraja.onlinebookstore.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class BookUserId implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * 
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 	private Book book;
 	private Customer customer;

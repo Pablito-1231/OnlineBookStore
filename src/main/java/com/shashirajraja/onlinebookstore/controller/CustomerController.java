@@ -2,7 +2,7 @@ package com.shashirajraja.onlinebookstore.controller;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,7 +79,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/profile/update/process")
-	public String processProfileEdit(@ModelAttribute("customerData") CustomerData customerData, Model theModel) {
+	public String processProfileEdit(@ModelAttribute CustomerData customerData, Model theModel) {
 		String message = theCustomerService.updateCustomer(customerData);
 		theModel.addAttribute("message", message);
 		CustomerData theData = new CustomerData(currentSession.getUser().getCustomer());
@@ -103,7 +103,7 @@ public class CustomerController {
 	
 	
 	@PostMapping("/password/change")
-	public String processChangePassword(@ModelAttribute("changePassword") ChangePassword changePassword, Model theModel) {
+	public String processChangePassword(@ModelAttribute ChangePassword changePassword, Model theModel) {
 		String message = theCustomerService.updatePassword(changePassword);
 		theModel.addAttribute("message", message);		
 		return "customer-password-update";
@@ -129,7 +129,7 @@ public class CustomerController {
 	
 	
 	@GetMapping("/cart/add")
-	public String addToCart(@RequestParam("bookId") int bookId, Model theModel) {
+	public String addToCart(@RequestParam int bookId, Model theModel) {
 				
 		Customer customer = currentSession.getUser().getCustomer();
 		
@@ -184,8 +184,8 @@ public class CustomerController {
 
 	// Incrementar cantidad de un item en el carrito
 	@PostMapping("/cart/increase")
-	public String increaseCartItem(@RequestParam("bookId") int bookId,
-			@RequestParam(name = "count", defaultValue = "1") int count,
+	public String increaseCartItem(@RequestParam int bookId,
+			@RequestParam(defaultValue = "1") int count,
 			Model theModel) {
 		Customer customer = currentSession.getUser().getCustomer();
 		Book book = theBookService.getBookById(bookId);
@@ -199,8 +199,8 @@ public class CustomerController {
 
 	// Decrementar cantidad de un item en el carrito (elimina si llega a 0)
 	@PostMapping("/cart/decrease")
-	public String decreaseCartItem(@RequestParam("bookId") int bookId,
-			@RequestParam(name = "count", defaultValue = "1") int count,
+	public String decreaseCartItem(@RequestParam int bookId,
+			@RequestParam(defaultValue = "1") int count,
 			Model theModel) {
 		Customer customer = currentSession.getUser().getCustomer();
 		Book book = theBookService.getBookById(bookId);
@@ -213,7 +213,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("cart/remove")
-	public String removeAndViewList(@RequestParam("bookId") int bookId, Model theModel) {
+	public String removeAndViewList(@RequestParam int bookId, Model theModel) {
 		String message = null;
 		Customer customer = currentSession.getUser().getCustomer();
 		message = theShoppingCartService.removeItem(customer, theBookService.getBookById(bookId));
