@@ -2,50 +2,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-<html style="margin:0;padding:0;overflow-x:hidden;">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Estadísticas - Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
 </head>
-<body style="margin:0;padding:0;">
+<body class="admin-wrapper">
+<div style="display: flex; margin: 0; padding: 0;">
 
-<!-- Admin Sidebar -->
-<div class="admin-sidebar">
-    <div class="admin-sidebar-header">
-        <i class="fas fa-book-reader"></i>
-        <span>Librería Admin</span>
-    </div>
-    
-    <nav class="admin-nav">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/libros" class="admin-nav-item">
-            <i class="fas fa-book"></i>
-            <span>Gestión de Libros</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/usuarios" class="admin-nav-item">
-            <i class="fas fa-users"></i>
-            <span>Usuarios</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/estadisticas" class="admin-nav-item active">
-            <i class="fas fa-chart-bar"></i>
-            <span>Estadísticas</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item" style="margin-top: auto;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Cerrar Sesión</span>
-        </a>
-    </nav>
-</div>
+<%@ include file="sidebar.jsp" %>
 
-<!-- Admin Main Content -->
-<div class="admin-main">
+<!-- Contenido Principal -->
+<main class="admin-main">
     
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -59,46 +32,46 @@
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="admin-stat-card h-100">
-                <div class="stat-icon" style="background: rgba(78, 115, 223, 0.1); color: #4e73df;">
-                    <i class="fas fa-book"></i>
+                <div class="admin-stat-header">
+                    <div class="admin-stat-icon primary">
+                        <i class="fas fa-book"></i>
+                    </div>
                 </div>
-                <div class="stat-info">
-                    <h3>${totalLibros}</h3>
-                    <p>Total de Libros</p>
-                </div>
+                <div class="admin-stat-value">${totalLibros}</div>
+                <div class="admin-stat-label">Total de Libros</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="admin-stat-card h-100">
-                <div class="stat-icon" style="background: rgba(28, 200, 138, 0.1); color: #1cc88a;">
-                    <i class="fas fa-check-circle"></i>
+                <div class="admin-stat-header">
+                    <div class="admin-stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
                 </div>
-                <div class="stat-info">
-                    <h3>${librosDisponibles}</h3>
-                    <p>Libros Disponibles</p>
-                </div>
+                <div class="admin-stat-value">${librosDisponibles}</div>
+                <div class="admin-stat-label">Libros Disponibles</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="admin-stat-card h-100">
-                <div class="stat-icon" style="background: rgba(231, 74, 59, 0.1); color: #e74a3b;">
-                    <i class="fas fa-exclamation-triangle"></i>
+                <div class="admin-stat-header">
+                    <div class="admin-stat-icon danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
                 </div>
-                <div class="stat-info">
-                    <h3>${librosAgotados}</h3>
-                    <p>Libros Agotados</p>
-                </div>
+                <div class="admin-stat-value">${librosAgotados}</div>
+                <div class="admin-stat-label">Libros Agotados</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="admin-stat-card h-100">
-                <div class="stat-icon" style="background: rgba(54, 185, 204, 0.1); color: #36b9cc;">
-                    <i class="fas fa-users"></i>
+                <div class="admin-stat-header">
+                    <div class="admin-stat-icon warning">
+                        <i class="fas fa-users"></i>
+                    </div>
                 </div>
-                <div class="stat-info">
-                    <h3>${totalUsuarios}</h3>
-                    <p>Usuarios Registrados</p>
-                </div>
+                <div class="admin-stat-value">${totalUsuarios}</div>
+                <div class="admin-stat-label">Usuarios Registrados</div>
             </div>
         </div>
     </div>
@@ -138,6 +111,8 @@
         <i class="fas fa-info-circle me-2"></i>
         <strong>Nota:</strong> Las estadísticas se actualizan en tiempo real según los datos en la base de datos.
     </div>
+
+</main>
 
 </div>
 

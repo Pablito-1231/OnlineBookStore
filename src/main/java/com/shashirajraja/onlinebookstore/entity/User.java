@@ -13,11 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.context.annotation.Scope;
-
 @Entity
 @Table(name="users")
-@Scope("session")
 public class User {
 
 	@Id
@@ -32,7 +29,7 @@ public class User {
 	
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Customer customer;
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Authority> authorities;
 
 	
@@ -112,8 +109,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", enabled=" + enabled + ", authorities="
-				+ authorities + "]";
+		return "User [username=" + username + ", enabled=" + enabled + "]";
 	}
 	
 }

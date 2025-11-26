@@ -3,50 +3,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
-<html style="margin:0;padding:0;overflow-x:hidden;">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'} - Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
 </head>
-<body style="margin:0;padding:0;">
+<body class="admin-wrapper">
+<div style="display: flex; margin: 0; padding: 0;">
 
-<!-- Admin Sidebar -->
-<div class="admin-sidebar">
-    <div class="admin-sidebar-header">
-        <i class="fas fa-book-reader"></i>
-        <span>Librería Admin</span>
-    </div>
-    
-    <nav class="admin-nav">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/libros" class="admin-nav-item">
-            <i class="fas fa-book"></i>
-            <span>Gestión de Libros</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/usuarios" class="admin-nav-item active">
-            <i class="fas fa-users"></i>
-            <span>Usuarios</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/estadisticas" class="admin-nav-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Estadísticas</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item" style="margin-top: auto;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Cerrar Sesión</span>
-        </a>
-    </nav>
-</div>
+<%@ include file="sidebar.jsp" %>
 
-<!-- Admin Main Content -->
-<div class="admin-main">
+<!-- Contenido Principal -->
+<main class="admin-main">
     
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
@@ -84,8 +57,7 @@
                             
                             <!-- Username original (hidden) -->
                             <input type="hidden" name="username" value="${user.username}">
-                            
-                            <!-- Username (solo lectura - no se puede cambiar) -->
+                            <!-- Username solo lectura -->
                             <div class="mb-4">
                                 <label class="form-label">
                                     <i class="fas fa-user me-2"></i>Username
@@ -184,6 +156,8 @@
             </div>
         </div>
     </div>
+
+</main>
 
 </div>
 

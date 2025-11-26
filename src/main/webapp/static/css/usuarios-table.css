@@ -1,0 +1,27 @@
+.usuarios-table-row {
+  height: 64px !important;
+  padding: 0 !important;
+}
+/* Estilos para la tabla de usuarios en admin */
+.usuarios-table-container {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.usuarios-table {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+.usuarios-table {
+  width: 100%;
+}
+.usuarios-table-header {
+  background: #2563eb;
+  color: #fff;
+  border-radius: 18px;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.usuarios-table-header th {

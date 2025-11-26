@@ -66,12 +66,12 @@ INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (29,'
 INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (30,'Neon Nights', 4, 23.75, 30);
 
 -- Usuarios en BD (para login JDBC)
--- Admin user: admin / admin123
-INSERT IGNORE INTO users (username, password, enabled) VALUES ('admin', '{bcrypt}$2a$10$QtyKIBGFIv.fg1/TRsG6jeKOxyBo3thuRbp0WVYC0tBq3sytHoMV.', 1);
+-- Admin user: admin / admin
+INSERT IGNORE INTO users (username, password, enabled) VALUES ('admin', '{noop}admin', 1);
 INSERT IGNORE INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
 
--- Customer user: customer / customer123
-INSERT IGNORE INTO users (username, password, enabled) VALUES ('customer', '{bcrypt}$2a$10$QtyKIBGFIv.fg1/TRsG6jeKOxyBo3thuRbp0WVYC0tBq3sytHoMV.', 1);
+-- Customer user: customer / customer
+INSERT IGNORE INTO users (username, password, enabled) VALUES ('customer', '{noop}customer', 1);
 INSERT IGNORE INTO authorities (username, authority) VALUES ('customer', 'ROLE_CUSTOMER');
 
 -- Datos del customer en tabla customer

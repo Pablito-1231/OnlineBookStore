@@ -21,6 +21,7 @@
   <!-- Estilos personalizados -->
   <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/customer-profile.css" rel="stylesheet">
 
   <!-- Estilos para tablas -->
   <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
@@ -156,16 +157,6 @@
 
           <ul class="navbar-nav ml-auto">
 
-            <!-- CARRITO ICONO -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- INFORMACIÓN DEL USUARIO -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
@@ -197,86 +188,119 @@
         <!-- CONTENIDO PRINCIPAL -->
         <div class="container-fluid">
 
-          <h1 class="h3 mb-2 text-gray-800">Perfil del Cliente</h1>
-
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Actualizar Perfil</h6>
+          <div class="profile-container">
+            
+            <div class="profile-header">
+              <h1>
+                <i class="fas fa-user-edit"></i>
+                Actualizar Perfil
+              </h1>
+              <p>Modifica tu información personal</p>
             </div>
 
-            <div class="card-body">
-              <div class="table-responsive">
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <h2>
+                  <i class="fas fa-edit"></i>
+                  Editar Información
+                </h2>
+              </div>
+              
+              <div class="profile-card-body">
 
                 <!-- FORMULARIO DE ACTUALIZACIÓN -->
                 <form:form method="POST" modelAttribute="customerData" action="/customers/profile/update/process">
+                  
+                  <form:hidden path="role" value="ROLE_CUSTOMER" />
+                  <form:hidden path="username" />
 
-                  <table class="table table-bordered" width="100%" cellspacing="0">
-                    <form:hidden path="role" value="ROLE_CUSTOMER" />
-                    <form:hidden path="username" />
+                  <!-- Mensaje de estado -->
+                  <c:if test="${message != null}">
+                    <div class="profile-alert ${message.contains('Error') || message.contains('error') ? 'error' : 'success'}">
+                      <i class="fas ${message.contains('Error') || message.contains('error') ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                      <c:out value="${message}" />
+                    </div>
+                  </c:if>
 
-                    <tbody>
-                      <tr>
-                        <td colspan="2" style="color:red;">
-                          <c:if test="${message != null}">
-                            <c:out value="${message}" />
-                          </c:if>
-                        </td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-user"></i>
+                      Nombre:
+                    </label>
+                    <form:input path="firstName" class="profile-input" placeholder="Ingresa tu nombre" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Nombre:</td>
-                        <td><form:input path="firstName" /></td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-user"></i>
+                      Apellido:
+                    </label>
+                    <form:input path="lastName" class="profile-input" placeholder="Ingresa tu apellido" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Apellido:</td>
-                        <td><form:input path="lastName" /></td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-at"></i>
+                      Usuario:
+                    </label>
+                    <input type="text" class="profile-input readonly" value="${customerData.username}" disabled />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Usuario:</td>
-                        <td><c:out value="${customerData.username}" /></td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-envelope"></i>
+                      Correo:
+                    </label>
+                    <form:input path="email" class="profile-input" placeholder="correo@ejemplo.com" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Correo electrónico:</td>
-                        <td><form:input path="email" /></td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-phone"></i>
+                      Teléfono:
+                    </label>
+                    <form:input path="mobile" class="profile-input" placeholder="3001234567" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Número de celular:</td>
-                        <td><form:input path="mobile" /></td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-map-marker-alt"></i>
+                      Dirección:
+                    </label>
+                    <form:textarea path="address" class="profile-input" placeholder="Ingresa tu dirección completa" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Dirección:</td>
-                        <td><form:textarea path="address" /></td>
-                      </tr>
+                  <div class="profile-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>Nota de seguridad:</strong> Debes ingresar tu contraseña actual para confirmar los cambios.</p>
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Contraseña (encriptada)</td>
-                        <td>***************************************</td>
-                      </tr>
+                  <div class="profile-field">
+                    <label class="profile-label">
+                      <i class="fas fa-lock"></i>
+                      Confirmar Contraseña:
+                    </label>
+                    <form:password path="password" class="profile-input" placeholder="Ingresa tu contraseña actual" required="required" />
+                  </div>
 
-                      <tr>
-                        <td style="color:green;">Ingrese su contraseña para actualizar:</td>
-                        <td><form:password path="password" placeholder="Confirmar contraseña..." /></td>
-                      </tr>
-
-                      <tr>
-                        <td colspan="2">
-                          <input type="submit" class="btn btn-success" value="Actualizar perfil"
-                            onClick="return confirm('¿Deseas actualizar este perfil?');" />
-                        </td>
-                      </tr>
-                    </tbody>
-
-                  </table>
+                  <div class="profile-actions">
+                    <a href="${pageContext.request.contextPath}/customers/profile" 
+                       class="profile-btn profile-btn-secondary">
+                      <i class="fas fa-times"></i>
+                      Cancelar
+                    </a>
+                    <button type="submit" class="profile-btn profile-btn-success"
+                            onclick="return confirm('¿Deseas actualizar tu perfil?');">
+                      <i class="fas fa-save"></i>
+                      Guardar Cambios
+                    </button>
+                  </div>
 
                 </form:form>
 
               </div>
             </div>
+
           </div>
 
         </div>

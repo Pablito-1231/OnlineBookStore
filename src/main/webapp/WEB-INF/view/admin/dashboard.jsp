@@ -14,157 +14,122 @@
 <body class="admin-wrapper">
 <div style="display: flex; margin: 0; padding: 0;">
 
-    <!-- Sidebar Moderna -->
-    <aside class="admin-sidebar">
-        <div class="admin-sidebar-header">
-            <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-brand">
-                <div class="admin-brand-icon">
-                    <i class="fas fa-book"></i>
-                </div>
-                <div class="admin-brand-text">
-                    <h2>Admin Panel</h2>
-                    <p>Librería Online</p>
-                </div>
-            </a>
-        </div>
-
-        <nav class="admin-nav">
-            <div class="admin-nav-section">
-                <div class="admin-nav-title">Principal</div>
-                <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-nav-item active">
-                    <i class="fas fa-home admin-nav-icon"></i>
-                    <span class="admin-nav-text">Dashboard</span>
-                </a>
-            </div>
-
-            <div class="admin-nav-section">
-                <div class="admin-nav-title">Gestión</div>
-                <a href="${pageContext.request.contextPath}/admin/libros" class="admin-nav-item">
-                    <i class="fas fa-book admin-nav-icon"></i>
-                    <span class="admin-nav-text">Libros</span>
-                </a>
-                <a href="${pageContext.request.contextPath}/admin/usuarios" class="admin-nav-item">
-                    <i class="fas fa-users admin-nav-icon"></i>
-                    <span class="admin-nav-text">Usuarios</span>
-                </a>
-            </div>
-
-            <div class="admin-nav-section">
-                <div class="admin-nav-title">Análisis</div>
-                <a href="${pageContext.request.contextPath}/admin/estadisticas" class="admin-nav-item">
-                    <i class="fas fa-chart-bar admin-nav-icon"></i>
-                    <span class="admin-nav-text">Estadísticas</span>
-                </a>
-            </div>
-
-            <div class="admin-nav-section">
-                <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item logout">
-                    <i class="fas fa-sign-out-alt admin-nav-icon"></i>
-                    <span class="admin-nav-text">Cerrar Sesión</span>
-                </a>
-            </div>
-        </nav>
-    </aside>
+<%@ include file="sidebar.jsp" %>
 
     <!-- Contenido Principal -->
     <main class="admin-main">
         
-        <!-- Header -->
-        <div class="admin-header">
-            <div class="admin-header-top">
-                <h1>Panel de Control</h1>
-                <div class="admin-header-actions">
-                    <button class="btn-admin primary">
-                        <i class="fas fa-sync"></i> Actualizar
-                    </button>
+        <!-- Header Mejorado -->
+        <div class="admin-page-header mb-4">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <nav aria-label="breadcrumb" class="mb-2">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item active"><i class="fas fa-home me-1"></i>Dashboard</li>
+                        </ol>
+                    </nav>
+                    <h2 class="mb-2 fw-bold"><i class="fas fa-tachometer-alt me-2 text-primary"></i>Panel de Control</h2>
+                    <p class="text-muted mb-0">Resumen general de la actividad de la librería</p>
                 </div>
-            </div>
-            <div class="admin-breadcrumb">
-                <a href="${pageContext.request.contextPath}/admin/dashboard">
-                    <i class="fas fa-home"></i> Inicio
-                </a>
-                <i class="fas fa-chevron-right"></i>
-                <span>Dashboard</span>
+                <button class="btn btn-outline-primary shadow-sm" onclick="location.reload()">
+                    <i class="fas fa-sync-alt me-2"></i>Actualizar
+                </button>
             </div>
         </div>
 
         <!-- Estadísticas -->
-        <div class="admin-stats-grid">
+        <div class="row g-3 mb-4">
             
-            <div class="admin-stat-card">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon primary">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="admin-stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 12%
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-primary-subtle">
+                                <i class="fas fa-users text-primary"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="fas fa-arrow-up me-1"></i>12%
+                            </span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">${totalUsuarios}</h3>
+                        <p class="text-muted mb-0 small">Usuarios Registrados</p>
                     </div>
                 </div>
-                <div class="admin-stat-value">${totalUsuarios}</div>
-                <div class="admin-stat-label">Usuarios Registrados</div>
             </div>
 
-            <div class="admin-stat-card">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon success">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="admin-stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 8%
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-success-subtle">
+                                <i class="fas fa-book text-success"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="fas fa-arrow-up me-1"></i>8%
+                            </span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">${librosDisponibles}</h3>
+                        <p class="text-muted mb-0 small">Libros Disponibles</p>
                     </div>
                 </div>
-                <div class="admin-stat-value">${librosDisponibles}</div>
-                <div class="admin-stat-label">Libros Disponibles</div>
             </div>
 
-            <div class="admin-stat-card">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon warning">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="admin-stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 24%
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-warning-subtle">
+                                <i class="fas fa-shopping-cart text-warning"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="fas fa-arrow-up me-1"></i>24%
+                            </span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">${comprasTotales}</h3>
+                        <p class="text-muted mb-0 small">Compras Realizadas</p>
                     </div>
                 </div>
-                <div class="admin-stat-value">${comprasTotales}</div>
-                <div class="admin-stat-label">Compras Realizadas</div>
             </div>
 
-            <div class="admin-stat-card">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon danger">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="admin-stat-trend up">
-                        <i class="fas fa-arrow-up"></i> 18%
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="stat-icon-modern bg-danger-subtle">
+                                <i class="fas fa-dollar-sign text-danger"></i>
+                            </div>
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="fas fa-arrow-up me-1"></i>18%
+                            </span>
+                        </div>
+                        <h3 class="mb-1 fw-bold display-6">$12,450</h3>
+                        <p class="text-muted mb-0 small">Ingresos Totales</p>
                     </div>
                 </div>
-                <div class="admin-stat-value">$12,450</div>
-                <div class="admin-stat-label">Ingresos Totales</div>
             </div>
 
         </div>
 
         <!-- Acciones Rápidas -->
-        <div class="admin-card">
-            <div class="admin-card-header">
-                <h3 class="admin-card-title">
-                    <i class="fas fa-bolt"></i> Acciones Rápidas
-                </h3>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-bottom py-3">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="fas fa-bolt me-2 text-warning"></i>Acciones Rápidas
+                </h5>
             </div>
-            <div class="admin-card-body">
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="${pageContext.request.contextPath}/admin/libros/add" class="btn-admin primary lg">
-                        <i class="fas fa-plus"></i> Agregar Libro
+            <div class="card-body p-4">
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="${pageContext.request.contextPath}/admin/libros/add" class="btn btn-primary btn-lg flex-grow-1">
+                        <i class="fas fa-plus-circle me-2"></i>Agregar Libro
                     </a>
-                    <a href="${pageContext.request.contextPath}/admin/libros" class="btn-admin success lg">
-                        <i class="fas fa-book"></i> Ver Todos los Libros
+                    <a href="${pageContext.request.contextPath}/admin/libros" class="btn btn-outline-success btn-lg flex-grow-1">
+                        <i class="fas fa-book me-2"></i>Ver Catálogo
                     </a>
-                    <a href="${pageContext.request.contextPath}/admin/usuarios" class="btn-admin warning lg">
-                        <i class="fas fa-users"></i> Gestionar Usuarios
+                    <a href="${pageContext.request.contextPath}/admin/usuarios" class="btn btn-outline-warning btn-lg flex-grow-1">
+                        <i class="fas fa-users-cog me-2"></i>Gestionar Usuarios
                     </a>
-                    <a href="${pageContext.request.contextPath}/admin/estadisticas" class="btn-admin secondary lg">
-                        <i class="fas fa-chart-line"></i> Ver Estadísticas
+                    <a href="${pageContext.request.contextPath}/admin/estadisticas" class="btn btn-outline-secondary btn-lg flex-grow-1">
+                        <i class="fas fa-chart-line me-2"></i>Ver Reportes
                     </a>
                 </div>
             </div>

@@ -10,13 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
-import com.shashirajraja.onlinebookstore.dao.UserRepository;
 import com.shashirajraja.onlinebookstore.entity.Authority;
 import com.shashirajraja.onlinebookstore.entity.CurrentSession;
 import com.shashirajraja.onlinebookstore.entity.Customer;
+import com.shashirajraja.onlinebookstore.entity.User;
 import com.shashirajraja.onlinebookstore.forms.entity.ChangePassword;
 import com.shashirajraja.onlinebookstore.forms.entity.CustomerData;
-import com.shashirajraja.onlinebookstore.entity.User;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {

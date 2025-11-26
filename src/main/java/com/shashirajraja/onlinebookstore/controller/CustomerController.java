@@ -45,8 +45,21 @@ public class CustomerController {
 	
 	@GetMapping("")
 	public String customerHome(Model theModel) {
+		Customer customer = currentSession.getUser().getCustomer();
 		
-		return viewBooks(theModel);
+		// Obtener datos para el dashboard
+		Set<Book> allBooks = theBookService.getAllBooks();
+		Set<Book> purchasedBooks = theBookUserService.getBooksPurchasedBy(customer);
+		Set<ShoppingCart> cartItems = customer.getShoppingCart();
+		
+		theModel.addAttribute("allBooks", allBooks);
+		theModel.addAttribute("purchasedBooks", purchasedBooks);
+		theModel.addAttribute("cartItems", cartItems);
+		theModel.addAttribute("totalBooks", allBooks.size());
+		theModel.addAttribute("purchasedCount", purchasedBooks.size());
+		theModel.addAttribute("cartCount", cartItems.size());
+		
+		return "customer-home";
 	}
 	
 	@GetMapping("/profile")
@@ -148,12 +161,25 @@ public class CustomerController {
 	
 	@GetMapping("/cart")
 	public String viewCustomerCart(Model theModel) {
-		String message = null;
-		Customer customer = currentSession.getUser().getCustomer();
-		Set<ShoppingCart> shoppingItems = customer.getShoppingCart();
-		theModel.addAttribute("message", message);
-		theModel.addAttribute("shoppingItems", shoppingItems);
-		return "customer-cart";
+		try {
+			Customer customer = currentSession.getUser().getCustomer();
+			Set<ShoppingCart> shoppingItems = customer.getShoppingCart();
+			
+			// Inicializar si es null
+			if (shoppingItems == null) {
+				shoppingItems = new java.util.HashSet<>();
+			}
+			
+			theModel.addAttribute("message", null);
+			theModel.addAttribute("shoppingItems", shoppingItems);
+			return "customer-cart";
+		} catch (Exception e) {
+			System.err.println("Error al cargar carrito: " + e.getMessage());
+			e.printStackTrace();
+			theModel.addAttribute("message", "Error al cargar el carrito: " + e.getMessage());
+			theModel.addAttribute("shoppingItems", new java.util.HashSet<>());
+			return "customer-cart";
+		}
 	}
 
 	// Incrementar cantidad de un item en el carrito

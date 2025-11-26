@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.shashirajraja.onlinebookstore.entity.CurrentSession;
 import com.shashirajraja.onlinebookstore.entity.Customer;
-import com.shashirajraja.onlinebookstore.entity.PurchaseDetail;
 import com.shashirajraja.onlinebookstore.entity.PurchaseHistory;
 import com.shashirajraja.onlinebookstore.service.EmailService;
 import com.shashirajraja.onlinebookstore.service.PaymentService;
@@ -67,8 +66,10 @@ public class PaymentController {
 		// ========== PROCESAR PAGO ==========
 		try {
 			Customer customer = currentSession.getUser().getCustomer();
+			
 			//load the purchase history
 			paymentService.getPurchaseHistories(customer);
+			
 			//create purchase History
 			String transId = paymentService.createTransaction(customer);
 			
@@ -81,11 +82,14 @@ public class PaymentController {
 				System.err.println("Error al enviar email de confirmación: " + emailEx.getMessage());
 			}
 			
-			theModel.addAttribute("message", "Pago exitoso con ID de transacción: "+ transId);
+			theModel.addAttribute("message", "✅ ¡Pago exitoso! ID de transacción: "+ transId);
 			theModel.addAttribute("messageType", "success");
 			theModel.addAttribute("purchaseHistory", paymentService.getPurchaseHistory(customer, transId));
+			
 			return "customer-transaction-detail";
 		} catch (Exception e) {
+			System.err.println("ERROR en paymentSuccess: " + e.getMessage());
+			e.printStackTrace();
 			theModel.addAttribute("message", "❌ Error al procesar el pago: " + e.getMessage());
 			theModel.addAttribute("messageType", "error");
 			return "customer-payment-form";

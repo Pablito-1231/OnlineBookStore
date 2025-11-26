@@ -13,13 +13,20 @@
 
   <title>Refugio Literario</title>
 
+  <!-- Bootstrap desde CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome desde CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <!-- Fuentes personalizadas -->
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- DataTables desde CDN -->
+  <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
   <!-- Estilos personalizados -->
   <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
   <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/cart-modern.css" rel="stylesheet">
 
@@ -162,42 +169,6 @@
 
           <ul class="navbar-nav ml-auto">
 
-            <!-- Alertas -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown">
-                <i class="fas fa-bell fa-fw"></i>
-                <span class="badge badge-danger badge-counter">1+</span>
-              </a>
-
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
-                <h6 class="dropdown-header">Centro de alertas</h6>
-
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">17 Junio 2020</div>
-                    <span class="font-weight-bold">Un nuevo informe mensual estará disponible pronto...</span>
-                  </div>
-                </a>
-
-                <a class="dropdown-item text-center small text-gray-500" href="#">Ver todas las alertas</a>
-              </div>
-            </li>
-
-            <!-- Carrito -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- Usuario -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
@@ -245,13 +216,15 @@
           <!-- Calcular totales -->
           <c:set var="totalPrice" value="0" scope="page" />
           <c:set var="totalQuantity" value="0" scope="page" />
-          <c:forEach var="shoppingCart" items="${shoppingItems}">
-            <c:set var="totalPrice" value="${totalPrice + (shoppingCart.quantity * shoppingCart.book.price)}" scope="page" />
-            <c:set var="totalQuantity" value="${totalQuantity + shoppingCart.quantity}" scope="page" />
-          </c:forEach>
+          <c:if test="${not empty shoppingItems}">
+            <c:forEach var="shoppingCart" items="${shoppingItems}">
+              <c:set var="totalPrice" value="${totalPrice + (shoppingCart.quantity * shoppingCart.book.price)}" scope="page" />
+              <c:set var="totalQuantity" value="${totalQuantity + shoppingCart.quantity}" scope="page" />
+            </c:forEach>
+          </c:if>
 
           <!-- Carrito vacío -->
-          <c:if test="${totalQuantity eq 0}">
+          <c:if test="${empty shoppingItems or totalQuantity eq 0}">
             <div class="cart-empty">
               <div class="cart-empty-icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -265,7 +238,7 @@
           </c:if>
 
           <!-- Carrito con items -->
-          <c:if test="${totalQuantity ne 0}">
+          <c:if test="${not empty shoppingItems and totalQuantity ne 0}">
             <div class="cart-grid">
               
               <!-- Items del carrito -->
@@ -424,14 +397,14 @@
     </div>
   </div>
 
-  <!-- scrips  -->
-  <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Scripts desde CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  
+  <!-- Scripts locales -->
   <script src="${pageContext.request.contextPath}/js/sb-admin-2.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
 
 </body>
 

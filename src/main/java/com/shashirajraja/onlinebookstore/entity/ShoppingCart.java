@@ -70,7 +70,7 @@ public class ShoppingCart{
 
 	@Override
 	public String toString() {
-		return "ShoppingCart [customer=" + customer.getUsername() + ", book=" + book.getId() + ", count=" + quantity + "]";
+		return "ShoppingCart [quantity=" + quantity + "]";
 	}
 	
 }

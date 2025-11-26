@@ -160,42 +160,6 @@
            <!-- Navegación superior -->
            <ul class="navbar-nav ml-auto">
 
-            <!-- Alertas -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" data-toggle="dropdown">
-                <i class="fas fa-bell fa-fw"></i>
-                <span class="badge badge-danger badge-counter">1+</span>
-              </a>
-
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
-                <h6 class="dropdown-header">Centro de Alertas</h6>
-
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">7 diciembre 2025</div>
-                    <span class="font-weight-bold">Un nuevo reporte mensual llegará pronto...</span>
-                  </div>
-                </a>
-
-                <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar todas las alertas</a>
-              </div>
-            </li>
-
-            <!-- Carrito -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">1</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- Usuario -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">

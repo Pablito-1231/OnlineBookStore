@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,7 @@ import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    
     @Autowired
     private com.shashirajraja.onlinebookstore.dao.AuthorityRepository authorityRepository;
 
@@ -168,6 +171,11 @@ public class AdminController {
 
         model.addAttribute("books", pageItems);
         model.addAttribute("totalLibros", total);
+        // Contadores globales para tarjetas superiores
+        long librosDisponibles = books.stream().filter(b -> b.getQuantity() > 0).count();
+        long librosAgotados = books.stream().filter(b -> b.getQuantity() == 0).count();
+        model.addAttribute("librosDisponibles", librosDisponibles);
+        model.addAttribute("librosAgotados", librosAgotados);
         model.addAttribute("stockFilter", stock == null ? "all" : stock);
         model.addAttribute("sort", sort);
         model.addAttribute("order", order);
@@ -256,7 +264,8 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public String procesarAgregarLibro(@Valid @ModelAttribute("book") Book book,
                                         BindingResult bookBindingResult,
-                                        @ModelAttribute("bookDetail") BookDetail bookDetail,
+                                        @RequestParam(value = "bookDetail.type", required = false) String type,
+                                        @RequestParam(value = "bookDetail.detail", required = false) String detail,
                                         Model model) {
         try {
             // Validación Bean Validation
@@ -264,7 +273,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: Revisa los campos del libro");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail);
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
@@ -273,7 +282,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: El nombre del libro es obligatorio");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail);
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
@@ -282,7 +291,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: El precio debe ser mayor a 0");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail);
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
@@ -291,24 +300,28 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: La cantidad debe ser mayor o igual a 0");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail);
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
             
-            if (bookDetail == null) {
-                bookDetail = new BookDetail("EBOOK", "No especificado", 0);
+            if (type == null || type.trim().isEmpty()) {
+                type = "EBOOK";
+            }
+            if (detail == null) {
+                detail = "No especificado";
             }
             
+            BookDetail bookDetail = new BookDetail(type, detail, 0);
             book.setBookDetail(bookDetail);
             String message = bookService.addBook(book);
-            model.addAttribute("message", message);
+            model.addAttribute("message", "✅ " + message);
             model.addAttribute("messageType", "success");
         } catch (Exception e) {
             model.addAttribute("message", "❌ Error al agregar libro: " + e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("book", book);
-            model.addAttribute("bookDetail", bookDetail);
+            model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
             model.addAttribute("action", "add");
             return "admin/libro-form";
         }
@@ -316,6 +329,10 @@ public class AdminController {
         Set<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         model.addAttribute("totalLibros", books.size());
+        long librosDisponibles = books.stream().filter(b -> b.getQuantity() > 0).count();
+        long librosAgotados = books.stream().filter(b -> b.getQuantity() == 0).count();
+        model.addAttribute("librosDisponibles", librosDisponibles);
+        model.addAttribute("librosAgotados", librosAgotados);
         return "admin/libros";
     }
 
@@ -340,7 +357,8 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public String procesarEditarLibro(@Valid @ModelAttribute("book") Book book,
                                        BindingResult bookBindingResult,
-                                       @ModelAttribute("bookDetail") BookDetail bookDetail,
+                                       @RequestParam(value = "bookDetail.type", required = false) String type,
+                                       @RequestParam(value = "bookDetail.detail", required = false) String detail,
                                        Model model) {
         try {
             Book existingBook = bookService.getBookById(book.getId());
@@ -354,7 +372,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: Revisa los campos del libro");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail != null ? bookDetail : existingBook.getBookDetail());
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
@@ -364,7 +382,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: El nombre del libro es obligatorio");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail != null ? bookDetail : existingBook.getBookDetail());
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
@@ -373,7 +391,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: El precio debe ser mayor a 0");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail != null ? bookDetail : existingBook.getBookDetail());
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
@@ -382,7 +400,7 @@ public class AdminController {
                 model.addAttribute("message", "❌ Error: La cantidad debe ser mayor o igual a 0");
                 model.addAttribute("messageType", "error");
                 model.addAttribute("book", book);
-                model.addAttribute("bookDetail", bookDetail != null ? bookDetail : existingBook.getBookDetail());
+                model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
@@ -391,19 +409,21 @@ public class AdminController {
             existingBook.setPrice(book.getPrice());
             existingBook.setQuantity(book.getQuantity());
             
-            if (existingBook.getBookDetail() != null && bookDetail != null) {
-                existingBook.getBookDetail().setType(bookDetail.getType());
-                existingBook.getBookDetail().setDetail(bookDetail.getDetail());
+            if (existingBook.getBookDetail() != null && type != null) {
+                existingBook.getBookDetail().setType(type);
+                existingBook.getBookDetail().setDetail(detail != null ? detail : "");
+            } else if (type != null) {
+                existingBook.setBookDetail(new BookDetail(type, detail != null ? detail : "", 0));
             }
             
             String message = bookService.updateBook(existingBook);
-            model.addAttribute("message", message);
+            model.addAttribute("message", "✅ " + message);
             model.addAttribute("messageType", "success");
         } catch (Exception e) {
             model.addAttribute("message", "❌ Error al editar libro: " + e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("book", book);
-            model.addAttribute("bookDetail", bookDetail);
+            model.addAttribute("bookDetail", new BookDetail(type, detail, 0));
             model.addAttribute("action", "edit");
             return "admin/libro-form";
         }
@@ -448,13 +468,29 @@ public class AdminController {
     // ========== ESTADÍSTICAS ==========
     @GetMapping("/estadisticas")
     @PreAuthorize("hasRole('ADMIN')")
-    public String estadisticas(Model model) {
+    public String estadisticas(Model model, javax.servlet.http.HttpServletResponse response) {
+        // Desactivar cache
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+        
         Set<Book> allBooks = bookService.getAllBooks();
         
-        model.addAttribute("totalLibros", allBooks.size());
-        model.addAttribute("librosDisponibles", allBooks.stream().filter(b -> b.getQuantity() > 0).count());
-        model.addAttribute("librosAgotados", allBooks.stream().filter(b -> b.getQuantity() == 0).count());
-        model.addAttribute("totalUsuarios", userService.getAllUsers().stream().count());
+        long totalLibros = allBooks.size();
+        long librosDisponibles = allBooks.stream().filter(b -> b.getQuantity() > 0).count();
+        long librosAgotados = allBooks.stream().filter(b -> b.getQuantity() == 0).count();
+        long totalUsuarios = userService.getAllUsers().stream().count();
+        
+        // Debug: imprimir valores
+        System.out.println("=== ESTADÍSTICAS DEBUG ===");
+        System.out.println("Total libros: " + totalLibros);
+        System.out.println("Disponibles: " + librosDisponibles);
+        System.out.println("Agotados: " + librosAgotados);
+        
+        model.addAttribute("totalLibros", totalLibros);
+        model.addAttribute("librosDisponibles", librosDisponibles);
+        model.addAttribute("librosAgotados", librosAgotados);
+        model.addAttribute("totalUsuarios", totalUsuarios);
         
         return "admin/estadisticas";
     }

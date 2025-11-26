@@ -1,0 +1,285 @@
+/* ========== MODERN TOAST NOTIFICATIONS ========== */
+
+.toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+}
+
+.modern-toast {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    border-left: 5px solid;
+    animation: slideInRight 0.4s ease, fadeOut 0.4s ease 4.6s forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-toast::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: currentColor;
+    animation: progressBar 5s linear forwards;
+}
+
+@keyframes progressBar {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+.modern-toast.success {
+    border-color: #10b981;
+}
+
+.modern-toast.success::before {
+    background: #10b981;
+}
+
+.modern-toast.error {
+    border-color: #ef4444;
+}
+
+.modern-toast.error::before {
+    background: #ef4444;
+}
+
+.modern-toast.warning {
+    border-color: #f59e0b;
+}
+
+.modern-toast.warning::before {
+    background: #f59e0b;
+}
+
+.modern-toast.info {
+    border-color: #3b82f6;
+}
+
+.modern-toast.info::before {
+    background: #3b82f6;
+}
+
+.toast-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.modern-toast.success .toast-icon {
+    background: #d1fae5;
+    color: #10b981;
+}
+
+.modern-toast.error .toast-icon {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.modern-toast.warning .toast-icon {
+    background: #fef3c7;
+    color: #f59e0b;
+}
+
+.modern-toast.info .toast-icon {
+    background: #dbeafe;
+    color: #3b82f6;
+}
+
+.toast-content {
+    flex: 1;
+    padding-top: 0.25rem;
+}
+
+.toast-content strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.toast-content p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Animaciones */
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(400px);
+    }
+}
+
+/* Alert banners modernos (para mensajes en página) */
+.modern-alert {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    border-left: 5px solid;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modern-alert.success {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.modern-alert.error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.modern-alert.warning {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #f59e0b;
+    color: #92400e;
+}
+
+.modern-alert.info {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+.modern-alert .alert-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.modern-alert.success .alert-icon {
+    background: #10b981;
+    color: white;
+}
+
+.modern-alert.error .alert-icon {
+    background: #ef4444;
+    color: white;
+}
+
+.modern-alert.warning .alert-icon {
+    background: #f59e0b;
+    color: white;
+}
+
+.modern-alert.info .alert-icon {
+    background: #3b82f6;
+    color: white;
+}
+
+.modern-alert .alert-content {
+    flex: 1;
+}
+
+.modern-alert .alert-content strong {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.modern-alert .alert-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    color: inherit;
+}
+
+.modern-alert .alert-close:hover {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .toast-container {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .modern-toast {
+        padding: 1rem;
+    }
+    
+    .modern-alert {
+        padding: 1rem;
+    }
+}

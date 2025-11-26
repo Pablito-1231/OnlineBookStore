@@ -1,0 +1,324 @@
+/* ========== PAYMENT FORM STYLES ========== */
+
+.payment-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.payment-header {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+    text-align: center;
+}
+
+.payment-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.payment-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.95;
+    font-size: 1rem;
+}
+
+/* Card de pago */
+.payment-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.payment-card-header {
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    padding: 1.5rem;
+    border-bottom: 3px solid #11998e;
+}
+
+.payment-card-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payment-card-body {
+    padding: 2.5rem;
+}
+
+/* Alert de información */
+.payment-info-alert {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.payment-info-alert i {
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.payment-info-alert .alert-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.payment-info-alert .alert-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.95;
+    line-height: 1.5;
+}
+
+/* Mensaje de error/éxito */
+.payment-message {
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+}
+
+.payment-message.error {
+    background: #fee;
+    color: #c33;
+    border-left: 4px solid #dc3545;
+}
+
+.payment-message.success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+/* Formulario */
+.payment-form-group {
+    margin-bottom: 1.75rem;
+}
+
+.payment-label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payment-label i {
+    color: #11998e;
+    width: 20px;
+    text-align: center;
+}
+
+.payment-label .required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+}
+
+.payment-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: inherit;
+}
+
+.payment-input:focus {
+    outline: none;
+    border-color: #11998e;
+    box-shadow: 0 0 0 4px rgba(17, 153, 142, 0.1);
+}
+
+.payment-input::placeholder {
+    color: #adb5bd;
+}
+
+/* Input con icono */
+.payment-input-wrapper {
+    position: relative;
+}
+
+.payment-input-wrapper .input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.payment-input-wrapper .payment-input {
+    padding-left: 3rem;
+}
+
+/* Texto de ayuda */
+.payment-help-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.payment-help-text i {
+    color: #11998e;
+}
+
+/* Botón de pago */
+.payment-submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2rem;
+}
+
+.payment-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(17, 153, 142, 0.4);
+}
+
+.payment-submit-btn:active {
+    transform: translateY(-1px);
+}
+
+.payment-submit-btn i {
+    font-size: 1.3rem;
+}
+
+/* Seguridad badges */
+.payment-security {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.security-badge i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+/* Resumen del carrito */
+.payment-summary {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border: 2px solid #e9ecef;
+}
+
+.payment-summary h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #11998e;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 2px solid #11998e;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.payment-card {
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .payment-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .payment-card-body {
+        padding: 1.5rem;
+    }
+    
+    .payment-security {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

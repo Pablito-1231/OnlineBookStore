@@ -176,6 +176,7 @@ html, body {
     margin-left: 280px;
     padding: 2rem;
     min-height: 100vh;
+    flex: 1;
 }
 
 /* Header del contenido */
@@ -226,17 +227,17 @@ html, body {
 /* Grid de estadísticas */
 .admin-stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
     margin-bottom: 2rem;
 }
 
 .admin-stat-card {
     background: white;
-    border-radius: 15px;
+    border-radius: 12px;
     padding: 1.75rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
 }
@@ -248,16 +249,16 @@ html, body {
     right: 0;
     width: 100px;
     height: 100px;
-    background: linear-gradient(135deg, transparent 0%, rgba(52, 152, 219, 0.1) 100%);
+    background: linear-gradient(135deg, transparent 0%, rgba(52, 152, 219, 0.05) 100%);
     border-radius: 50%;
     transform: translate(30%, -30%);
 }
 
 .admin-stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
+/* Layout para dashboard (header + value + label) */
 .admin-stat-header {
     display: flex;
     justify-content: space-between;
@@ -274,6 +275,19 @@ html, body {
     justify-content: center;
     font-size: 1.5rem;
     color: white;
+}
+
+.admin-stat-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--admin-dark);
+    margin-bottom: 0.25rem;
+}
+
+.admin-stat-label {
+    color: #7f8c8d;
+    font-size: 0.875rem;
+    font-weight: 500;
 }
 
 .admin-stat-icon.primary {
@@ -394,8 +408,7 @@ html, body {
 }
 
 .btn-admin:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
 }
 
 .btn-admin.lg {
@@ -458,23 +471,310 @@ html, body {
     }
 }
 
-/* Animaciones */
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* Animaciones eliminadas para mejor rendimiento */
+
+/* ========================================
+   ESTILOS ADICIONALES (Migrados de libros.jsp)
+   ======================================== */
+
+/* Header de página mejorado */
+.admin-page-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    border-left: 4px solid #0d6efd;
 }
 
-.admin-stat-card {
-    animation: slideInLeft 0.4s ease forwards;
+.admin-page-header h2 {
+    color: #2c3e50;
 }
 
-.admin-stat-card:nth-child(1) { animation-delay: 0.1s; }
-.admin-stat-card:nth-child(2) { animation-delay: 0.2s; }
-.admin-stat-card:nth-child(3) { animation-delay: 0.3s; }
-.admin-stat-card:nth-child(4) { animation-delay: 0.4s; }
+/* Breadcrumbs */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+}
+
+.breadcrumb-item a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #0d6efd;
+}
+
+/* Stats Cards Modernas (Hover effects) */
+.stat-card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.15) !important;
+}
+
+.stat-icon-modern {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Tabla Moderna */
+.modern-table thead th {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    padding: 1rem;
+    color: #212529 !important;
+}
+
+.modern-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Botones de acciones - estilo unificado y moderno */
+.modern-table .btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.25rem 0.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px; /* forma del contenedor */
+}
+
+/* Unir botones (colapsar borde interno) */
+.modern-table .btn-group .btn + .btn {
+    margin-left: -1px !important;
+}
+
+.modern-table .btn-group .btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0; /* se controla por posición */
+    line-height: 1;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+/* Bordes redondeados sólo en extremos */
+.modern-table .btn-group .btn:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.modern-table .btn-group .btn:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Modificadores opcionales de forma por si necesitas variaciones */
+.modern-table .btn-group.actions-rounded { border-radius: 12px; }
+.modern-table .btn-group.actions-pill { border-radius: 9999px; }
+.modern-table .btn-group.actions-plain { background: transparent; border-color: transparent; padding: 0; }
+.modern-table .btn-group.actions-circle .btn { border-radius: 9999px; }
+.modern-table .btn-group.actions-pill .btn { border-radius: 9999px; }
+.modern-table .btn-group.actions-rounded .btn { border-radius: 8px; }
+
+.modern-table .btn-group .btn i { font-size: 0.95rem; }
+
+.modern-table .btn-group .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.modern-table .btn-group .btn:active { transform: translateY(0); }
+
+/* Variantes de color (outline) con fondos sutiles al hover */
+.modern-table .btn-outline-primary {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+.modern-table .btn-outline-primary:hover {
+    background-color: rgba(13,110,253,0.10);
+    border-color: #0b5ed7;
+    color: #0b5ed7;
+}
+
+.modern-table .btn-outline-dark {
+    color: #212529;
+    border-color: #ced4da;
+}
+.modern-table .btn-outline-dark:hover {
+    background-color: #f1f3f5;
+    border-color: #adb5bd;
+    color: #212529;
+}
+
+.modern-table .btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+.modern-table .btn-outline-warning:hover {
+    background-color: rgba(255,193,7,0.12);
+    border-color: #e0a800;
+    color: #e0a800;
+}
+
+.modern-table .btn-outline-success {
+    color: #198754;
+    border-color: #198754;
+}
+.modern-table .btn-outline-success:hover {
+    background-color: rgba(25,135,84,0.12);
+    border-color: #157347;
+    color: #157347;
+}
+
+.modern-table .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.modern-table .btn-outline-danger:hover {
+    background-color: rgba(220,53,69,0.10);
+    border-color: #bb2d3b;
+    color: #bb2d3b;
+}
+
+/* Botón de edición mejorado */
+.modern-table .btn-edit {
+    color: #0d6efd;
+    border-color: #0d6efd;
+    background-color: rgba(13,110,253,0.08);
+}
+.modern-table .btn-edit:hover {
+    background-color: rgba(13,110,253,0.16);
+    border-color: #0b5ed7;
+    color: #0b5ed7;
+}
+.modern-table .btn-edit:active {
+    background-color: rgba(13,110,253,0.22);
+    border-color: #0a58ca;
+}
+.modern-table .btn-edit i {
+    transition: transform .15s ease;
+}
+.modern-table .btn-edit:hover i {
+    transform: translateY(-1px);
+}
+
+.modern-table .btn-outline-secondary[disabled],
+.modern-table .btn-outline-secondary:disabled,
+.modern-table .btn[disabled],
+.modern-table .btn:disabled {
+    color: #6c757d !important;
+    border-color: #ced4da !important;
+    background-color: #f1f3f5 !important;
+    opacity: 1; /* mantener consistencia visual */
+    cursor: not-allowed;
+}
+
+/* Accesibilidad: foco visible */
+.modern-table .btn-group .btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.modern-table tbody td {
+    padding: 1.25rem 1rem;
+    vertical-align: middle;
+}
+
+/* Iconos en tablas */
+.book-icon-placeholder, .user-icon-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.book-icon-placeholder {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-icon-placeholder {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.book-row, .user-row {
+    transition: all 0.2s ease;
+}
+
+.book-row:hover .book-icon-placeholder,
+.user-row:hover .user-icon-placeholder {
+    transform: scale(1.1);
+}
+
+/* Estados vacíos */
+.empty-state {
+    padding: 3rem 2rem;
+}
+
+/* Utilidades de color sutiles (Bootstrap 5.3 style) */
+.bg-primary-subtle { background-color: rgba(13, 110, 253, 0.1) !important; }
+.bg-success-subtle { background-color: rgba(25, 135, 84, 0.1) !important; }
+.bg-danger-subtle { background-color: rgba(220, 53, 69, 0.1) !important; }
+.bg-warning-subtle { background-color: rgba(255, 193, 7, 0.1) !important; }
+
+.text-primary { color: #0d6efd !important; }
+.text-success { color: #198754 !important; }
+.text-danger { color: #dc3545 !important; }
+.text-warning { color: #ffc107 !important; }
+
+/* Dropdowns y Paginación */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    border-radius: 8px;
+}
+
+.dropdown-item {
+    padding: 0.625rem 1.25rem;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-header {
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pagination .page-link {
+    border-radius: 8px;
+    margin: 0 0.25rem;
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+}
+
+.pagination .page-link:hover {
+    background-color: #f8f9fa;
+}

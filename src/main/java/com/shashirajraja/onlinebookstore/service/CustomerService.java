@@ -2,12 +2,9 @@ package com.shashirajraja.onlinebookstore.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.shashirajraja.onlinebookstore.entity.Customer;
 import com.shashirajraja.onlinebookstore.forms.entity.ChangePassword;
 import com.shashirajraja.onlinebookstore.forms.entity.CustomerData;
-import com.shashirajraja.onlinebookstore.entity.User;
 
 public interface CustomerService {
 

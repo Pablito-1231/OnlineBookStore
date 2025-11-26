@@ -4,6 +4,15 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+### CREDENCIALES Y ARCHIVOS SENSIBLES ###
+.env
+.env.local
+.env.*.local
+application-prod.properties
+application-local.properties
+*.log
+logs/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -29,3 +38,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Sistema Operativo ###
+.DS_Store
+Thumbs.db
+desktop.ini

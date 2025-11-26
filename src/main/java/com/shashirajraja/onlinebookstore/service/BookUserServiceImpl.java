@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.shashirajraja.onlinebookstore.dao.BookRepository;
 import com.shashirajraja.onlinebookstore.dao.BookUserRepository;
 import com.shashirajraja.onlinebookstore.entity.Book;
-import com.shashirajraja.onlinebookstore.entity.BookUser;
 import com.shashirajraja.onlinebookstore.entity.Customer;
 
 @Service

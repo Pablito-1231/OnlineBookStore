@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,14 @@ import com.shashirajraja.onlinebookstore.entity.BookUser;
 import com.shashirajraja.onlinebookstore.entity.BookUserId;
 import com.shashirajraja.onlinebookstore.entity.Customer;
 import com.shashirajraja.onlinebookstore.entity.PurchaseDetail;
-import com.shashirajraja.onlinebookstore.entity.PurchaseDetailId;
 import com.shashirajraja.onlinebookstore.entity.PurchaseHistory;
 import com.shashirajraja.onlinebookstore.entity.ShoppingCart;
 import com.shashirajraja.onlinebookstore.utility.IDUtil;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+
+	private static final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
 	@Autowired
 	CustomerRepository customerRepos;
@@ -68,26 +71,31 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		//now add the purchase details to purchase history
 		purchaseHistory.setPurchaseDetails(purchaseDetails);
+		
 		//save the purchase History
 		try {
-			customer.addPurchaseHistories(purchaseHistory);
+			// Primero guardar el purchaseHistory directamente
+			purchaseHistoryRepos.save(purchaseHistory);
+			
+			// Luego limpiar el carrito y actualizar el customer
 			customer.getShoppingCart().clear();
 			customerRepos.save(customer);
+			
 			//add the books to the customers service
 			for(Book item: books) {
 				BookUserId theId = new BookUserId(item, customer);
 				Optional<BookUser> theOpt = bookUserRepos.findById(theId);
 				if(!theOpt.isPresent()) {
 					int y = bookUserRepos.addBookToUser(theId.getBook().getId(), theId.getCustomer().getUsername());
-				if(y <=0) 
-					throw new RuntimeException("¡No se pudo establecer la relación entre libro y usuario!");
+					if(y <=0) 
+						throw new RuntimeException("¡No se pudo establecer la relación entre libro y usuario!");
 				}
 			}
 		}
 		catch(Exception ex) {
-			customer.getPurchaseHistories().remove(purchaseHistory);
-			customer.setShoppingCart(items);
+			log.error("Error al procesar transacción para el cliente '{}': {}", customer.getUsername(), ex.getMessage());
 			ex.printStackTrace();
+			throw new RuntimeException("Error al procesar el pago: " + ex.getMessage());
 		}
 		return purchaseHistory.getId();
 	}

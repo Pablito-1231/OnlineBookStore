@@ -73,8 +73,7 @@ public class PurchaseHistory {
 
 	@Override
 	public String toString() {
-		return "PurchaseHistory [id=" + id + ", customer=" + customer.getUsername() + ", date=" + date + ", purchaseDetails="
-				+ purchaseDetails + "]";
+		return "PurchaseHistory [id=" + id + ", date=" + date + "]";
 	}
 	
 	

@@ -12,14 +12,19 @@
 
   <title>Refugio Literario</title>
 
-  <!-- Fuentes -->
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Bootstrap desde CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome desde CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Fuentes personalizadas -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Estilos personalizados -->
   <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+  <link href="${pageContext.request.contextPath}/css/payment-form.css" rel="stylesheet">
 
 </head>
 
@@ -152,16 +157,6 @@
           <!-- Menú derecho -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Carrito contador -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- Usuario -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" id="userDropdown">
@@ -191,49 +186,113 @@
         <!-- Contenido de la página -->
         <div class="container-fluid">
 
-          <h1 class="h3 mb-2 text-gray-800">Pago</h1>
-
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">
-                Nota: ....
-              </h6>
+          <div class="payment-container">
+            
+            <div class="payment-header">
+              <h1>
+                <i class="fas fa-credit-card"></i>
+                Procesar Pago
+              </h1>
+              <p>Completa la información para finalizar tu compra</p>
             </div>
 
-            <div class="card-body">
-              <div class="table-responsive">
+            <div class="payment-card">
+              <div class="payment-card-header">
+                <h2>
+                  <i class="fas fa-lock"></i>
+                  Pago Seguro
+                </h2>
+              </div>
+              
+              <div class="payment-card-body">
 
-              <form:form action="/customers/payment/success" method="post">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <!-- Alerta informativa -->
+                <div class="payment-info-alert">
+                  <i class="fas fa-info-circle"></i>
+                  <div class="alert-content">
+                    <h3>Sistema de Pago Simulado</h3>
+                    <p>Este es un entorno de prueba. Ingresa cualquier ID y código OTP para simular el proceso de pago.</p>
+                  </div>
+                </div>
 
-                  <tbody>
-                    <tr>
-                      <td colspan="2" style="color:red;">
-                        <c:if test="${message != null}">
-                          <c:out value="${message}"></c:out>
-                        </c:if>
-                      </td>
-                    </tr>
+                <!-- Mensaje de error/éxito -->
+                <c:if test="${message != null}">
+                  <div class="payment-message error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <c:out value="${message}"></c:out>
+                  </div>
+                </c:if>
 
-                    <tr>
-                      <td style="color:green;">Ingresa tu ID </td>
-                      <td><input type="text" name="upi" required/></td>
-                    </tr>
+                <!-- Formulario de pago -->
+                <form:form action="/customers/payment/success" method="post">
+                  
+                  <div class="payment-form-group">
+                    <label class="payment-label">
+                      <i class="fas fa-id-card"></i>
+                      Ingresa tu ID
+                      <span class="required">*</span>
+                    </label>
+                    <div class="payment-input-wrapper">
+                      <input type="text" 
+                             name="upi" 
+                             class="payment-input" 
+                             placeholder="Ej: usuario123" 
+                             required
+                             maxlength="50" />
+                    </div>
+                    <div class="payment-help-text">
+                      <i class="fas fa-info-circle"></i>
+                      Ingresa tu identificador único de pago
+                    </div>
+                  </div>
 
-                    <tr>
-                      <td style="color:green;">Ingresa el código OTP</td>
-                      <td><input type="number" name="otp" required/></td>
-                    </tr>
+                  <div class="payment-form-group">
+                    <label class="payment-label">
+                      <i class="fas fa-key"></i>
+                      Ingresa el código OTP
+                      <span class="required">*</span>
+                    </label>
+                    <div class="payment-input-wrapper">
+                      <input type="number" 
+                             name="otp" 
+                             class="payment-input" 
+                             placeholder="Código de 6 dígitos" 
+                             required
+                             minlength="6"
+                             maxlength="6" />
+                    </div>
+                    <div class="payment-help-text">
+                      <i class="fas fa-shield-alt"></i>
+                      Código de verificación enviado a tu dispositivo
+                    </div>
+                  </div>
 
-                    <tr>
-                      <td><input type="submit" class="button btn-success" value="PROCEDER AL PAGO"/></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </form:form>
+                  <button type="submit" class="payment-submit-btn">
+                    <i class="fas fa-lock"></i>
+                    Proceder al Pago
+                  </button>
+
+                  <!-- Badges de seguridad -->
+                  <div class="payment-security">
+                    <div class="security-badge">
+                      <i class="fas fa-shield-alt"></i>
+                      Pago Seguro
+                    </div>
+                    <div class="security-badge">
+                      <i class="fas fa-lock"></i>
+                      Encriptación SSL
+                    </div>
+                    <div class="security-badge">
+                      <i class="fas fa-check-circle"></i>
+                      Verificado
+                    </div>
+                  </div>
+
+                </form:form>
 
               </div>
             </div>
+
           </div>
 
         </div>
@@ -257,14 +316,12 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Scripts -->
-  <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Scripts desde CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Scripts locales -->
   <script src="${pageContext.request.contextPath}/js/sb-admin-2.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
 
 </body>
 

@@ -22,6 +22,7 @@
   <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/customer-profile.css" rel="stylesheet">
 
 </head>
 
@@ -150,16 +151,6 @@
 
           <ul class="navbar-nav ml-auto">
 
-            <!-- Carrito -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- Usuario -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
@@ -190,67 +181,107 @@
         <!-- Contenido de página -->
         <div class="container-fluid">
 
-          <h1 class="h3 mb-2 text-gray-800">Perfil del Cliente</h1>
-
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Detalles del Perfil</h6>
+          <div class="profile-container">
+            
+            <div class="profile-header">
+              <h1>
+                <i class="fas fa-user-circle"></i>
+                Mi Perfil
+              </h1>
+              <p>Información personal de tu cuenta</p>
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
 
-                <table class="table table-bordered" id="dataTable">
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <h2>
+                  <i class="fas fa-id-card"></i>
+                  Detalles del Perfil
+                </h2>
+              </div>
+              
+              <div class="profile-card-body">
+                
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-user"></i>
+                    Nombre:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.firstName}"></c:out>
+                  </div>
+                </div>
 
-                  <tbody>
-                    <tr>
-                      <td style="color:green;">Nombre:</td>
-                      <td><c:out value="${customerData.firstName}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-user"></i>
+                    Apellido:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.lastName}"></c:out>
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Apellido:</td>
-                      <td><c:out value="${customerData.lastName}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-at"></i>
+                    Usuario:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.username}"></c:out>
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Usuario:</td>
-                      <td><c:out value="${customerData.username}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-envelope"></i>
+                    Correo:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.email}"></c:out>
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Correo:</td>
-                      <td><c:out value="${customerData.email}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-phone"></i>
+                    Teléfono:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.mobile}"></c:out>
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Teléfono:</td>
-                      <td><c:out value="${customerData.mobile}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Dirección:
+                  </div>
+                  <div class="profile-value">
+                    <c:out value="${customerData.address}"></c:out>
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Dirección:</td>
-                      <td><c:out value="${customerData.address}"></c:out></td>
-                    </tr>
+                <div class="profile-field">
+                  <div class="profile-label">
+                    <i class="fas fa-lock"></i>
+                    Contraseña:
+                  </div>
+                  <div class="profile-value password">
+                    ************************
+                  </div>
+                </div>
 
-                    <tr>
-                      <td style="color:green;">Contraseña:</td>
-                      <td><c:out value="************************"></c:out></td>
-                    </tr>
-
-                    <tr>
-                      <td style="color:green;" colspan="2">
-                        <form method="get" action="${pageContext.request.contextPath}/customers/profile/update">
-                          <button type="submit" class="button btn-info">Editar Perfil</button>
-                        </form>
-                      </td>
-                    </tr>
-
-                  </tbody>
-
-                </table>
+                <div class="profile-actions">
+                  <a href="${pageContext.request.contextPath}/customers/profile/update" 
+                     class="profile-btn profile-btn-primary">
+                    <i class="fas fa-edit"></i>
+                    Editar Perfil
+                  </a>
+                </div>
 
               </div>
             </div>
+
           </div>
 
         </div>

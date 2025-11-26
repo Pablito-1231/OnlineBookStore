@@ -13,12 +13,21 @@
 
   <title>Refugio literario</title>
 
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Bootstrap desde CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome desde CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Fuentes personalizadas -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+  <!-- DataTables desde CDN -->
+  <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+  <!-- Estilos personalizados -->
   <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
   <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -169,18 +178,23 @@
 
         <div class="container-fluid">
 
-          <h1 class="h3 mb-2 text-gray-800">Libros Disponibles</h1>
+          <h1 class="h3 mb-2 text-gray-800">Detalle de Compra</h1>
+
+          <c:if test="${message != null}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check-circle"></i> <c:out value="${message}"/>
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </c:if>
 
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Lista de Libros</h6>
+              <h6 class="m-0 font-weight-bold text-primary">
+                <i class="fas fa-receipt"></i> Productos Comprados
+              </h6>
             </div>
-
-            <c:if test="${message != null}">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"><c:out value="${message}"/></h6>
-              </div>
-            </c:if>
 
             <div class="card-body">
               <div class="table-responsive">
@@ -281,14 +295,14 @@
     </div>
   </div>
 
-  <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Scripts desde CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  
+  <!-- Scripts locales -->
   <script src="${pageContext.request.contextPath}/js/sb-admin-2.min.js"></script>
-
-  <script src="${pageContext.request.contextPath}/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
 
 </body>
 

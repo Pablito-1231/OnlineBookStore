@@ -116,8 +116,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", bookDetail="
-				+ bookDetail + "]";
+		return "Book [id=" + id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + "]";
 	}
 
 	public List<ShoppingCart> getShoppingCart() {

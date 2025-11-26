@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
 import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
 import com.shashirajraja.onlinebookstore.entity.Book;
 import com.shashirajraja.onlinebookstore.entity.Customer;
@@ -17,9 +16,6 @@ import com.shashirajraja.onlinebookstore.entity.ShoppingCart;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-	@Autowired
-	private CustomerRepository theCustomerRepository;
-	
 	@Autowired
 	private ShoppingCartRepository theCartRepository;
 

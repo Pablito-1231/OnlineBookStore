@@ -380,8 +380,8 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25) !important;
+    transform: none;
+    box-shadow: none;
 }
 
 .card-header {
@@ -465,8 +465,8 @@ body {
 }
 
 .table thead th {
-    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%) !important;
-    color: white !important;
+    background: transparent !important;
+    color: inherit !important;
     border: none !important;
     font-weight: 700;
     text-transform: uppercase;
@@ -478,11 +478,11 @@ body {
 }
 
 .table thead th:first-child {
-    border-radius: 0.5rem 0 0 0;
+    border-radius: 0;
 }
 
 .table thead th:last-child {
-    border-radius: 0 0.5rem 0 0;
+    border-radius: 0;
 }
 
 .table tbody td {
@@ -492,14 +492,11 @@ body {
 }
 
 .table tbody tr {
-    transition: all 0.3s ease;
     background: white;
 }
 
 .table tbody tr:hover {
-    background: rgba(78, 115, 223, 0.05) !important;
-    transform: scale(1.01);
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    background: white !important;
 }
 
 .table tbody tr:last-child td {
@@ -527,7 +524,7 @@ body {
 
 /* Tabla hover */
 .table-hover tbody tr:hover {
-    background-color: rgba(78, 115, 223, 0.08) !important;
+    background-color: transparent !important;
 }
 
 /* Responsive table */
@@ -561,6 +558,22 @@ body {
 
 .badge-info {
     background: var(--accent-color) !important;
+}
+
+/* ========== PAGINACIÓN ========== */
+.pagination .page-item.active .page-link {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #ffffff !important;
+}
+
+.pagination .page-link {
+    color: #495057 !important;
+}
+
+.pagination .page-link:hover {
+    color: #495057 !important;
+    background-color: #e9ecef !important;
 }
 
 /* ========== ALERTAS ========== */

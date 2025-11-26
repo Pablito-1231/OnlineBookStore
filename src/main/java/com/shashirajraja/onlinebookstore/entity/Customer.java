@@ -42,7 +42,7 @@ public class Customer {
 	private User user;
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="book_user", joinColumns=@JoinColumn(name="customer_id"), 
 								inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> books;
@@ -148,7 +148,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [username=" + username + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", mobile=" + mobile + ", address=" + address + ", user=" + user + "]";
+				+ email + ", mobile=" + mobile + ", address=" + address + "]";
 	}
 
 	

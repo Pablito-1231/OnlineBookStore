@@ -3,50 +3,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
-<html style="margin:0;padding:0;overflow-x:hidden;">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${action eq 'edit' ? 'Editar' : 'Agregar'} Libro - Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
 </head>
-<body style="margin:0;padding:0;">
+<body class="admin-wrapper">
+<div style="display: flex; margin: 0; padding: 0;">
 
-<!-- Admin Sidebar -->
-<div class="admin-sidebar">
-    <div class="admin-sidebar-header">
-        <i class="fas fa-book-reader"></i>
-        <span>Librería Admin</span>
-    </div>
-    
-    <nav class="admin-nav">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/libros" class="admin-nav-item active">
-            <i class="fas fa-book"></i>
-            <span>Gestión de Libros</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/usuarios" class="admin-nav-item">
-            <i class="fas fa-users"></i>
-            <span>Usuarios</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/estadisticas" class="admin-nav-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Estadísticas</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item" style="margin-top: auto;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Cerrar Sesión</span>
-        </a>
-    </nav>
-</div>
+<%@ include file="sidebar.jsp" %>
 
-<!-- Admin Main Content -->
-<div class="admin-main">
+<!-- Contenido Principal -->
+<main class="admin-main">
     
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
@@ -60,7 +33,10 @@
                     </div>
                     <div class="card-body p-5">
                         <form:form modelAttribute="book" method="POST" 
-                                   action="${action eq 'edit' ? '/admin/libros/edit/process' : '/admin/libros/add/process'}">
+                                   action="${pageContext.request.contextPath}${action eq 'edit' ? '/admin/libros/edit/process' : '/admin/libros/add/process'}">
+                            
+                            <!-- Token CSRF explícito para compatibilidad con ngrok -->
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             
                             <!-- ID (solo para editar) -->
                             <c:if test="${action eq 'edit'}">
@@ -77,15 +53,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <form:select path="bookDetail.type" class="form-select" id="inputType" required="true">
+                                        <select name="bookDetail.type" class="form-select" id="inputType" required>
                                             <option value="">-- Selecciona --</option>
-                                            <option value="EBOOK">E-Book</option>
-                                            <option value="PAPERBACK">Tapa Blanda</option>
-                                            <option value="HARDCOVER">Tapa Dura</option>
-                                            <option value="AUDIOBOOK">Audiolibro</option>
-                                        </form:select>
+                                            <option value="EBOOK" ${bookDetail.type eq 'EBOOK' ? 'selected' : ''}>E-Book</option>
+                                            <option value="PAPERBACK" ${bookDetail.type eq 'PAPERBACK' ? 'selected' : ''}>Tapa Blanda</option>
+                                            <option value="HARDCOVER" ${bookDetail.type eq 'HARDCOVER' ? 'selected' : ''}>Tapa Dura</option>
+                                            <option value="AUDIOBOOK" ${bookDetail.type eq 'AUDIOBOOK' ? 'selected' : ''}>Audiolibro</option>
+                                        </select>
                                         <label for="inputType">Tipo de Libro</label>
-                                        <form:errors path="bookDetail.type" class="text-danger small"/>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +83,7 @@
                             </div>
 
                             <div class="form-floating mb-4">
-                                <form:textarea path="bookDetail.detail" class="form-control" id="inputDetail" placeholder="Detalles" style="height: 100px"/>
+                                <textarea name="bookDetail.detail" class="form-control" id="inputDetail" placeholder="Detalles" style="height: 100px">${bookDetail.detail}</textarea>
                                 <label for="inputDetail">Descripción / Detalles</label>
                             </div>
 
@@ -127,6 +102,8 @@
             </div>
         </div>
     </div>
+
+</main>
 
 </div>
 

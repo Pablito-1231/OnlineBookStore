@@ -78,5 +78,10 @@ public class PurchaseDetail{
 	public void setBook(Book book) {
 		this.book = book;
 	}
+
+	@Override
+	public String toString() {
+		return "PurchaseDetail [price=" + price + ", quantity=" + quantity + "]";
+	}
 	
 }

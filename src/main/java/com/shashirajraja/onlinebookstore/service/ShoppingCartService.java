@@ -1,7 +1,5 @@
 package com.shashirajraja.onlinebookstore.service;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 import com.shashirajraja.onlinebookstore.entity.Book;

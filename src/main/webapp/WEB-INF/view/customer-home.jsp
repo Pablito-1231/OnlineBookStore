@@ -135,7 +135,7 @@
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0"
             method="get" action="${pageContext.request.contextPath}/customers/books/search">
             <div class="input-group">
-              <input type="text" name="book" class="form-control bg-light border-0 small" placeholder="Buscar libro...">
+              <input type="text" name="name" class="form-control bg-light border-0 small" placeholder="Buscar libro...">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                   <i class="fas fa-search fa-sm"></i>
@@ -146,25 +146,6 @@
 
           <!-- Menú superior -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Carrito -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <span class="badge badge-danger badge-counter">7</span>
-              </a>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Usuario -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${customers.getFirstName()}</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
-            </li>
-
           </ul>
 
         </nav>
