@@ -18,12 +18,12 @@ import com.shashirajraja.onlinebookstore.entity.ShoppingCartId;
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, ShoppingCartId> {
 
 	
-	@Query("from ShoppingCart where customer is :customer")
+	@Query("from ShoppingCart where customer = :customer")
 	public List<ShoppingCart> getItemsByCustomer(@Param("customer") Customer customer);
 	
 	
 	
-	@Query("from ShoppingCart where book is :book")
+	@Query("from ShoppingCart where book = :book")
 	public List<ShoppingCart> getItemsByBook(@Param("book") Book book);
 
 	@Query("from ShoppingCart sc where sc.customer.username = :customerId and sc.book.id = :bookId")

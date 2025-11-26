@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,22 +39,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers(
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/vendor/**",
-                    "/static/**",
-                    "/login",
-                    "/register",
-                    "/register/customer",
-                    "/register/provider"
-                ).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/customers/**").hasRole("CUSTOMER")
-                .requestMatchers("/books").authenticated()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()  // Permitir TODO temporalmente
             )
             .formLogin(form -> form
                 .loginPage("/login")
@@ -62,17 +50,7 @@ public class SecurityConfig {
                 .failureHandler(customAuthenticationFailureHandler)
                 .permitAll()
             )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-            )
-            .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/access-denied")
-            );
+            .logout(logout -> logout.permitAll());
         
         return http.build();
     }
