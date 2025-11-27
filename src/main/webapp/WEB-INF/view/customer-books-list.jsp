@@ -16,27 +16,7 @@
 
   <title>Librería en Línea</title>
 
-  <!-- Fuentes -->
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,900" rel="stylesheet">
-
-  <!-- Estilos -->
-  <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
-  <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/books-grid.css" rel="stylesheet">
-
-</head>
-
-<body id="page-top">
-  <fmt:setLocale value="es_CO"/>
-
-  <!-- Contenedor principal -->
-  <div id="wrapper">
-
-    <!-- Barra lateral -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            <!-- Usuario eliminado: vista simplificada -->
       <!-- Marca -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/customers">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -158,29 +138,7 @@
           </form>
 
           <ul class="navbar-nav ml-auto">
-
-            <!-- Usuario -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">¡Bienvenido!</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
-
-              <div class="dropdown-menu dropdown-menu-right shadow">
-                <a class="dropdown-item" href="${pageContext.request.contextPath}/customers/profile">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Perfil
-                </a>
-
-                <div class="dropdown-divider"></div>
-
-                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar Sesión
-                </a>
-              </div>
-            </li>
-
+            <!-- Usuario eliminado: no mostrar avatar/label -->
           </ul>
 
         </nav>

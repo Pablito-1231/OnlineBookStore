@@ -45,8 +45,10 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	@Transactional
 	public String createTransaction(Customer customer) {
-		//get the customer cart items and add it to his buys history;
-		Set<ShoppingCart> items = customer.getShoppingCart();
+		// Ensure we operate on a managed Customer entity to avoid lazy-proxy 'no session' errors.
+		Customer managedCustomer = customerRepos.findById(customer.getUsername()).orElse(customer);
+		// get the customer cart items from the managed entity
+		Set<ShoppingCart> items = managedCustomer.getShoppingCart();
 		
 		//create a transaction purchase history
 		PurchaseHistory purchaseHistory = new PurchaseHistory(IDUtil.generatePurchaseHistoryId(),new Date());
@@ -78,12 +80,12 @@ public class PaymentServiceImpl implements PaymentService {
 			purchaseHistoryRepos.save(purchaseHistory);
 			
 			// Luego limpiar el carrito y actualizar el customer
-			customer.getShoppingCart().clear();
-			customerRepos.save(customer);
+			managedCustomer.getShoppingCart().clear();
+			customerRepos.save(managedCustomer);
 			
 			//add the books to the customers service
 			for(Book item: books) {
-				BookUserId theId = new BookUserId(item, customer);
+				BookUserId theId = new BookUserId(item, managedCustomer);
 				Optional<BookUser> theOpt = bookUserRepos.findById(theId);
 				if(theOpt.isEmpty()) {
 					int y = bookUserRepos.addBookToUser(theId.getBook().getId(), theId.getCustomer().getUsername());

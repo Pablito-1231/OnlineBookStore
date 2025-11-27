@@ -52,6 +52,22 @@ public class UserServiceImpl implements UserService {
 		
 		if(userOpt.isPresent())
 			theUser = userOpt.get();
+
+		// Initialize customer collections to avoid LazyInitializationException later
+		// when the User/Customer is stored in session and accessed outside a TX.
+		try {
+			if (theUser != null && theUser.getCustomer() != null) {
+				// touch collections while inside transaction
+				if (theUser.getCustomer().getShoppingCart() != null)
+					theUser.getCustomer().getShoppingCart().size();
+				if (theUser.getCustomer().getBooks() != null)
+					theUser.getCustomer().getBooks().size();
+				if (theUser.getCustomer().getPurchaseHistories() != null)
+					theUser.getCustomer().getPurchaseHistories().size();
+			}
+		} catch (Exception ex) {
+			log.debug("No se pudieron inicializar colecciones del customer: {}", ex.getMessage());
+		}
 		
 		return theUser;
 	}
