@@ -25,13 +25,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ModelAndView handleException(Exception ex, HttpServletRequest request) {
         log.error("Error no manejado en {}: {}", request.getRequestURI(), ex.getMessage(), ex);
-        
         ModelAndView mav = new ModelAndView("error");
         mav.addObject("errorMessage", "Ha ocurrido un error inesperado");
-        mav.addObject("errorDetails", ex.getMessage());
+        // No exponer stacktrace en producción. Detalles de error quedan en logs.
         mav.addObject("url", request.getRequestURI());
         mav.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        
         return mav;
     }
 
@@ -41,13 +39,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ModelAndView handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
         log.error("RuntimeException en {}: {}", request.getRequestURI(), ex.getMessage(), ex);
-        
         ModelAndView mav = new ModelAndView("error");
         mav.addObject("errorMessage", "Error al procesar la solicitud");
-        mav.addObject("errorDetails", ex.getMessage());
         mav.addObject("url", request.getRequestURI());
         mav.setStatus(HttpStatus.BAD_REQUEST);
-        
         return mav;
     }
 

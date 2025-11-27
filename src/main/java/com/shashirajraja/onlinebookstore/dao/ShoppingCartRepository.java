@@ -18,7 +18,8 @@ import com.shashirajraja.onlinebookstore.entity.ShoppingCartId;
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, ShoppingCartId> {
 
 	
-	@Query("from ShoppingCart where customer = :customer")
+	// Usar JOIN FETCH para inicializar la relación book dentro de la transacción
+	@Query("select sc from ShoppingCart sc join fetch sc.book where sc.customer = :customer")
 	public List<ShoppingCart> getItemsByCustomer(@Param("customer") Customer customer);
 	
 	

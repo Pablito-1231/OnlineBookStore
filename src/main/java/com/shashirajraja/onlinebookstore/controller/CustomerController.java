@@ -167,13 +167,11 @@ public class CustomerController {
 	public String viewCustomerCart(Model theModel) {
 		try {
 			Customer customer = currentSession.getUser().getCustomer();
-			Set<ShoppingCart> shoppingItems = customer.getShoppingCart();
-			
-			// Inicializar si es null
+			// Usar el servicio para obtener items (transaccional) y asegurar que 'book' esté inicializado
+			Set<ShoppingCart> shoppingItems = theShoppingCartService.getAllItems(customer);
 			if (shoppingItems == null) {
 				shoppingItems = new java.util.HashSet<>();
 			}
-			
 			theModel.addAttribute("message", null);
 			theModel.addAttribute("shoppingItems", shoppingItems);
 			return "customer-cart";
