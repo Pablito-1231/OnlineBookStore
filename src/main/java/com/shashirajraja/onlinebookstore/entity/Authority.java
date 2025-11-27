@@ -11,6 +11,8 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="authorities")
@@ -21,6 +23,7 @@ public class Authority{
 	@Id
 	@JoinColumn(name="username", referencedColumnName="username")
 	@ManyToOne(fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
 	
 	@Id

@@ -11,6 +11,8 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="shopping_cart")
@@ -21,6 +23,7 @@ public class ShoppingCart{
 	@JoinColumn(name="customer_id", referencedColumnName="id")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
 			CascadeType.MERGE, CascadeType.REFRESH})
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@NotNull(message = "Cliente es obligatorio")
 	private Customer customer;
 	
@@ -28,6 +31,7 @@ public class ShoppingCart{
 	@JoinColumn(name="book_id", referencedColumnName="id")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
 			CascadeType.MERGE, CascadeType.REFRESH})
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@NotNull(message = "Libro es obligatorio")
 	private Book book;
 	

@@ -1,59 +1,57 @@
 package com.shashirajraja.onlinebookstore.entity;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Id class for ShoppingCart composite primary key.
+ * Uses the PK types of referenced entities: customer -> String (username), book -> Integer (id).
+ */
 public class ShoppingCartId implements Serializable {
 
-    /**
-     * 
-     */
-    @Serial
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-	private Customer customer;
-	
-	private Book book;
+	private String customer; // corresponds to Customer.id (username)
 
-	public ShoppingCartId(Customer customer, Book book) {
-		this.customer = customer;
-		this.book = book;
-	}
-	
+	private Integer book; // corresponds to Book.id
+
 	public ShoppingCartId() {
 	}
 
-	public Customer getCustomer() {
+	public ShoppingCartId(String customer, Integer book) {
+		this.customer = customer;
+		this.book = book;
+	}
+
+	public String getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
 
-	public Book getBook() {
+	public Integer getBook() {
 		return book;
 	}
 
-	public void setBook(Book book) {
+	public void setBook(Integer book) {
 		this.book = book;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customer.getUsername(),book.getId());
+		return Objects.hash(customer, book);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj)
+		if (this == obj)
 			return true;
-		if(!(obj instanceof ShoppingCart))
+		if (obj == null || getClass() != obj.getClass())
 			return false;
-		ShoppingCart shoppingCart = (ShoppingCart)obj;
-		return ((this.getBook().getId() == shoppingCart.getBook().getId()) && (this.getCustomer().getUsername().equals(shoppingCart.getCustomer().getUsername())));
+		ShoppingCartId other = (ShoppingCartId) obj;
+		return Objects.equals(this.customer, other.customer) && Objects.equals(this.book, other.book);
 	}
-	
-	
+
 }
