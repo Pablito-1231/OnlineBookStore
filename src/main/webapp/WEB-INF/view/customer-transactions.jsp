@@ -160,7 +160,27 @@
           <!-- Navegación superior -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Usuario eliminado: vista simplificada -->
+            <!-- Usuario -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">¡Bienvenido!</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/customers/profile">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Perfil
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Cerrar Sesión
+                </a>
+              </div>
+            </li>
 
           </ul>
 

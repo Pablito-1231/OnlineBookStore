@@ -344,3 +344,33 @@ body {
         padding: 15px;
     }
 }
+
+/* ------------------------------------------------------------------
+   Layout rules to match JSP structure using #content-wrapper / #content
+   Ensure main content is shifted right to avoid being covered by fixed
+   sidebar. Mobile behavior unchanged by existing media queries.
+   ------------------------------------------------------------------ */
+@media (min-width: 769px) {
+    #content-wrapper {
+        margin-left: 240px; /* match .sidebar width + small gap */
+        transition: margin-left 0.25s ease;
+    }
+
+    #content {
+        padding: 30px;
+        min-height: calc(100vh - 80px);
+    }
+}
+
+@media (max-width: 768px) {
+    /* On small screens the sidebar is hidden by transform; keep content full width */
+    #content-wrapper {
+        margin-left: 0;
+    }
+}
+
+/* Ensure sidebar sits above page elements when visible */
+.sidebar {
+    z-index: 1100;
+}
+

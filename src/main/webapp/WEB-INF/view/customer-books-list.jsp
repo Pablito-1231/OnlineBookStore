@@ -16,17 +16,27 @@
 
   <title>Librería en Línea</title>
 
-    <!-- Bootstrap y fuentes -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,900" rel="stylesheet">
 
-    <!-- Estilos de la aplicación -->
-    <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/books-grid.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
+  <!-- Estilos -->
+  <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+  <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/css/books-grid.css" rel="stylesheet">
 
-            <!-- Usuario eliminado: vista simplificada -->
+</head>
+
+<body id="page-top">
+  <fmt:setLocale value="es_CO"/>
+
+  <!-- Contenedor principal -->
+  <div id="wrapper">
+
+    <!-- Barra lateral -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
       <!-- Marca -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/customers">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -148,7 +158,29 @@
           </form>
 
           <ul class="navbar-nav ml-auto">
-            <!-- Usuario eliminado: no mostrar avatar/label -->
+
+            <!-- Usuario -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">¡Bienvenido!</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right shadow">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/customers/profile">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Perfil
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Cerrar Sesión
+                </a>
+              </div>
+            </li>
+
           </ul>
 
         </nav>

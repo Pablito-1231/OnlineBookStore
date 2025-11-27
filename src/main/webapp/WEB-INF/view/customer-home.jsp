@@ -155,7 +155,17 @@
         <!-- Contenido -->
         <div class="container-fluid dashboard-container">
 
-          <!-- Hero Section eliminado -->
+          <!-- Hero Section -->
+          <div class="dashboard-hero">
+            <div class="hero-content">
+              <h1 class="hero-welcome">
+                ¡Bienvenido, ${customers.getFirstName()}!
+              </h1>
+              <p class="hero-subtitle">
+                <i class="fas fa-book-open"></i> Tu refugio literario personal
+              </p>
+            </div>
+          </div>
 
           <!-- Estadísticas Principales -->
           <div class="stats-grid">
