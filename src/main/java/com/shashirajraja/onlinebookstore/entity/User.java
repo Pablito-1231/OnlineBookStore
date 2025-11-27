@@ -30,8 +30,8 @@ public class User {
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Customer customer;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Authority> authorities;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private List<Authority> authorities = new ArrayList<>();
 	
 	public User() {
 	}

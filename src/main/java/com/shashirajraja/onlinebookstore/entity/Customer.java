@@ -42,15 +42,15 @@ public class Customer {
 	private User user;
 	
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name="book_user", joinColumns=@JoinColumn(name="customer_id"), 
 								inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> books;
 	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval= true)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private Set<ShoppingCart> shoppingCart;
 	
-	@OneToMany(mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private Set<PurchaseHistory> purchaseHistories;
 	
 	public Customer() {
@@ -122,12 +122,14 @@ public class Customer {
 	}
 
 	public Set<Book> getBooks() {
-		return books;
+		if (this.books == null) this.books = new HashSet<>();
+		return this.books;
 	}
 
 	public void setBooks(Set<Book> books) {
+		if (this.books == null) this.books = new HashSet<>();
 		this.books.clear();
-		if(books != null)
+		if (books != null)
 			this.books.addAll(books);
 	}
 
@@ -140,8 +142,10 @@ public class Customer {
 	}
 
 	public void setShoppingCart(Set<ShoppingCart> shoppingCart) {
+		if (this.shoppingCart == null)
+			this.shoppingCart = new HashSet<ShoppingCart>();
 		this.shoppingCart.clear();
-		if(shoppingCart != null)
+		if (shoppingCart != null)
 			this.shoppingCart.addAll(shoppingCart);
 	}
 

@@ -24,15 +24,16 @@ public class CheckUsers {
             while (rs.next()) {
                 any = true;
                 String uname = rs.getString("username");
-                String pwd = rs.getString("password");
-                System.out.println("FOUND: " + uname + " -> " + pwd);
+                org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CheckUsers.class);
+                logger.info("FOUND: {} -> [hidden]", uname);
             }
             if (!any) {
-                System.out.println("No se encontraron usuarios de prueba en la tabla users.");
+                org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CheckUsers.class);
+                logger.info("No se encontraron usuarios de prueba en la tabla users.");
             }
         } catch (Exception e) {
-            System.err.println("Error comprobando users: " + e.getMessage());
-            e.printStackTrace(System.err);
+            org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CheckUsers.class);
+            logger.error("Error comprobando users: {}", e.getMessage(), e);
             System.exit(4);
         }
     }

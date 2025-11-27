@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +29,8 @@ import com.shashirajraja.onlinebookstore.service.ShoppingCartService;
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
 	private BookService theBookService;
@@ -174,8 +178,7 @@ public class CustomerController {
 			theModel.addAttribute("shoppingItems", shoppingItems);
 			return "customer-cart";
 		} catch (Exception e) {
-			System.err.println("Error al cargar carrito: " + e.getMessage());
-			e.printStackTrace();
+			logger.error("Error al cargar carrito: {}", e.getMessage(), e);
 			theModel.addAttribute("message", "Error al cargar el carrito: " + e.getMessage());
 			theModel.addAttribute("shoppingItems", new java.util.HashSet<>());
 			return "customer-cart";
@@ -231,7 +234,7 @@ public class CustomerController {
 		Set<Book> books = null;
 		books = theBookService.searchBooks(search);
 		theModel.addAttribute("books",books);
-		System.out.println("Búsqueda: " + search);
+		logger.info("Búsqueda de libros por: {}", search);
 		return "customer-books-list";
 	}
 }

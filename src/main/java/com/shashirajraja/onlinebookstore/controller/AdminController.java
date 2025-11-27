@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,6 +38,7 @@ import com.shashirajraja.onlinebookstore.dao.PurchaseHistoryRepository;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
     
     @Autowired
     private com.shashirajraja.onlinebookstore.dao.AuthorityRepository authorityRepository;
@@ -507,11 +510,11 @@ public class AdminController {
         long librosAgotados = allBooks.stream().filter(b -> b.getQuantity() == 0).count();
         long totalUsuarios = userService.getAllUsers().stream().count();
         
-        // Debug: imprimir valores
-        System.out.println("=== ESTADÍSTICAS DEBUG ===");
-        System.out.println("Total libros: " + totalLibros);
-        System.out.println("Disponibles: " + librosDisponibles);
-        System.out.println("Agotados: " + librosAgotados);
+        // Debug: registrar valores
+        logger.debug("=== ESTADÍSTICAS DEBUG ===");
+        logger.debug("Total libros: {}", totalLibros);
+        logger.debug("Disponibles: {}", librosDisponibles);
+        logger.debug("Agotados: {}", librosAgotados);
         
         model.addAttribute("totalLibros", totalLibros);
         model.addAttribute("librosDisponibles", librosDisponibles);

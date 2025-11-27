@@ -1,12 +1,15 @@
 package com.shashirajraja.onlinebookstore.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class SetAdminBcrypt {
+    private static final Logger logger = LoggerFactory.getLogger(SetAdminBcrypt.class);
     public static void main(String[] args) {
         String url = System.getenv().getOrDefault("DB_URL", "jdbc:mysql://localhost:3306/onlinebookstore?useSSL=false&serverTimezone=UTC");
         String user = System.getenv().getOrDefault("DB_USERNAME", "root");
@@ -18,8 +21,8 @@ public class SetAdminBcrypt {
         String bcryptHash = encoder.encode(adminPlain);
         String stored = "{bcrypt}" + bcryptHash;
 
-        System.out.println("Using DB URL: " + url);
-        System.out.println("Updating admin password to bcrypt-hash (not printing actual hash)");
+        logger.info("Using DB URL: {}", url);
+        logger.info("Updating admin password to bcrypt-hash (not printing actual hash)");
 
         try (Connection c = DriverManager.getConnection(url, user, pass)) {
             String sql = "UPDATE users SET password = ? WHERE username = 'admin' OR username = ?";
@@ -27,14 +30,13 @@ public class SetAdminBcrypt {
                 ps.setString(1, stored);
                 ps.setString(2, "admin");
                 int rows = ps.executeUpdate();
-                System.out.println("Rows updated: " + rows);
+                logger.info("Rows updated: {}", rows);
             }
         } catch (Exception e) {
-            System.err.println("Error updating admin password: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Error updating admin password: {}", e.getMessage(), e);
             System.exit(1);
         }
 
-        System.out.println("Done.");
+        logger.info("Done.");
     }
 }

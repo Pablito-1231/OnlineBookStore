@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.shashirajraja.onlinebookstore.entity.Customer;
 import com.shashirajraja.onlinebookstore.entity.PurchaseDetail;
@@ -12,6 +14,8 @@ import com.shashirajraja.onlinebookstore.entity.PurchaseHistory;
 
 @Service
 public class EmailServiceImpl implements EmailService {
+
+	private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
 	@Autowired(required = false)
 	private JavaMailSender mailSender;
@@ -61,7 +65,7 @@ public class EmailServiceImpl implements EmailService {
 			mailSender.send(message);
 		} catch (Exception e) {
 			// Log error pero no fallar el registro
-			System.err.println("Error enviando email de registro: " + e.getMessage());
+			logger.warn("Error enviando email de registro: {}", e.getMessage(), e);
 		}
 	}
 
@@ -107,7 +111,7 @@ public class EmailServiceImpl implements EmailService {
 			mailSender.send(message);
 		} catch (Exception e) {
 			// Log error pero no fallar la compra
-			System.err.println("Error enviando email de confirmación de compra: " + e.getMessage());
+			logger.warn("Error enviando email de confirmación de compra: {}", e.getMessage(), e);
 		}
 	}
 }

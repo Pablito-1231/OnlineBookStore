@@ -28,7 +28,7 @@ public class PurchaseHistory {
 	@Column(name="date")
 	private Date date;
 
-	@OneToMany(mappedBy ="purchaseHistory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="purchaseHistory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	Set<PurchaseDetail> purchaseDetails;
 	
 	public PurchaseHistory() {

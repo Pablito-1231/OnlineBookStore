@@ -6,8 +6,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExecuteSqlScript {
+    private static final Logger logger = LoggerFactory.getLogger(ExecuteSqlScript.class);
     public static void main(String[] args) throws Exception {
         String url = System.getenv().getOrDefault("DB_URL", "jdbc:mysql://localhost:3306/onlinebookstore?useSSL=false&serverTimezone=UTC");
         String user = System.getenv().getOrDefault("DB_USERNAME", "root");
@@ -15,11 +18,11 @@ public class ExecuteSqlScript {
 
         Path script = Path.of("scripts", "cleanup_keep_admin.sql");
         if (!Files.exists(script)) {
-            System.err.println("Script no encontrado: " + script.toAbsolutePath());
+            logger.error("Script no encontrado: {}", script.toAbsolutePath());
             System.exit(2);
         }
 
-        System.out.println("Connecting to DB: " + url);
+        logger.info("Connecting to DB: {}", url);
         try (Connection c = DriverManager.getConnection(url, user, pass)) {
             c.setAutoCommit(false);
             try (Statement st = c.createStatement()) {
@@ -41,11 +44,10 @@ public class ExecuteSqlScript {
                 for (String sql : ordered) {
                     try {
                         int affected = st.executeUpdate(sql);
-                        System.out.println("Executed: " + sql + " -> " + affected + " rows");
+                        logger.info("Executed: {} -> {} rows", sql, affected);
                         total += affected;
                     } catch (Exception e) {
-                        System.err.println("Failed statement: " + sql);
-                        e.printStackTrace();
+                        logger.error("Failed statement: {}", sql, e);
                     }
                 }
 
@@ -53,7 +55,7 @@ public class ExecuteSqlScript {
                 st.execute("SET FOREIGN_KEY_CHECKS=1");
 
                 c.commit();
-                System.out.println("Total affected (sum of update counts): " + total);
+                logger.info("Total affected (sum of update counts): {}", total);
             }
         }
 

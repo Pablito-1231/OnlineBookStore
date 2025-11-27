@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
 import com.shashirajraja.onlinebookstore.entity.Book;
@@ -15,6 +17,8 @@ import com.shashirajraja.onlinebookstore.entity.ShoppingCart;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
+
+	private static final Logger logger = LoggerFactory.getLogger(ShoppingCartServiceImpl.class);
 
 	@Autowired
 	private ShoppingCartRepository theCartRepository;
@@ -38,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			logger.error("Error removing item from cart for customer '{}', book id {}: {}", customer.getUsername(), book.getId(), ex.getMessage(), ex);
 		}
 		return "Libro: \""+book.getName()+"\" eliminado del carrito!";
 	}
@@ -68,7 +72,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				}
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Error al decrementar item en carrito para customer '{}', book id {}: {}", customer.getUsername(), book.getId(), ex.getMessage(), ex);
 			return "Error al decrementar: " + ex.getMessage();
 		}
 		return "No se pudo decrementar";
@@ -100,7 +104,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			logger.error("Error al agregar al carrito para customer '{}', book id {}: {}", customer.getUsername(), book.getId(), ex.getMessage(), ex);
 			return "Error al agregar al carrito: " + ex.getMessage();
 		}
 		return "Libro: \""+book.getName()+"\" agregado al carrito";
@@ -126,7 +130,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				return "Cantidad actualizada a " + newCount + " para '" + book.getName() + "'";
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("Error al incrementar item en carrito para customer '{}', book id {}: {}", customer.getUsername(), book.getId(), ex.getMessage(), ex);
 			return "Error al incrementar: " + ex.getMessage();
 		}
 		return "No se pudo incrementar";

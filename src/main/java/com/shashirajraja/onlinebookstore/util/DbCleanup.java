@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DbCleanup {
+
+    private static final Logger logger = LoggerFactory.getLogger(DbCleanup.class);
 
     // Ejecutar desde proyecto con: mvn compile exec:java -Dexec.mainClass=com.shashirajraja.onlinebookstore.util.DbCleanup
     public static void main(String[] args) throws Exception {
@@ -75,10 +79,9 @@ public class DbCleanup {
             }
 
             conn.commit();
-            System.out.println("Limpieza completada para: " + toDelete);
+            logger.info("Limpieza completada para: {}", toDelete);
         } catch (Exception e) {
-            System.err.println("Error durante limpieza: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Error durante limpieza: {}", e.getMessage(), e);
             throw e;
         }
     }

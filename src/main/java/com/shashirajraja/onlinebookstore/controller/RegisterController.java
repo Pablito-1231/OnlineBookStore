@@ -14,6 +14,8 @@ import com.shashirajraja.onlinebookstore.service.EmailService;
 
 @Controller
 public class RegisterController {
+
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RegisterController.class);
 	
     @Autowired
     private CustomerService customerService;
@@ -44,7 +46,7 @@ public String processCustomerRegistration(
             }
         } catch (Exception e) {
             // No fallar el registro si el email falla
-            System.err.println("Error enviando correo electrónico de bienvenida: " + e.getMessage());
+            logger.warn("Error enviando correo electrónico de bienvenida: {}", e.getMessage(), e);
         }
         return "redirect:/login";
     }

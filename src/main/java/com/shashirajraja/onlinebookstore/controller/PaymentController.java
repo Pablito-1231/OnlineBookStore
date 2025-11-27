@@ -5,6 +5,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,8 @@ import com.shashirajraja.onlinebookstore.utility.ValidationUtil;
 
 @Controller
 public class PaymentController {
+
+	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
 	@Autowired
 	private PaymentService paymentService;
@@ -79,7 +83,7 @@ public class PaymentController {
 				emailService.sendPurchaseConfirmation(customer, purchaseHistory);
 			} catch (Exception emailEx) {
 				// Log el error pero no interrumpir el flujo
-				System.err.println("Error al enviar email de confirmación: " + emailEx.getMessage());
+				logger.warn("Error al enviar email de confirmación: {}", emailEx.getMessage(), emailEx);
 			}
 			
 			theModel.addAttribute("message", "✅ ¡Pago exitoso! ID de transacción: "+ transId);
@@ -88,8 +92,7 @@ public class PaymentController {
 			
 			return "customer-transaction-detail";
 		} catch (Exception e) {
-			System.err.println("ERROR en paymentSuccess: " + e.getMessage());
-			e.printStackTrace();
+			logger.error("ERROR en paymentSuccess: {}", e.getMessage(), e);
 			theModel.addAttribute("message", "❌ Error al procesar el pago: " + e.getMessage());
 			theModel.addAttribute("messageType", "error");
 			return "customer-payment-form";

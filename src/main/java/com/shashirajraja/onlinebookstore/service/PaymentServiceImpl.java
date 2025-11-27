@@ -93,9 +93,8 @@ public class PaymentServiceImpl implements PaymentService {
 			}
 		}
 		catch(Exception ex) {
-			log.error("Error al procesar transacción para el cliente '{}': {}", customer.getUsername(), ex.getMessage());
-			ex.printStackTrace();
-			throw new RuntimeException("Error al procesar el pago: " + ex.getMessage());
+			log.error("Error al procesar transacción para el cliente '{}': {}", customer.getUsername(), ex);
+			throw new RuntimeException("Error al procesar el pago: " + ex.getMessage(), ex);
 		}
 		return purchaseHistory.getId();
 	}
@@ -128,8 +127,14 @@ public class PaymentServiceImpl implements PaymentService {
 		Optional<PurchaseHistory> history = purchaseHistoryRepos.findById(transId);
 		if(history.isPresent()) {
 			purchaseHistory = history.get();
-			if(!purchaseHistory.getCustomer().getUsername().equals(customer.getUsername()))
+			if(!purchaseHistory.getCustomer().getUsername().equals(customer.getUsername())) {
 				purchaseHistory = null;
+			} else {
+				// Cargar explícitamente los detalles dentro de la transacción
+				Set<PurchaseDetail> details = new HashSet<>();
+				details.addAll(purchaseDetailRepos.findAllByHistory(purchaseHistory));
+				purchaseHistory.setPurchaseDetails(details);
+			}
 		}
 		return purchaseHistory;
 	}
