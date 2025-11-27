@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
 import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
@@ -20,6 +21,7 @@ import com.shashirajraja.onlinebookstore.entity.User;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Sql(scripts = {"/cleanup.sql", "/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class AdminDeleteBlockingTests {
 
     @Autowired

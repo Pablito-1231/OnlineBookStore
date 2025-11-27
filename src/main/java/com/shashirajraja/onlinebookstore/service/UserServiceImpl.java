@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import com.shashirajraja.onlinebookstore.entity.Customer;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserRepository theUserRepository;
@@ -38,6 +42,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User getUserByUsername(String username) {
+		if (username == null || username.trim().isEmpty()) {
+			return null;
+		}
 		
 		Optional<User> userOpt = theUserRepository.findById(username);
 		
@@ -83,27 +90,26 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		try {
-			System.out.println("=== ELIMINANDO USUARIO: " + username + " ===");
+			log.info("Eliminando usuario: {}", username);
 			
 			// 1. Eliminar authorities primero usando query nativa
 			int authDeleted = authorityRepository.deleteByUsername(username);
-			System.out.println("Authorities eliminadas: " + authDeleted);
+			log.debug("Authorities eliminadas: {}", authDeleted);
 			
 			// 2. Verificar si tiene customer y eliminarlo (cascada eliminará: shopping_cart, purchase_history, book_user)
 			Optional<Customer> customerOpt = customerRepository.findById(username);
 			if (customerOpt.isPresent()) {
 				customerRepository.deleteById(username);
-				System.out.println("Customer eliminado (con cascada)");
+				log.debug("Customer eliminado (con cascada)");
 			}
 			
 			// 3. Finalmente eliminar el usuario
 			theUserRepository.deleteById(username);
-			System.out.println("Usuario eliminado exitosamente");
+			log.info("Usuario eliminado exitosamente: {}", username);
 			
 			return "Usuario eliminado exitosamente";
 		} catch (Exception e) {
-			System.err.println("Error al eliminar usuario " + username + ": " + e.getMessage());
-			e.printStackTrace();
+			log.error("Error al eliminar usuario {}: {}", username, e.getMessage(), e);
 			return "Error: No se pudo eliminar el usuario. " + e.getMessage();
 		}
 	}
@@ -111,8 +117,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public String toggleUserEnabled(String username) {
-		System.out.println("=== TOGGLE USER ENABLED ===");
-		System.out.println("Username recibido: " + username);
+		log.debug("Toggle user enabled - Username: {}", username);
 		
 		if (username == null || username.trim().isEmpty()) {
 			return "Error: Username inválido";
@@ -120,7 +125,7 @@ public class UserServiceImpl implements UserService {
 		
 		Optional<User> userOpt = theUserRepository.findById(username);
 		if (userOpt.isEmpty()) {
-			System.out.println("Usuario NO encontrado en BD");
+			log.warn("Usuario no encontrado: {}", username);
 			return "Error: Usuario no encontrado";
 		}
 		
@@ -133,14 +138,12 @@ public class UserServiceImpl implements UserService {
 		boolean estadoAnterior = user.isEnabled();
 		boolean nuevoEstado = !estadoAnterior;
 		
-		System.out.println("Estado anterior: " + estadoAnterior);
-		System.out.println("Nuevo estado: " + nuevoEstado);
+		log.debug("Cambiando estado de usuario {} de {} a {}", username, estadoAnterior, nuevoEstado);
 		
 		user.setEnabled(nuevoEstado);
 		User savedUser = theUserRepository.save(user);
 		
-		System.out.println("Estado guardado en BD: " + savedUser.isEnabled());
-		System.out.println("===========================");
+		log.info("Usuario {} {}", username, savedUser.isEnabled() ? "habilitado" : "deshabilitado");
 		
 		return savedUser.isEnabled() ? "Usuario habilitado" : "Usuario deshabilitado";
 	}

@@ -7,15 +7,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/app.css">
 </head>
 
 <body>
 
-<h2>¡Bienvenido a la página principal!</h2>
 
-<form:form method="POST" action="${pageContext.request.contextPath}/logout">
-    <input type="submit" value="Cerrar sesión" />
-</form:form>
+<script type="text/javascript">
+    window.location.href = "${pageContext.request.contextPath}/login";
+</script>
 
 </body>
 </html>

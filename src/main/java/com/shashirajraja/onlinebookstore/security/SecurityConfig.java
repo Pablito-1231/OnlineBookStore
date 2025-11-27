@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -39,9 +40,36 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            // Habilitar CSRF (por defecto) para formularios JSP
+            .csrf(csrf -> {})
             .authorizeHttpRequests(authz -> authz
-                .anyRequest().permitAll()  // Permitir TODO temporalmente
+                // Recursos estáticos y páginas públicas
+                .requestMatchers(
+                    "/",
+                        "/home",
+                        "/login",
+                        "/register",
+                        "/register-customer",
+                        "/register-provider",
+                        "/register/**",
+                        "/register/customer",
+                        "/register/provider",
+                        "/authenticateTheUser",
+                    "/error",
+                    "/WEB-INF/view/**",
+                    "/css/**",
+                    "/js/**",
+                    "/img/**",
+                    "/static/**",
+                    "/vendor/**",
+                    "/internal/**"
+                ).permitAll()
+                // Zonas administrativas
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                // Zonas de cliente autenticado
+                .requestMatchers("/customers/**", "/cart/**", "/books/**").hasAnyRole("CUSTOMER", "ADMIN")
+                // Cualquier otra solicitud requiere autenticación
+                .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
@@ -50,7 +78,13 @@ public class SecurityConfig {
                 .failureHandler(customAuthenticationFailureHandler)
                 .permitAll()
             )
-            .logout(logout -> logout.permitAll());
+            .logout(logout -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            );
         
         return http.build();
     }

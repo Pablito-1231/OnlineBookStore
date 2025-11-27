@@ -8,9 +8,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.8</version>
+		<version>3.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
-	</parent>    <groupId>com.shashirajraja</groupId>
+	</parent>
+    <groupId>com.shashirajraja</groupId>
     <artifactId>online-book-store</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>online-book-store</name>
@@ -72,16 +73,29 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSTL (para vistas JSP) -->
+        <!-- JSP API (asegura clases JSP/JSTL en pruebas) -->
         <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
         <!-- Jasper (para compilar JSPs) - SIN scope provided para spring-boot:run -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+
+        <!-- JSTL (Jakarta) para JSP en producción y pruebas -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
         </dependency>
 
         <!-- BASE DE DATOS: MySQL -->
@@ -103,6 +117,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- H2 en pruebas (driver org.h2.Driver) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -129,7 +150,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
                 <executions>
                     <!-- Copiar solo application.properties -->
                     <execution>
@@ -150,7 +170,7 @@
                             </resources>
                         </configuration>
                     </execution>
-                    <!-- Copiar JSPs al classpath -->
+                    <!-- Copiar JSPs y static al classpath -->
                     <execution>
                         <id>copy-jsp-resources</id>
                         <phase>process-resources</phase>
@@ -166,6 +186,10 @@
                                     <includes>
                                         <include>WEB-INF/**/*.jsp</include>
                                     </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources/static</directory>
+                                    <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>

@@ -168,7 +168,7 @@ public class AdminController {
                 comparator = Comparator.comparing(Book::getName, Comparator.nullsLast(String::compareToIgnoreCase));
                 break;
             case "price":
-                comparator = Comparator.comparing(Book::getPrice, Comparator.nullsLast(Double::compare));
+                comparator = Comparator.comparing(Book::getPrice, Comparator.nullsLast(Comparator.naturalOrder()));
                 break;
             case "stock":
             case "quantity":
@@ -238,7 +238,7 @@ public class AdminController {
                 comparator = Comparator.comparing(Book::getName, Comparator.nullsLast(String::compareToIgnoreCase));
                 break;
             case "price":
-                comparator = Comparator.comparing(Book::getPrice, Comparator.nullsLast(Double::compare));
+                comparator = Comparator.comparing(Book::getPrice, Comparator.nullsLast(Comparator.naturalOrder()));
                 break;
             case "stock":
             case "quantity":

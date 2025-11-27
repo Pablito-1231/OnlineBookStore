@@ -12,8 +12,8 @@
 
   <title>Librería Online - Iniciar Sesión</title>
 
-  <!-- Bootstrap Css link -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Bootstrap 5 local -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- Google Fonts -->
@@ -264,6 +264,11 @@
           <i class="fas fa-exclamation-circle"></i> Usuario o contraseña incorrectos
         </div>
       </c:if>
+      <c:if test="${param.errorMsg != null}">
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-circle"></i> ${param.errorMsg}
+        </div>
+      </c:if>
       
       <c:if test="${param.logout != null}">
         <div class="alert alert-success">
@@ -330,7 +335,7 @@
   <!-- Bootstrap core JavaScript-->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

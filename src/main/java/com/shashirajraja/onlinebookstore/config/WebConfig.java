@@ -1,8 +1,11 @@
 package com.shashirajraja.onlinebookstore.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -13,7 +16,10 @@ import java.io.File;
 @Configuration
 public class WebConfig {
 
+    private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
+
     @Bean
+    @ConditionalOnMissingBean(ConfigurableServletWebServerFactory.class)
     public ConfigurableServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         
@@ -21,9 +27,9 @@ public class WebConfig {
         File webappDir = new File("src/main/webapp");
         if (webappDir.exists() && webappDir.isDirectory()) {
             factory.setDocumentRoot(webappDir);
-            System.out.println("✓ Document root configurado: " + webappDir.getAbsolutePath());
+            log.info("Document root configurado: {}", webappDir.getAbsolutePath());
         } else {
-            System.out.println("⚠ Document root no existe, usando classpath");
+            log.warn("Document root no existe, usando classpath");
         }
         
         return factory;
@@ -36,7 +42,7 @@ public class WebConfig {
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".jsp");
         resolver.setOrder(1);
-        System.out.println("✓ ViewResolver configurado: /WEB-INF/view/*.jsp");
+        log.info("ViewResolver configurado: /WEB-INF/view/*.jsp");
         return resolver;
     }
 }

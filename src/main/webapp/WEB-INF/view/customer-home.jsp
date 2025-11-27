@@ -12,15 +12,17 @@
 
   <title>Refugio literario</title>
 
-  <!-- Iconos y fuentes -->
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <!-- Bootstrap 5 local -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Iconos y fuentes -->
+    <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
-  <!-- Estilos personalizados -->
-  <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/dashboard-home.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/dashboard-home.css" rel="stylesheet">
 
 </head>
 

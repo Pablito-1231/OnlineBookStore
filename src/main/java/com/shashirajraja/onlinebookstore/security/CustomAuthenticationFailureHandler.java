@@ -16,13 +16,11 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         
-        String errorMessage = "error";
-        
+        String errorMessage = exception.getMessage();
         if (exception instanceof DisabledException) {
-            errorMessage = "disabled";
+            errorMessage = "Cuenta deshabilitada";
         }
-        
-        setDefaultFailureUrl("/login?" + errorMessage);
+        setDefaultFailureUrl("/login?errorMsg=" + java.net.URLEncoder.encode(errorMessage, "UTF-8"));
         super.onAuthenticationFailure(request, response, exception);
     }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
 import com.shashirajraja.onlinebookstore.dao.ShoppingCartRepository;
@@ -18,6 +19,7 @@ import com.shashirajraja.onlinebookstore.entity.ShoppingCart;
 import com.shashirajraja.onlinebookstore.service.ShoppingCartService;
 
 @SpringBootTest
+@Sql(scripts = {"/cleanup.sql", "/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ShoppingCartServiceTests {
 
     @Autowired private ShoppingCartService shoppingCartService;

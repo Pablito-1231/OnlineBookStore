@@ -47,6 +47,9 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional
 	public String updateBook(Book book) {
+		if (book == null) {
+			return "Error: Libro inválido";
+		}
 		theBook.save(book);
 		return "¡Libro actualizado exitosamente!";
 	}
@@ -59,7 +62,8 @@ public class BookServiceImpl implements BookService {
 		if(bookOpt.isEmpty())
 			return "ID de libro inválido";
 		
-		theBook.save(bookOpt.get());
+		Book book = bookOpt.get();
+		theBook.save(book);
 		
 		return "¡Libro eliminado exitosamente!";
 	}
@@ -67,7 +71,9 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional
 	public String addBook(Book book) {
-		
+		if (book == null) {
+			return "Error: Libro inválido";
+		}
 		theBook.save(book);
 		
 		return "¡Libro agregado exitosamente!";
@@ -82,14 +88,19 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public String removeBook(Book book) {
+		if (book == null) {
+			return "Error: Libro inválido";
+		}
 		Optional<Book> optBook = theBook.findById(book.getId());
 		
-		if(optBook.isPresent())
-			theBook.delete(optBook.get());
-	else
-		return "¡Libro no disponible en la base de datos!";
+		if(optBook.isPresent()) {
+			Book bookToDelete = optBook.get();
+			theBook.delete(bookToDelete);
+		} else {
+			return "¡Libro no disponible en la base de datos!";
+		}
 	
-	return "¡Libro eliminado exitosamente!";
+		return "¡Libro eliminado exitosamente!";
 	}
 
 	// ========== NUEVOS MÉTODOS PARA PAGINACIÓN Y FILTROS ==========

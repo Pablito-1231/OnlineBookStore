@@ -74,6 +74,29 @@ INSERT IGNORE INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMI
 INSERT IGNORE INTO users (username, password, enabled) VALUES ('customer', '{noop}customer', 1);
 INSERT IGNORE INTO authorities (username, authority) VALUES ('customer', 'ROLE_CUSTOMER');
 
--- Datos del customer en tabla customer
 INSERT IGNORE INTO customer (id, first_name, last_name, email, mob, address) 
 VALUES ('customer', 'Juan', 'Pérez', 'customer@test.com', 123456789, 'Calle Principal 123');
+
+-- Roles básicos
+INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_ADMIN');
+INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_CUSTOMER');
+
+-- Shopping cart de ejemplo
+INSERT IGNORE INTO shopping_cart (customer_id, book_id, count) VALUES ('customer', 1, 2);
+INSERT IGNORE INTO shopping_cart (customer_id, book_id, count) VALUES ('customer', 2, 1);
+
+-- Relación book_user (libros comprados por el usuario)
+INSERT IGNORE INTO book_user (book_id, customer_id) VALUES (1, 'customer');
+INSERT IGNORE INTO book_user (book_id, customer_id) VALUES (2, 'customer');
+
+-- Historial de compras de ejemplo
+INSERT IGNORE INTO purchase_history (id, customer_id, date) VALUES ('ph1', 'customer', '2025-11-26');
+
+-- Detalle de compra de ejemplo
+INSERT IGNORE INTO purchase_detail (purchase_history_id, book_id, price, quanitity) VALUES ('ph1', 1, 69000, 1);
+INSERT IGNORE INTO purchase_detail (purchase_history_id, book_id, price, quanitity) VALUES ('ph1', 2, 62000, 1);
+
+-- Asegurar que las contraseñas existentes tengan un prefijo de encoder.
+-- Si la contraseña ya tiene formato {id}... no se modifica.
+
+

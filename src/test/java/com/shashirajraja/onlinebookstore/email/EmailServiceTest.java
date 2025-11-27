@@ -1,18 +1,33 @@
 package com.shashirajraja.onlinebookstore.email;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.shashirajraja.onlinebookstore.service.EmailService;
 
+import static org.mockito.Mockito.mock;
+
 /**
  * Test para verificar la funcionalidad del servicio de email
  */
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class EmailServiceTest {
+
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public JavaMailSender javaMailSender() {
+            return mock(JavaMailSender.class);
+        }
+    }
 
     @Autowired
     private EmailService emailService;

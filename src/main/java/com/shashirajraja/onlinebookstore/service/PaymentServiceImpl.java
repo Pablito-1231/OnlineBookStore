@@ -120,6 +120,10 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	@Transactional
 	public PurchaseHistory getPurchaseHistory(Customer customer, String transId) {
+		if (customer == null || transId == null || transId.trim().isEmpty()) {
+			return null;
+		}
+		
 		PurchaseHistory purchaseHistory = null;
 		Optional<PurchaseHistory> history = purchaseHistoryRepos.findById(transId);
 		if(history.isPresent()) {

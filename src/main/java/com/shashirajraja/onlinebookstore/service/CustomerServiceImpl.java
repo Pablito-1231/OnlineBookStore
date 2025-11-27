@@ -39,6 +39,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public Customer getCustomer(String username) {
+		if (username == null || username.trim().isEmpty()) {
+			return null;
+		}
 		
 		Optional<Customer> custOpt = theCustomerRepository.findById(username);
 		
@@ -53,6 +56,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public String saveCustomer(Customer theCustomer) {
+		if (theCustomer == null) {
+			return "Error: Cliente inválido";
+		}
 		
 		theCustomerRepository.save(theCustomer);
 		
@@ -70,6 +76,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public String removeCustomer(Customer theCustomer) {
+		if (theCustomer == null) {
+			return "Error: Cliente inválido";
+		}
 		
 		theCustomerRepository.delete(theCustomer);
 		
@@ -204,9 +213,10 @@ public class CustomerServiceImpl implements CustomerService {
 			return "La longitud de la contraseña debe ser mayor a 4";
 		
 		Optional<Customer> theCust = theCustomerRepository.findById(changePassword.getUsername());
-		Customer cust = null;
-		if(theCust.isPresent())
-			cust = theCust.get();
+		if(!theCust.isPresent())
+			return "Cliente no encontrado";
+		
+		Customer cust = theCust.get();
 		if(!thePasswordEncoder.matches(changePassword.getOldPassword(), cust.getUser().getPassword()))
 			return "¡Contraseña antigua incorrecta!";
 		
