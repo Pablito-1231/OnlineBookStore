@@ -16,6 +16,16 @@
 
   <title>Librería en Línea</title>
 
+    <!-- Bootstrap y fuentes -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
+    <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos de la aplicación -->
+    <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/books-grid.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/app.css" rel="stylesheet">
+
             <!-- Usuario eliminado: vista simplificada -->
       <!-- Marca -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/customers">
