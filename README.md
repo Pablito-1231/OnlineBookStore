@@ -257,3 +257,29 @@ Para reportar problemas o sugerencias:
 ---
 
 ⭐ Si este proyecto te fue útil, no olvides darle una estrella en GitHub!
+
+## 🛠️ Auto-creación de base de datos y variables de entorno (desarrollo)
+
+Para facilitar el arranque en entornos de desarrollo locales (ej. XAMPP), la aplicación incluye un inicializador que puede crear la base de datos en tiempo de arranque.
+
+- **Activar auto-creación:** establece la variable de entorno `AUTO_CREATE_DB=true` antes de iniciar la app.
+- **Credenciales usadas:** la app usará `DB_URL`, `DB_USERNAME` y `DB_PASSWORD` para conectarse al servidor MySQL/MariaDB y ejecutar `CREATE DATABASE IF NOT EXISTS`.
+- **Contraseña de administrador:** puedes fijar la contraseña del usuario `admin` con la variable `ADMIN_PASSWORD`. Si no la especificas, el `DataInitializer` puede generar una contraseña temporal (se registra solo en DEBUG).
+
+Ejemplo (PowerShell) para arrancar la aplicación creando la BD y fijando la contraseña admin:
+
+```powershell
+$env:AUTO_CREATE_DB='true'
+$env:DB_USERNAME='root'
+$env:DB_PASSWORD=''
+$env:ADMIN_PASSWORD='TuPassSeguro123!'
+.\mvnw.cmd -DskipTests spring-boot:run
+```
+
+Notas importantes:
+
+- El usuario indicado en `DB_USERNAME` necesita permiso `CREATE DATABASE` en el servidor para que la auto-creación funcione.
+- Esta funcionalidad está pensada solo para desarrollo local. En producción, usa migraciones gestionadas en CI (Flyway/Liquibase) y almacena secretos en un vault.
+- Las contraseñas se almacenan en la base de datos usando BCrypt (Spring Security). El bean `PasswordEncoder` proviene de `security.SecurityConfig`.
+
+Si quieres que quite la clase neutralizada `PasswordEncoderConfig.java` del repositorio (ya no registra el bean), dímelo y la elimino.

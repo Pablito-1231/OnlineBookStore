@@ -1,17 +1,8 @@
+// Neutralized PasswordEncoderConfig to avoid duplicate bean registration.
+// The real PasswordEncoder bean is provided by `security.SecurityConfig`.
+
 package com.shashirajraja.onlinebookstore.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-@Configuration
 public class PasswordEncoderConfig {
-
-    @Bean
-    @ConditionalOnMissingBean(PasswordEncoder.class)
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    // Intentionally empty. Disabled to avoid bean name conflict with SecurityConfig.
 }
