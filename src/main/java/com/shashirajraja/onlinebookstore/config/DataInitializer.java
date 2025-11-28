@@ -3,12 +3,10 @@ package com.shashirajraja.onlinebookstore.config;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.security.SecureRandom;
 
@@ -17,11 +15,14 @@ public class DataInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
-    @Autowired
-    private JdbcTemplate jdbc;
+    private final JdbcTemplate jdbc;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    public DataInitializer(JdbcTemplate jdbc, PasswordEncoder passwordEncoder) {
+        this.jdbc = jdbc;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostConstruct
     public void init() {
@@ -121,7 +122,7 @@ public class DataInitializer {
                     new String[]{"The Divine Comedy", "Dante Alighieri", "Epic"}
             );
 
-            SecureRandom rnd = new SecureRandom();
+            SecureRandom rnd = RANDOM;
             int variety = seed.size();
             for (int i = startIndex + 1; i <= target; i++) {
                 String[] info = seed.get((i - 1) % variety);
@@ -243,7 +244,7 @@ public class DataInitializer {
                     new String[]{"The Divine Comedy", "Dante Alighieri", "Epic"}
             );
 
-            SecureRandom rnd = new SecureRandom();
+            SecureRandom rnd = RANDOM;
             int variety = seed.size();
             for (int i = 1; i <= count; i++) {
                 String[] info = seed.get((i - 1) % variety);
@@ -312,12 +313,13 @@ public class DataInitializer {
     }
 
     private String generateRandomPassword(int length) {
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()-_=+";
-        SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
-            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+            sb.append(PASSWORD_CHARS.charAt(RANDOM.nextInt(PASSWORD_CHARS.length())));
         }
         return sb.toString();
     }
+
+    private static final SecureRandom RANDOM = new SecureRandom();
+    private static final String PASSWORD_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()-_=+";
 }

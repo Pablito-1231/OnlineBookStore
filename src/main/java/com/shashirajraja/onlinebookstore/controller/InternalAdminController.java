@@ -19,7 +19,6 @@ public class InternalAdminController {
     // Endpoint temporal para ejecutar la limpieza de usuarios de prueba.
     @PostMapping("/cleanup-test-users")
     public Map<String, Object> cleanupTestUsers() {
-        String[] users = new String[] {"prueba_auto","prueba1","testuser1"};
         Map<String, Object> result = new HashMap<>();
         try {
             // Reportar conteos antes
