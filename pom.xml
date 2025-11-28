@@ -201,6 +201,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- Flyway removed: migrations handled by DataInitializer and Hibernate in this branch -->
         </plugins>
     </build>
 
