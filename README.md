@@ -24,7 +24,7 @@ Sistema completo de comercio electrónico para la venta de libros en línea, des
 
 ### Backend
 - **Java 21**
-- **Spring Boot 2.7.18**
+- **Spring Boot 3.4.1**
   - Spring MVC
   - Spring Security
   - Spring Data JPA
@@ -202,7 +202,7 @@ Tests incluidos:
 
 ## 📝 Notas de Desarrollo
 
-- Spring Boot 2.7.18 (EOL pero funcional)
+- Spring Boot 3.4.1
 - Java 21 como target de compilación
 - MySQL sin contraseña en desarrollo (cambiar en producción)
 - Puerto por defecto: 8080
