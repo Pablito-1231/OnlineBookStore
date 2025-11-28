@@ -19,6 +19,30 @@ import com.shashirajraja.onlinebookstore.entity.Customer;
 
 @Service
 public class UserServiceImpl implements UserService {
+	@Autowired
+	private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
+	@Override
+	@Transactional
+	public String changeAdminPassword(String oldPassword, String newPassword, String confirmPassword) {
+		Optional<User> adminOpt = theUserRepository.findById("admin");
+		if (adminOpt.isEmpty()) {
+			return "No se encontró el usuario administrador.";
+		}
+		User admin = adminOpt.get();
+		if (!passwordEncoder.matches(oldPassword, admin.getPassword())) {
+			return "La contraseña actual es incorrecta.";
+		}
+		if (newPassword == null || newPassword.length() < 6) {
+			return "La nueva contraseña debe tener al menos 6 caracteres.";
+		}
+		if (!newPassword.equals(confirmPassword)) {
+			return "La nueva contraseña y la confirmación no coinciden.";
+		}
+		admin.setPassword(passwordEncoder.encode(newPassword));
+		theUserRepository.save(admin);
+		return "¡Contraseña de administrador actualizada exitosamente!";
+	}
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 

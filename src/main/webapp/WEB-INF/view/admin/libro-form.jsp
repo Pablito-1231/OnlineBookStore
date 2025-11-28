@@ -2,32 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${action eq 'edit' ? 'Editar' : 'Agregar'} Libro - Administrador</title>
-    <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
-</head>
-<body class="admin-wrapper">
-<div style="display: flex; margin: 0; padding: 0;">
-
-<%@ include file="sidebar.jsp" %>
-
-<!-- Contenido Principal -->
-<main class="admin-main">
+<%@ include file="layouts/admin-layout-header.jsp" %>
     
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 
-                <div class="card shadow-lg border-0 rounded-lg mt-4">
-                    <div class="card-header bg-primary text-white">
+                <div class="glass-card mt-4">
+                    <div class="glass-header-main p-4">
                         <h3 class="text-center font-weight-light my-2">
+                            <i class="fas fa-book-open me-2 text-warning"></i>
                             ${action eq 'edit' ? 'Editar Libro' : 'Agregar Nuevo Libro'}
                         </h3>
                     </div>
@@ -103,10 +87,4 @@
         </div>
     </div>
 
-</main>
-
-</div>
-
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

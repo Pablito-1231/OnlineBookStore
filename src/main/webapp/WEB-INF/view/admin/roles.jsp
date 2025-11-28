@@ -10,47 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
 </head>
-<body>
-<div class="admin-sidebar">
-    <div class="admin-sidebar-header">
-        <i class="fas fa-book-reader"></i>
-        <span>Librería Admin</span>
-    </div>
-    <nav class="admin-nav">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/libros" class="admin-nav-item">
-            <i class="fas fa-book"></i>
-            <span>Gestión de Libros</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/usuarios" class="admin-nav-item">
-            <i class="fas fa-users"></i>
-            <span>Usuarios</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/roles" class="admin-nav-item active">
-            <i class="fas fa-user-shield"></i>
-            <span>Roles</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/admin/estadisticas" class="admin-nav-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Estadísticas</span>
-        </a>
-        <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item" style="margin-top: auto;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Cerrar Sesión</span>
-        </a>
-    </nav>
-</div>
-<div class="admin-main">
+<%@ include file="layouts/admin-layout-header.jsp" %>
+<!-- Contenido Principal -->
+<main class="admin-main">
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card shadow-lg border-0 rounded-lg mt-4">
-                    <div class="card-header bg-primary text-white">
+                <div class="glass-card mt-4">
+                    <div class="glass-header-main p-4">
                         <h3 class="text-center font-weight-light my-2">
-                            <i class="fas fa-user-shield me-2"></i> Gestión de Roles
+                            <i class="fas fa-user-shield me-2 text-warning"></i> Gestión de Roles
                         </h3>
                     </div>
                     <div class="card-body p-5">
@@ -78,7 +47,7 @@
                                 <label class="form-label">Nombre del rol</label>
                                 <input type="text" name="roleName" class="form-control" required placeholder="Ej: ROLE_MANAGER">
                             </div>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-warning">
                                 <i class="fas fa-plus"></i> Crear Rol
                             </button>
                         </form>
@@ -90,7 +59,6 @@
             </div>
         </div>
     </div>
+</main>
 </div>
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

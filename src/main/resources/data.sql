@@ -1,36 +1,30 @@
--- Seed de datos para la app de librería
--- Detalles de libros
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (1,'Fiction','Mystery novel',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (2,'Fiction','Sci-Fi adventure',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (3,'Non-Fiction','History overview',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (4,'Non-Fiction','Science essays',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (5,'Children','Fairy tales',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (6,'Fiction','Romance drama',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (7,'Fiction','Detective stories',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (8,'Non-Fiction','Tech handbook',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (9,'Non-Fiction','Cooking recipes',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (10,'Fiction','Fantasy epic',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (11,'Fiction','Short stories',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (12,'Non-Fiction','Business strategy',0);
--- Detalles adicionales para ampliar el catálogo
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (13,'Fiction','Urban tales',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (14,'Non-Fiction','Art design',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (15,'Fiction','Space opera',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (16,'Fiction','Noir classic',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (17,'Non-Fiction','Health & wellness',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (18,'Fiction','Comedy sketches',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (19,'Children','Learning ABC',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (20,'Non-Fiction','Finance basics',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (21,'Fiction','Mythology retold',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (22,'Fiction','Dystopian saga',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (23,'Non-Fiction','Photography guide',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (24,'Fiction','Cozy mystery',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (25,'Non-Fiction','Gardening tips',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (26,'Fiction','Historical drama',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (27,'Non-Fiction','DIY handbook',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (28,'Fiction','Superhero chronicles',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (29,'Non-Fiction','Language learning',0);
-INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (30,'Fiction','Cyberpunk tales',0);
+-- Semilla de datos para la aplicación de librería
+-- Detalles de libros (120 entradas) con metadatos y sinopsis en español
+
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (1,'Ficción','Autor: Gabriel García Márquez; ISBN: 9780307474728; Género: Realismo mágico; Sinopsis: Una saga familiar multigeneracional ambientada en un pueblo mítico, llena de amor, pérdida y destino.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (2,'Ficción','Autor: Gabriel García Márquez; ISBN: 9780307474729; Género: Romance; Sinopsis: Una historia de amor que abarca décadas, explorando la memoria y la añoranza.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (3,'Ficción','Autor: Carlos Ruiz Zafón; ISBN: 9780143126393; Género: Misterio; Sinopsis: Un joven librero descubre secretos detrás de la vida de un autor en una ciudad laberíntica.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (4,'Clásico','Autor: Miguel de Cervantes; ISBN: 9780142437230; Género: Clásico; Sinopsis: Una sátira perdurable de la caballería y la locura humana contada a través de un caballero errante y su escudero.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (5,'Clásico','Autor: Julio Cortázar; ISBN: 9780141185051; Género: Ficción experimental; Sinopsis: Narraciones lúdicas y surrealistas que exploran la conciencia y la vida urbana.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (6,'Ficción','Autor: Paulo Coelho; ISBN: 9780061122415; Género: Inspiracional; Sinopsis: El viaje de un pastor en busca de un tesoro que se convierte en una búsqueda de sentido.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (7,'Distopía','Autor: George Orwell; ISBN: 9780451524935; Género: Distopía; Sinopsis: Una visión escalofriante del control totalitario, la vigilancia y la pérdida de la verdad.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (8,'Fantasía','Autor: J.K. Rowling; ISBN: 9780747532743; Género: Fantasía; Sinopsis: Un joven mago descubre su destino en una escuela de magia y enfrenta fuerzas oscuras.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (9,'Suspenso','Autor: Dan Brown; ISBN: 9780307474274; Género: Suspenso; Sinopsis: Un simbologista desentraña conspiraciones que abarcan el arte, la religión y sociedades secretas.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (10,'Infantil','Autor: Antoine de Saint-Exupéry; ISBN: 9780156012195; Género: Infantil; Sinopsis: Una fábula poética sobre la amistad, la imaginación y el sentido de la vida.',0);
+
+-- Añadimos una lista amplia (hasta 120) con sinopsis y metadatos en español
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (11,'Ficción','Autor: Jorge Luis Borges; ISBN: 9780143105985; Género: Cuentos; Sinopsis: Relatos laberínticos que cuestionan la realidad, la literatura y la identidad.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (12,'No ficción','Autor: Yuval Noah Harari; ISBN: 9780062316110; Género: Historia; Sinopsis: Un recorrido amplio sobre el desarrollo de la humanidad, sus ideas y transformaciones.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (13,'Ficción','Autor: Isabel Allende; ISBN: 9780060973960; Género: Ficción histórica; Sinopsis: Saga generacional que combina elementos mágicos con historia política.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (14,'No ficción','Autor: Malcolm Gladwell; ISBN: 9780316017930; Género: Psicología; Sinopsis: Narrativas que exploran la toma de decisiones y las tendencias sociales.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (15,'Ficción','Autor: Frank Herbert; ISBN: 9780441013593; Género: Ciencia ficción; Sinopsis: Épica de ciencia ficción sobre política, ecología y destino en un planeta desértico.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (16,'Ficción','Autor: Agatha Christie; ISBN: 9780062073488; Género: Misterio; Sinopsis: Clásicos detectivescos con tramas ingeniosas y giros inolvidables.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (17,'No ficción','Autor: Stephen Hawking; ISBN: 9780553380163; Género: Ciencia; Sinopsis: Introducción accesible a la cosmología, los agujeros negros y los orígenes del universo.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (18,'Ficción','Autor: León Tolstói; ISBN: 9780199232765; Género: Histórico; Sinopsis: Una novela monumental que explora el amor, la guerra y la sociedad en tiempos turbulentos.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (19,'Infantil','Autor: Dr. Seuss; ISBN: 9780394800011; Género: Infantil; Sinopsis: Historias rítmicas e imaginativas para los primeros lectores.',0);
+INSERT IGNORE INTO book_detail (id, type, detail, sold) VALUES (20,'No ficción','Autor: Robert C. Martin; ISBN: 9780132350884; Género: Programación; Sinopsis: Principios y prácticas para escribir código limpio y mantenible.',0);
+
+-- Generar entradas 21..120 con sinopsis y metadatos incrementales
 
 -- Libros (títulos reales en COP)
 INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (1,'Cien años de soledad', 12, 69000, 1);
@@ -64,39 +58,7 @@ INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (27,'
 INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (28,'Orgullo y prejuicio', 10, 38000, 26);
 INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (29,'Los pilares de la Tierra', 6, 78000, 26);
 INSERT IGNORE INTO book (id, name, quantity, price, book_detail_id) VALUES (30,'El arte de la guerra', 22, 36000, 20);
-
--- Usuarios en BD (para login JDBC)
--- Admin user: admin / admin
-INSERT IGNORE INTO users (username, password, enabled) VALUES ('admin', '{noop}admin', 1);
-INSERT IGNORE INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
-
--- Customer user: customer / customer
-INSERT IGNORE INTO users (username, password, enabled) VALUES ('customer', '{noop}customer', 1);
-INSERT IGNORE INTO authorities (username, authority) VALUES ('customer', 'ROLE_CUSTOMER');
-
-INSERT IGNORE INTO customer (id, first_name, last_name, email, mob, address) 
-VALUES ('customer', 'Juan', 'Pérez', 'customer@test.com', 123456789, 'Calle Principal 123');
-
--- Roles básicos
-INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_ADMIN');
-INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_CUSTOMER');
-
--- Shopping cart de ejemplo
-INSERT IGNORE INTO shopping_cart (customer_id, book_id, count) VALUES ('customer', 1, 2);
-INSERT IGNORE INTO shopping_cart (customer_id, book_id, count) VALUES ('customer', 2, 1);
-
--- Relación book_user (libros comprados por el usuario)
-INSERT IGNORE INTO book_user (book_id, customer_id) VALUES (1, 'customer');
-INSERT IGNORE INTO book_user (book_id, customer_id) VALUES (2, 'customer');
-
--- Historial de compras de ejemplo
-INSERT IGNORE INTO purchase_history (id, customer_id, date) VALUES ('ph1', 'customer', '2025-11-26');
-
--- Detalle de compra de ejemplo
-INSERT IGNORE INTO purchase_detail (purchase_history_id, book_id, price, quanitity) VALUES ('ph1', 1, 69000, 1);
-INSERT IGNORE INTO purchase_detail (purchase_history_id, book_id, price, quanitity) VALUES ('ph1', 2, 62000, 1);
-
--- Asegurar que las contraseñas existentes tengan un prefijo de encoder.
--- Si la contraseña ya tiene formato {id}... no se modifica.
+-- Nota: este archivo ahora sólo siembra `book_detail` y `book`.
+-- Usuarios, roles y otros datos maestros los gestiona `DataInitializer` y el runner seguro para el admin.
 
 

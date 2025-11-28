@@ -1,55 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Panel de Administrador</title>
-    <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
-</head>
-<body class="admin-wrapper">
-<div style="display: flex; margin: 0; padding: 0;">
+<%@ include file="layouts/admin-layout-header.jsp" %>
 <fmt:setLocale value="es_CO"/>
-
-<%@ include file="sidebar.jsp" %>
-
-    <!-- Contenido Principal -->
-    <main class="admin-main">
         
-        <!-- Header Mejorado -->
-        <div class="admin-page-header mb-4">
+        <!-- Header Glassmorphism -->
+        <div class="admin-page-header mb-4 glass-header-main">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <nav aria-label="breadcrumb" class="mb-2">
-                        <ol class="breadcrumb mb-0">
+                        <ol class="breadcrumb mb-0 glass-breadcrumb">
                             <li class="breadcrumb-item active"><i class="fas fa-home me-1"></i>Dashboard</li>
                         </ol>
                     </nav>
-                    <h2 class="mb-2 fw-bold"><i class="fas fa-tachometer-alt me-2 text-primary"></i>Panel de Control</h2>
+                    <h2 class="mb-2 fw-bold"><i class="fas fa-tachometer-alt me-2 text-warning"></i>Panel de Control</h2>
                     <p class="text-muted mb-0">Resumen general de la actividad de la librería</p>
                 </div>
-                <button class="btn btn-outline-primary shadow-sm" onclick="location.reload()">
+                <button class="btn btn-outline-warning shadow-sm" onclick="location.reload()">
                     <i class="fas fa-sync-alt me-2"></i>Actualizar
                 </button>
             </div>
         </div>
 
-        <!-- Estadísticas -->
+        <!-- Estadísticas Glassmorphism -->
         <div class="row g-3 mb-4">
-            
             <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                <div class="glass-card stat-card-hover">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-primary-subtle">
-                                <i class="fas fa-users text-primary"></i>
+                            <div class="stat-icon-modern glass-icon-card">
+                                <i class="fas fa-users text-warning"></i>
                             </div>
-                            <span class="badge bg-success-subtle text-success">
+                            <span class="badge glass-badge text-warning">
                                 <i class="fas fa-arrow-up me-1"></i>12%
                             </span>
                         </div>
@@ -58,15 +40,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
+                <div class="glass-card stat-card-hover">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-success-subtle">
-                                <i class="fas fa-book text-success"></i>
+                            <div class="stat-icon-modern glass-icon-card">
+                                <i class="fas fa-book text-warning"></i>
                             </div>
-                            <span class="badge bg-success-subtle text-success">
+                            <span class="badge glass-badge text-warning">
                                 <i class="fas fa-arrow-up me-1"></i>8%
                             </span>
                         </div>
@@ -184,9 +165,4 @@
         </div>
 
     </main>
-
-</div>
-
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

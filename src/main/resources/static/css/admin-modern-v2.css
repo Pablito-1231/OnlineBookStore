@@ -1,0 +1,67 @@
+/* admin-modern-v2.css — Nueva variante moderna y compacta para Admin
+   - Paleta cálida, tipografía moderna, layout CSS Grid
+   - Scoped under .admin-wrapper cuando es posible
+*/
+:root{
+  --bg:#fbf9f7;
+  --card:#fffdfb;
+  --accent:#b57a36;
+  --accent-2:#8f5f2d;
+  --muted:#7b8077;
+  --text:#3e2f22;
+  --glass: rgba(255,255,255,0.6);
+}
+
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:var(--bg);} 
+.admin-wrapper{min-height:100vh}
+
+/* Topbar */
+.admin-topbar{position:sticky;top:0;z-index:1100;background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(255,250,245,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.04);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.admin-topbar .brand{display:flex;align-items:center;gap:.5rem}
+.admin-topbar .brand h1{font-size:1rem;margin:0;color:var(--accent)}
+
+/* Sidebar modern */
+.admin-wrapper .glass-sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:linear-gradient(180deg,rgba(255,245,230,0.95),rgba(255,240,225,0.92));padding:1rem 0;border-right:1px solid rgba(181,122,60,0.06);box-shadow:2px 0 18px rgba(88,50,18,0.04);}
+.admin-wrapper .admin-brand{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem}
+.admin-wrapper .admin-brand .title{font-weight:700;color:var(--accent)}
+.admin-wrapper .admin-nav{padding:.5rem}
+.admin-wrapper .admin-nav-item{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;border-radius:10px;color:rgba(0,0,0,0.65);margin:.25rem 0;text-decoration:none}
+.admin-wrapper .admin-nav-item:hover{background:rgba(255,255,255,0.12);color:var(--text)}
+.admin-wrapper .admin-nav-item.active{background:linear-gradient(90deg, rgba(181,122,60,0.12), rgba(181,122,60,0.06));}
+.admin-wrapper .admin-nav-icon{width:30px;text-align:center}
+
+/* Main layout */
+.admin-main{margin-left:240px;padding:1.25rem;min-height:100vh;}
+.admin-page-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.admin-page-header h2{margin:0;font-size:1.4rem}
+
+/* Cards */
+.glass-card{background:var(--card);border-radius:12px;padding:1rem;box-shadow:0 8px 24px rgba(46,20,12,0.04);border:1px solid rgba(181,122,60,0.06)}
+.stat-icon-modern{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white}
+
+/* Table modern */
+.modern-table{width:100%;border-collapse:collapse;font-size:.95rem}
+.modern-table thead th{background:transparent;color:var(--muted);padding:.9rem;border-bottom:1px solid rgba(0,0,0,0.05);text-align:left}
+.modern-table tbody td{padding:.85rem;border-bottom:1px solid rgba(0,0,0,0.03);vertical-align:middle}
+.modern-table tbody tr:hover{background:linear-gradient(90deg, rgba(255,250,245,0.6), rgba(255,255,255,0.6))}
+
+/* Buttons */
+.btn-v2{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .75rem;border-radius:10px;border:none;font-weight:600}
+.btn-v2.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white}
+.btn-v2.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text)}
+
+/* Action group compact */
+.modern-table .btn-group .btn{width:36px;height:36px;padding:0;border-radius:8px}
+
+/* Responsive tweaks */
+@media (max-width:992px){ .admin-wrapper .glass-sidebar{transform:translateX(-260px);transition:transform .25s ease}.admin-wrapper .glass-sidebar.show{transform:translateX(0)} .admin-main{margin-left:0;padding:.9rem} }
+
+/* Utilities */
+.kv-muted{color:var(--muted)}
+.small{font-size:.85rem}
+
+/* Make sure theme-unified blue accents are softened inside admin */
+.admin-wrapper .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2)) !important;color:#fff !important}
+.admin-wrapper .text-primary{color:var(--accent) !important}
+
+/* End of admin-modern-v2 */

@@ -46,9 +46,12 @@ public class DataInitializer {
             jdbc.update("INSERT INTO users (username, password, enabled) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE password=VALUES(password), enabled=VALUES(enabled)", "admin", encoded, 1);
             jdbc.update("INSERT IGNORE INTO authorities (username, authority) VALUES (?, ?)", "admin", "ROLE_ADMIN");
 
+            // Informar en logs de la creación/actualización del admin (no incluir la contraseña)
             if (generated) {
                 // No imprimir la contraseña en consola por seguridad.
-                log.debug("DataInitializer: se generó una contraseña ADMIN (no mostrada). Establece ADMIN_PASSWORD en el entorno para controlarla.");
+                log.info("DataInitializer: usuario 'admin' creado/actualizado con contraseña GENERADA (establece ADMIN_PASSWORD en el entorno para controlarla). Vuelve a iniciar sin ADMIN_PASSWORD para conservar la contraseña establecida.");
+            } else {
+                log.info("DataInitializer: usuario 'admin' creado/actualizado usando la variable de entorno ADMIN_PASSWORD.");
             }
 
             // Sembrar catálogo de libros (idempotente)

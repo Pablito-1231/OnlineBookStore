@@ -2,31 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'} - Administrador</title>
-    <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
-</head>
-<body class="admin-wrapper">
-<div style="display: flex; margin: 0; padding: 0;">
-
-<%@ include file="sidebar.jsp" %>
-
-<!-- Contenido Principal -->
-<main class="admin-main">
+<%@ include file="layouts/admin-layout-header.jsp" %>
     
     <div class="container-fluid p-0">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 
                 <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-3">
+                <nav aria-label="breadcrumb" class="mb-3 glass-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/usuarios">Usuarios</a></li>
@@ -34,10 +17,10 @@
                     </ol>
                 </nav>
 
-                <div class="card shadow-lg border-0 rounded-lg">
-                    <div class="card-header bg-primary text-white">
+                <div class="glass-card mt-2">
+                    <div class="glass-header-main p-4">
                         <h3 class="text-center font-weight-light my-2">
-                            <i class="fas fa-user-edit me-2"></i>
+                            <i class="fas fa-user-edit me-2 text-warning"></i>
                             ${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'}
                         </h3>
                     </div>
@@ -157,17 +140,16 @@
         </div>
     </div>
 
-</main>
-
-</div>
-
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
     // Actualizar label del estado dinámicamente
-    document.getElementById('enabled').addEventListener('change', function() {
-        const label = document.getElementById('statusLabel');
-        label.textContent = this.checked ? 'Activo' : 'Inactivo';
+    document.addEventListener('DOMContentLoaded', function(){
+        const el = document.getElementById('enabled');
+        if(el){
+            el.addEventListener('change', function() {
+                const label = document.getElementById('statusLabel');
+                if(label) label.textContent = this.checked ? 'Activo' : 'Inactivo';
+            });
+        }
     });
 </script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

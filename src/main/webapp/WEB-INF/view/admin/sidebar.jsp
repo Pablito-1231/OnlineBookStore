@@ -2,10 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Sidebar Moderna -->
-<aside class="admin-sidebar">
-    <div class="admin-sidebar-header">
+
+<aside class="admin-sidebar glass-sidebar">
+    <div class="admin-sidebar-header glass-header">
         <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-brand">
-            <div class="admin-brand-icon">
+            <div class="admin-brand-icon glass-icon">
                 <i class="fas fa-book"></i>
             </div>
             <div class="admin-brand-text">
@@ -14,7 +15,6 @@
             </div>
         </a>
     </div>
-
     <nav class="admin-nav">
         <div class="admin-nav-section">
             <div class="admin-nav-title">Principal</div>
@@ -24,7 +24,6 @@
                 <span class="admin-nav-text">Dashboard</span>
             </a>
         </div>
-
         <div class="admin-nav-section">
             <div class="admin-nav-title">Gestión</div>
             <a href="${pageContext.request.contextPath}/admin/libros" 
@@ -38,7 +37,6 @@
                 <span class="admin-nav-text">Usuarios</span>
             </a>
         </div>
-
         <div class="admin-nav-section">
             <div class="admin-nav-title">Análisis</div>
             <a href="${pageContext.request.contextPath}/admin/estadisticas" 
@@ -47,8 +45,12 @@
                 <span class="admin-nav-text">Estadísticas</span>
             </a>
         </div>
-
         <div class="admin-nav-section">
+            <a href="${pageContext.request.contextPath}/admin/change-password" 
+               class="admin-nav-item ${pageContext.request.requestURI.contains('change-password') ? 'active' : ''}">
+                <i class="fas fa-key admin-nav-icon"></i>
+                <span class="admin-nav-text">Cambiar contraseña</span>
+            </a>
             <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item logout">
                 <i class="fas fa-sign-out-alt admin-nav-icon"></i>
                 <span class="admin-nav-text">Cerrar Sesión</span>

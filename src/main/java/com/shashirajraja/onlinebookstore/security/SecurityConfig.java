@@ -50,6 +50,7 @@ public class SecurityConfig {
                     "/",
                         "/home",
                         "/login",
+                        "/admin/change-password",
                         "/register",
                         "/register-customer",
                         "/register-provider",

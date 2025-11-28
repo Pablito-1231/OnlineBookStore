@@ -1,74 +1,51 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Estadísticas - Administrador</title>
-    <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
-</head>
-<body class="admin-wrapper">
-<div style="display: flex; margin: 0; padding: 0;">
-
-<%@ include file="sidebar.jsp" %>
-
-<!-- Contenido Principal -->
-<main class="admin-main">
+<%@ include file="layouts/admin-layout-header.jsp" %>
     
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2 class="mb-1">Estadísticas del Sistema</h2>
-            <p class="text-muted mb-0">Visión general del rendimiento de la librería</p>
+    <!-- Header Glassmorphism -->
+    <div class="admin-page-header mb-4 glass-header-main">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h2 class="mb-1"><i class="fas fa-chart-bar me-2 text-warning"></i>Estadísticas del Sistema</h2>
+                <p class="text-muted mb-0">Visión general del rendimiento de la librería</p>
+            </div>
         </div>
     </div>
 
-    <!-- Estadísticas principales -->
+    <!-- Estadísticas principales Glassmorphism -->
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="admin-stat-card h-100">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon primary">
-                        <i class="fas fa-book"></i>
-                    </div>
+            <div class="glass-card h-100">
+                <div class="glass-icon-card">
+                    <i class="fas fa-book text-warning"></i>
                 </div>
                 <div class="admin-stat-value">${totalLibros}</div>
                 <div class="admin-stat-label">Total de Libros</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="admin-stat-card h-100">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon success">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
+            <div class="glass-card h-100">
+                <div class="glass-icon-card">
+                    <i class="fas fa-check-circle text-warning"></i>
                 </div>
                 <div class="admin-stat-value">${librosDisponibles}</div>
                 <div class="admin-stat-label">Libros Disponibles</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="admin-stat-card h-100">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon danger">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
+            <div class="glass-card h-100">
+                <div class="glass-icon-card">
+                    <i class="fas fa-exclamation-triangle text-warning"></i>
                 </div>
                 <div class="admin-stat-value">${librosAgotados}</div>
                 <div class="admin-stat-label">Libros Agotados</div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="admin-stat-card h-100">
-                <div class="admin-stat-header">
-                    <div class="admin-stat-icon warning">
-                        <i class="fas fa-users"></i>
-                    </div>
+            <div class="glass-card h-100">
+                <div class="glass-icon-card">
+                    <i class="fas fa-users text-warning"></i>
                 </div>
                 <div class="admin-stat-value">${totalUsuarios}</div>
                 <div class="admin-stat-label">Usuarios Registrados</div>
@@ -112,10 +89,4 @@
         <strong>Nota:</strong> Las estadísticas se actualizan en tiempo real según los datos en la base de datos.
     </div>
 
-</main>
-
-</div>
-
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

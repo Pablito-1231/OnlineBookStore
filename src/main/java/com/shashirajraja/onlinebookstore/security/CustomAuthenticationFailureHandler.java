@@ -17,6 +17,9 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                                         AuthenticationException exception) throws IOException, ServletException {
         
         String errorMessage = exception.getMessage();
+        if ("Bad credentials".equals(errorMessage)) {
+            errorMessage = "Credenciales incorrectas. Verifica tu usuario y contraseña.";
+        }
         if (exception instanceof DisabledException) {
             errorMessage = "Cuenta deshabilitada";
         }

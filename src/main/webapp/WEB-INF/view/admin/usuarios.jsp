@@ -1,37 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gestión de Usuarios - Administrador</title>
-    <link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme-unified.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin-modern.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/notifications.css">
-</head>
-<body class="admin-wrapper">
-<div style="display: flex; margin: 0; padding: 0;">
-
-<%@ include file="sidebar.jsp" %>
-
-<!-- Contenido Principal -->
-<main class="admin-main">
+<%@ include file="layouts/admin-layout-header.jsp" %>
     
-    <!-- Header Mejorado -->
-    <div class="admin-page-header mb-4">
+    <!-- Header Glassmorphism -->
+    <div class="admin-page-header mb-4 glass-header-main">
         <div class="d-flex justify-content-between align-items-start">
             <div>
                 <nav aria-label="breadcrumb" class="mb-2">
-                    <ol class="breadcrumb mb-0">
+                    <ol class="breadcrumb mb-0 glass-breadcrumb">
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
                         <li class="breadcrumb-item active">Usuarios</li>
                     </ol>
                 </nav>
-                <h2 class="mb-2 fw-bold"><i class="fas fa-users me-2 text-dark"></i>Gestión de Usuarios</h2>
+                <h2 class="mb-2 fw-bold"><i class="fas fa-users me-2 text-warning"></i>Gestión de Usuarios</h2>
                 <p class="text-muted mb-0">Administra los usuarios y sus roles en el sistema</p>
             </div>
         </div>
@@ -54,7 +36,7 @@
     </c:if>
 
     <!-- Tabla de Usuarios -->
-    <div style="overflow-x: hidden;">
+    <div class="glass-card mt-3" style="overflow-x: hidden;">
         <table class="table table-hover align-middle mb-0 modern-table">
                     <thead>
                         <tr>
@@ -175,10 +157,4 @@
                 </table>
     </div>
 
-</main>
-
-</div>
-
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="layouts/admin-layout-footer.jsp" %>

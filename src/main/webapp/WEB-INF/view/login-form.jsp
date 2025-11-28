@@ -261,7 +261,7 @@
       
       <c:if test="${param.error != null}">
         <div class="alert alert-danger">
-          <i class="fas fa-exclamation-circle"></i> Usuario o contraseña incorrectos
+          <i class="fas fa-exclamation-circle"></i> Credenciales incorrectas. Verifica tu usuario y contraseña.
         </div>
       </c:if>
       <c:if test="${param.errorMsg != null}">
@@ -272,13 +272,13 @@
       
       <c:if test="${param.logout != null}">
         <div class="alert alert-success">
-          <i class="fas fa-check-circle"></i> Sesión cerrada exitosamente
+          <i class="fas fa-check-circle"></i> ¡Sesión cerrada exitosamente!
         </div>
       </c:if>
       
       <c:if test="${param.disabled != null}">
         <div class="alert alert-danger">
-          <i class="fas fa-user-lock"></i> <strong>Cuenta inhabilitada.</strong> Tu cuenta ha sido deshabilitada por un administrador. Contacta con el soporte para más información.
+          <i class="fas fa-user-lock"></i> <strong>Cuenta inhabilitada.</strong> Tu cuenta ha sido deshabilitada por un administrador. Contacta con soporte para más información.
         </div>
       </c:if>
       

@@ -15,4 +15,5 @@ public interface UserService {
 	public String deleteUser(String username);
 	
 	public String toggleUserEnabled(String username);
+    String changeAdminPassword(String oldPassword, String newPassword, String confirmPassword);
 }

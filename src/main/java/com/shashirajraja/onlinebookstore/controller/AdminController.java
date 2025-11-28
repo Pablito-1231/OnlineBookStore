@@ -38,6 +38,27 @@ import com.shashirajraja.onlinebookstore.dao.PurchaseHistoryRepository;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    // ========== CAMBIAR CONTRASEÑA DE ADMIN ========== 
+    @GetMapping("/change-password")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String mostrarFormularioCambioPassword(Model model) {
+        return "admin/admin-change-password";
+    }
+
+    @PostMapping("/change-password/process")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String procesarCambioPasswordAdmin(
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword,
+            @RequestParam String confirmPassword,
+            Model model) {
+        String message = userService.changeAdminPassword(oldPassword, newPassword, confirmPassword);
+        model.addAttribute("message", message);
+        model.addAttribute("messageType", message.startsWith("¡") ? "success" : "error");
+        return "admin/admin-change-password";
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
     
     @Autowired
