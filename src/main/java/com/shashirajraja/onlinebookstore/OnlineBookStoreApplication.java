@@ -11,7 +11,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class OnlineBookStoreApplication extends SpringBootServletInitializer{
 
     public static void main(String[] args) {
-        SpringApplication.run(OnlineBookStoreApplication.class, args);
+        org.springframework.boot.SpringApplication app = new org.springframework.boot.SpringApplication(OnlineBookStoreApplication.class);
+        app.addInitializers(new com.shashirajraja.onlinebookstore.bootstrap.DatabaseCreationInitializer());
+        app.run(args);
     }
 
     @Override
