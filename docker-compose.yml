@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0.33
+    container_name: onlinebookstore-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-onlinebookstore}
+      MYSQL_USER: ${DB_USERNAME:-bookstore_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-bookstore_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - bookstore-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: onlinebookstore-app
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-prod}
+      DB_URL: jdbc:mysql://mysql:3306/${DB_NAME:-onlinebookstore}?useSSL=false&serverTimezone=UTC
+      DB_USERNAME: ${DB_USERNAME:-bookstore_user}
+      DB_PASSWORD: ${DB_PASSWORD:-bookstore_pass}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      AUTO_CREATE_DB: "false"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - bookstore-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  bookstore-network:
+    driver: bridge
