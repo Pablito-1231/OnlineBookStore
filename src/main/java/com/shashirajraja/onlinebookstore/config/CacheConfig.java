@@ -49,7 +49,6 @@ public class CacheConfig {
                 .initialCapacity(100)
                 .maximumSize(500)
                 .expireAfterWrite(10, TimeUnit.MINUTES)
-                .recordStats()
-                .build();
+                .recordStats();
     }
 }
