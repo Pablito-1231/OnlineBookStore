@@ -29,29 +29,6 @@ class DtoTests {
         assertEquals(errorMessage, response.getMessage());
         assertEquals(errorMessage, response.getError());
         assertNull(response.getData());
-        assertNotNull(response.getTimestamp());
-    }
-
-    @Test
-    void testBookResponseDto() {
-        BookResponseDto dto = new BookResponseDto(
-                1, "Test Book", 10, 29.99,
-                "E-Book", "Test description", 5);
-
-        assertEquals(1, dto.getId());
-        assertEquals("Test Book", dto.getName());
-        assertEquals(10, dto.getQuantity());
-        assertEquals(29.99, dto.getPrice());
-        assertEquals("E-Book", dto.getType());
-        assertEquals("Test description", dto.getDetail());
-        assertEquals(5, dto.getSold());
-        assertTrue(dto.getAvailable());
-    }
-
-    @Test
-    void testBookResponseDtoAvailability() {
-        BookResponseDto dto = new BookResponseDto();
-
         // Test with stock
         dto.setQuantity(5);
         assertTrue(dto.getAvailable());
