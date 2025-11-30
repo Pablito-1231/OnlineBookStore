@@ -1,25 +1,21 @@
 package com.shashirajraja.onlinebookstore.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
-/**
- * DTO for creating/updating a review
- */
 public class ReviewRequestDto {
 
-    @NotNull(message = "Book ID is required")
-    @Positive(message = "Book ID must be positive")
+    @NotNull
     private Integer bookId;
 
-    @NotNull(message = "Rating is required")
-    @Min(value = 1, message = "Rating must be at least 1")
-    @Max(value = 5, message = "Rating must be at most 5")
+    @NotNull
+    @Min(1)
+    @Max(5)
     private Integer rating;
 
-    @Size(max = 1000, message = "Comment must not exceed 1000 characters")
     private String comment;
 
-    // Constructors
     public ReviewRequestDto() {
     }
 
@@ -29,7 +25,6 @@ public class ReviewRequestDto {
         this.comment = comment;
     }
 
-    // Getters and Setters
     public Integer getBookId() {
         return bookId;
     }

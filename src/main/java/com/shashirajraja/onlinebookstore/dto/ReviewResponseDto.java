@@ -2,11 +2,7 @@ package com.shashirajraja.onlinebookstore.dto;
 
 import java.time.LocalDateTime;
 
-/**
- * DTO for review responses
- */
 public class ReviewResponseDto {
-
     private int id;
     private int bookId;
     private String bookName;
@@ -16,12 +12,11 @@ public class ReviewResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Constructors
     public ReviewResponseDto() {
     }
 
-    public ReviewResponseDto(int id, int bookId, String bookName, String customerName,
-            int rating, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ReviewResponseDto(int id, int bookId, String bookName, String customerName, int rating, String comment,
+            LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.bookId = bookId;
         this.bookName = bookName;
@@ -32,7 +27,6 @@ public class ReviewResponseDto {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

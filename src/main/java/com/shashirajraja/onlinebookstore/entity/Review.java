@@ -1,67 +1,58 @@
 package com.shashirajraja.onlinebookstore.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-/**
- * Entity representing a book review
- * Allows customers to rate and review books they have purchased
- */
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "reviews")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
+    @NotNull
     private Book book;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @NotNull
     private Customer customer;
 
-    @Column(name = "rating", nullable = false)
-    @Min(value = 1, message = "Rating must be at least 1")
-    @Max(value = 5, message = "Rating must be at most 5")
+    @Column(nullable = false)
+    @Min(1)
+    @Max(5)
     private int rating;
 
-    @Column(name = "comment", length = 1000)
-    @Size(max = 1000, message = "Comment must not exceed 1000 characters")
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Constructors
     public Review() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     public Review(Book book, Customer customer, int rating, String comment) {
-        this();
         this.book = book;
         this.customer = customer;
         this.rating = rating;
         this.comment = comment;
     }
 
-    // Lifecycle callbacks
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -118,29 +109,12 @@ public class Review {
         this.updatedAt = updatedAt;
     }
 
-    // equals, hashCode, toString
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Review))
-            return false;
-        Review review = (Review) o;
-        return id == review.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     @Override
     public String toString() {
         return "Review{" +
                 "id=" + id +
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }

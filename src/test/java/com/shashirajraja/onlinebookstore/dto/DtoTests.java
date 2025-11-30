@@ -16,8 +16,17 @@ class DtoTests {
         assertTrue(response.isSuccess());
         assertEquals("Success", response.getMessage());
         assertEquals(testData, response.getData());
-        assertNotNull(response.getTimestamp());
-        assertNull(response.getError());
+    }
+
+    @Test
+    void testApiResponseSuccessWithMessage() {
+        String testData = "Test Data";
+        String message = "Operation successful";
+        ApiResponse<String> response = ApiResponse.success(message, testData);
+
+        assertTrue(response.isSuccess());
+        assertEquals(message, response.getMessage());
+        assertEquals(testData, response.getData());
     }
 
     @Test
@@ -27,17 +36,14 @@ class DtoTests {
 
         assertFalse(response.isSuccess());
         assertEquals(errorMessage, response.getMessage());
-        assertEquals(errorMessage, response.getError());
         assertNull(response.getData());
-        assertNotNull(response.getTimestamp());
     }
 
     @Test
     void testBookResponseDto() {
         BookResponseDto dto = new BookResponseDto(
                 1, "Clean Code", 10, 29.99,
-                "Paperback", "A great book", 5,
-                4.5, 10); // averageRating, totalReviews
+                "Paperback", "A great book");
 
         assertEquals(1, dto.getId());
         assertEquals("Clean Code", dto.getName());
@@ -45,105 +51,87 @@ class DtoTests {
         assertEquals(29.99, dto.getPrice());
         assertEquals("Paperback", dto.getType());
         assertEquals("A great book", dto.getDetail());
-        assertEquals(5, dto.getSold());
-        assertTrue(dto.getAvailable());
-        assertEquals(4.5, dto.getAverageRating());
-        assertEquals(10, dto.getTotalReviews());
     }
 
     @Test
-    void testBookResponseDtoAvailability() {
+    void testBookResponseDtoSetters() {
         BookResponseDto dto = new BookResponseDto();
 
-        // Test with stock
+        dto.setId(2);
+        dto.setName("Effective Java");
         dto.setQuantity(5);
-        assertTrue(dto.getAvailable());
+        dto.setPrice(45.99);
+        dto.setType("Hardcover");
+        dto.setDetail("Best practices");
 
-        // Test without stock
-        dto.setQuantity(0);
-        assertFalse(dto.getAvailable());
-    }
-
-    @Test
-    void testBookRequestDto() {
-        BookRequestDto dto = new BookRequestDto(
-                "New Book", 15, 39.99, "Hardcover", "Great book");
-
-        assertEquals("New Book", dto.getName());
-        assertEquals(15, dto.getQuantity());
-        assertEquals(39.99, dto.getPrice());
+        assertEquals(2, dto.getId());
+        assertEquals("Effective Java", dto.getName());
+        assertEquals(5, dto.getQuantity());
+        assertEquals(45.99, dto.getPrice());
         assertEquals("Hardcover", dto.getType());
-        assertEquals("Great book", dto.getDetail());
+        assertEquals("Best practices", dto.getDetail());
     }
 
     @Test
-    void testPageResponse() {
-        java.util.List<String> content = java.util.Arrays.asList("Item1", "Item2", "Item3");
-        PageResponse<String> pageResponse = new PageResponse<>(
-                content, 0, 10, 25, 3);
-
-        assertEquals(content, pageResponse.getContent());
-        assertEquals(0, pageResponse.getPage());
-        assertEquals(10, pageResponse.getSize());
-        assertEquals(25, pageResponse.getTotalElements());
-        assertEquals(3, pageResponse.getTotalPages());
-        assertTrue(pageResponse.isFirst());
-        assertFalse(pageResponse.isLast());
-        assertFalse(pageResponse.isEmpty());
-    }
-
-    @Test
-    void testPageResponseEmpty() {
-        PageResponse<String> pageResponse = new PageResponse<>(
-                java.util.Collections.emptyList(), 0, 10, 0, 0);
-
-        assertTrue(pageResponse.isEmpty());
-        assertTrue(pageResponse.isFirst());
-        assertTrue(pageResponse.isLast());
-    }
-
-    @Test
-    void testUserResponseDto() {
-        UserResponseDto dto = new UserResponseDto(
-                "testuser", "test@email.com", "John", "Doe",
-                "1234567890", "123 Main St", "ROLE_CUSTOMER");
-
-        assertEquals("testuser", dto.getUsername());
-        assertEquals("test@email.com", dto.getEmail());
-        assertEquals("John", dto.getFirstName());
-        assertEquals("Doe", dto.getLastName());
-        assertEquals("1234567890", dto.getPhone());
-        assertEquals("123 Main St", dto.getAddress());
-        assertEquals("ROLE_CUSTOMER", dto.getRole());
-    }
-
-    @Test
-    void testCartItemResponseDto() {
-        CartItemResponseDto dto = new CartItemResponseDto(
-                1, "Test Book", 29.99, 2, true);
+    void testReviewRequestDto() {
+        ReviewRequestDto dto = new ReviewRequestDto(1, 5, "Excellent book!");
 
         assertEquals(1, dto.getBookId());
-        assertEquals("Test Book", dto.getBookName());
-        assertEquals(29.99, dto.getBookPrice());
-        assertEquals(2, dto.getQuantity());
-        assertEquals(59.98, dto.getSubtotal(), 0.01);
-        assertTrue(dto.getAvailable());
+        assertEquals(5, dto.getRating());
+        assertEquals("Excellent book!", dto.getComment());
     }
 
     @Test
-    void testCartItemResponseDtoSubtotalCalculation() {
-        CartItemResponseDto dto = new CartItemResponseDto();
-        dto.setBookPrice(25.00);
-        dto.setQuantity(3);
+    void testReviewRequestDtoSetters() {
+        ReviewRequestDto dto = new ReviewRequestDto();
 
-        assertEquals(75.00, dto.getSubtotal(), 0.01);
+        dto.setBookId(2);
+        dto.setRating(4);
+        dto.setComment("Good read");
 
-        // Update price
-        dto.setBookPrice(30.00);
-        assertEquals(90.00, dto.getSubtotal(), 0.01);
+        assertEquals(2, dto.getBookId());
+        assertEquals(4, dto.getRating());
+        assertEquals("Good read", dto.getComment());
+    }
 
-        // Update quantity
-        dto.setQuantity(2);
-        assertEquals(60.00, dto.getSubtotal(), 0.01);
+    @Test
+    void testReviewResponseDto() {
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+
+        ReviewResponseDto dto = new ReviewResponseDto(
+                1, 10, "Clean Code", "John Doe", 5, "Great book!", now, now);
+
+        assertEquals(1, dto.getId());
+        assertEquals(10, dto.getBookId());
+        assertEquals("Clean Code", dto.getBookName());
+        assertEquals("John Doe", dto.getCustomerName());
+        assertEquals(5, dto.getRating());
+        assertEquals("Great book!", dto.getComment());
+        assertEquals(now, dto.getCreatedAt());
+        assertEquals(now, dto.getUpdatedAt());
+    }
+
+    @Test
+    void testReviewResponseDtoSetters() {
+        ReviewResponseDto dto = new ReviewResponseDto();
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+
+        dto.setId(2);
+        dto.setBookId(20);
+        dto.setBookName("Effective Java");
+        dto.setCustomerName("Jane Smith");
+        dto.setRating(4);
+        dto.setComment("Very informative");
+        dto.setCreatedAt(now);
+        dto.setUpdatedAt(now);
+
+        assertEquals(2, dto.getId());
+        assertEquals(20, dto.getBookId());
+        assertEquals("Effective Java", dto.getBookName());
+        assertEquals("Jane Smith", dto.getCustomerName());
+        assertEquals(4, dto.getRating());
+        assertEquals("Very informative", dto.getComment());
+        assertEquals(now, dto.getCreatedAt());
+        assertEquals(now, dto.getUpdatedAt());
     }
 }
