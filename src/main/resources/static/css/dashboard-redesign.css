@@ -59,11 +59,21 @@ a {
     display: grid;
     grid-template-columns: 260px 1fr;
     min-height: 100vh;
+    position: relative;
 }
 
-/* ==========================================================================
-   SIDEBAR COMPONENT
-   ========================================================================== */
+/* Fixed background for sidebar column to prevent white gaps */
+.app-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    background-color: var(--bg-sidebar);
+    z-index: 49;
+}
+
 .app-sidebar {
     background-color: var(--bg-sidebar);
     color: var(--text-sidebar);
@@ -129,11 +139,7 @@ a {
     color: var(--text-sidebar);
     transition: all 0.2s ease;
     font-weight: 500;
-}
-
-.nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
+    text-decoration: none;
 }
 
 .nav-item.active {
@@ -603,5 +609,10 @@ a {
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Hide the fixed sidebar background on mobile */
+    .app-container::before {
+        display: none;
     }
 }

@@ -39,7 +39,7 @@ import com.shashirajraja.onlinebookstore.dao.PurchaseHistoryRepository;
 @RequestMapping("/admin")
 public class AdminController {
 
-    // ========== CAMBIAR CONTRASEÑA DE ADMIN ========== 
+    // ========== CAMBIAR CONTRASEÑA DE ADMIN ==========
     @GetMapping("/change-password")
     @PreAuthorize("hasRole('ADMIN')")
     public String mostrarFormularioCambioPassword(Model model) {
@@ -60,12 +60,13 @@ public class AdminController {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    
+
     @Autowired
     private com.shashirajraja.onlinebookstore.dao.AuthorityRepository authorityRepository;
 
     @Autowired
     private com.shashirajraja.onlinebookstore.dao.RoleRepository roleRepository;
+
     // ========== ROLES - LISTAR Y CREAR ==========
     @GetMapping("/roles")
     @PreAuthorize("hasRole('ADMIN')")
@@ -73,9 +74,12 @@ public class AdminController {
         // Roles definidos (tabla roles)
         java.util.List<com.shashirajraja.onlinebookstore.entity.Role> definedRoles = roleRepository.findAll();
         // Authorities asignadas a usuarios
-        java.util.List<com.shashirajraja.onlinebookstore.entity.Authority> allAuthorities = authorityRepository.findAll();
+        java.util.List<com.shashirajraja.onlinebookstore.entity.Authority> allAuthorities = authorityRepository
+                .findAll();
         java.util.Map<String, Long> counts = allAuthorities.stream()
-                .collect(java.util.stream.Collectors.groupingBy(com.shashirajraja.onlinebookstore.entity.Authority::getRole, java.util.stream.Collectors.counting()));
+                .collect(java.util.stream.Collectors.groupingBy(
+                        com.shashirajraja.onlinebookstore.entity.Authority::getRole,
+                        java.util.stream.Collectors.counting()));
 
         java.util.List<java.util.Map<String, Object>> rolesForView = new java.util.ArrayList<>();
         for (com.shashirajraja.onlinebookstore.entity.Role r : definedRoles) {
@@ -101,7 +105,8 @@ public class AdminController {
             model.addAttribute("message", "El rol ya existe.");
             return listarRoles(model);
         }
-        com.shashirajraja.onlinebookstore.entity.Role nuevo = new com.shashirajraja.onlinebookstore.entity.Role(roleName.trim());
+        com.shashirajraja.onlinebookstore.entity.Role nuevo = new com.shashirajraja.onlinebookstore.entity.Role(
+                roleName.trim());
         roleRepository.save(nuevo);
         model.addAttribute("message", "Rol creado exitosamente.");
         return listarRoles(model);
@@ -109,7 +114,7 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private BookService bookService;
 
@@ -144,7 +149,7 @@ public class AdminController {
         double ticketPromedioMes = (comprasMesActual != null && comprasMesActual > 0)
                 ? (ingresosMesActual != null ? ingresosMesActual : 0d) / (double) comprasMesActual
                 : 0d;
-        
+
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("librosDisponibles", librosDisponibles);
@@ -199,7 +204,8 @@ public class AdminController {
                 comparator = Comparator.comparing(Book::getQuantity);
                 break;
             case "type":
-                comparator = Comparator.comparing(b -> b.getBookDetail() != null ? b.getBookDetail().getType() : "", String.CASE_INSENSITIVE_ORDER);
+                comparator = Comparator.comparing(b -> b.getBookDetail() != null ? b.getBookDetail().getType() : "",
+                        String.CASE_INSENSITIVE_ORDER);
                 break;
             case "id":
             default:
@@ -211,10 +217,13 @@ public class AdminController {
         filtered = filtered.stream().sorted(comparator).collect(Collectors.toList());
 
         int total = filtered.size();
-        if (size <= 0) size = 10;
+        if (size <= 0)
+            size = 10;
         int pageCount = (int) Math.ceil((double) total / size);
-        if (page < 0) page = 0;
-        if (page >= pageCount && pageCount > 0) page = pageCount - 1;
+        if (page < 0)
+            page = 0;
+        if (page >= pageCount && pageCount > 0)
+            page = pageCount - 1;
         int fromIndex = Math.min(page * size, total);
         int toIndex = Math.min(fromIndex + size, total);
         List<Book> pageItems = filtered.subList(fromIndex, toIndex);
@@ -269,7 +278,8 @@ public class AdminController {
                 comparator = Comparator.comparing(Book::getQuantity);
                 break;
             case "type":
-                comparator = Comparator.comparing(b -> b.getBookDetail() != null ? b.getBookDetail().getType() : "", String.CASE_INSENSITIVE_ORDER);
+                comparator = Comparator.comparing(b -> b.getBookDetail() != null ? b.getBookDetail().getType() : "",
+                        String.CASE_INSENSITIVE_ORDER);
                 break;
             case "id":
             default:
@@ -281,10 +291,13 @@ public class AdminController {
         filtered = filtered.stream().sorted(comparator).collect(Collectors.toList());
 
         int total = filtered.size();
-        if (size <= 0) size = 10;
+        if (size <= 0)
+            size = 10;
         int pageCount = (int) Math.ceil((double) total / size);
-        if (page < 0) page = 0;
-        if (page >= pageCount && pageCount > 0) page = pageCount - 1;
+        if (page < 0)
+            page = 0;
+        if (page >= pageCount && pageCount > 0)
+            page = pageCount - 1;
         int fromIndex = Math.min(page * size, total);
         int toIndex = Math.min(fromIndex + size, total);
         List<Book> pageItems = filtered.subList(fromIndex, toIndex);
@@ -313,10 +326,10 @@ public class AdminController {
     @PostMapping("/libros/add/process")
     @PreAuthorize("hasRole('ADMIN')")
     public String procesarAgregarLibro(@Valid @ModelAttribute Book book,
-                                        BindingResult bookBindingResult,
-                                        @RequestParam(value = "bookDetail.type", required = false) String type,
-                                        @RequestParam(value = "bookDetail.detail", required = false) String detail,
-                                        Model model) {
+            BindingResult bookBindingResult,
+            @RequestParam(value = "bookDetail.type", required = false) String type,
+            @RequestParam(value = "bookDetail.detail", required = false) String detail,
+            Model model) {
         try {
             // Validación Bean Validation
             if (bookBindingResult != null && bookBindingResult.hasErrors()) {
@@ -336,7 +349,7 @@ public class AdminController {
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
-            
+
             if (!ValidationUtil.isValidPrice(book.getPrice())) {
                 model.addAttribute("message", "❌ Error: El precio debe ser mayor a 0");
                 model.addAttribute("messageType", "error");
@@ -345,7 +358,7 @@ public class AdminController {
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
-            
+
             if (!ValidationUtil.isValidQuantity(book.getQuantity())) {
                 model.addAttribute("message", "❌ Error: La cantidad debe ser mayor o igual a 0");
                 model.addAttribute("messageType", "error");
@@ -354,14 +367,14 @@ public class AdminController {
                 model.addAttribute("action", "add");
                 return "admin/libro-form";
             }
-            
+
             if (type == null || type.trim().isEmpty()) {
                 type = "EBOOK";
             }
             if (detail == null) {
                 detail = "No especificado";
             }
-            
+
             BookDetail bookDetail = new BookDetail(type, detail, 0);
             book.setBookDetail(bookDetail);
             String message = bookService.addBook(book);
@@ -375,7 +388,7 @@ public class AdminController {
             model.addAttribute("action", "add");
             return "admin/libro-form";
         }
-        
+
         Set<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         model.addAttribute("totalLibros", books.size());
@@ -406,10 +419,10 @@ public class AdminController {
     @PostMapping("/libros/edit/process")
     @PreAuthorize("hasRole('ADMIN')")
     public String procesarEditarLibro(@Valid @ModelAttribute Book book,
-                                       BindingResult bookBindingResult,
-                                       @RequestParam(value = "bookDetail.type", required = false) String type,
-                                       @RequestParam(value = "bookDetail.detail", required = false) String detail,
-                                       Model model) {
+            BindingResult bookBindingResult,
+            @RequestParam(value = "bookDetail.type", required = false) String type,
+            @RequestParam(value = "bookDetail.detail", required = false) String detail,
+            Model model) {
         try {
             Book existingBook = bookService.getBookById(book.getId());
             if (existingBook == null) {
@@ -426,7 +439,7 @@ public class AdminController {
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
-            
+
             // ========== VALIDACIONES ==========
             if (book.getName() == null || book.getName().trim().isEmpty()) {
                 model.addAttribute("message", "❌ Error: El nombre del libro es obligatorio");
@@ -436,7 +449,7 @@ public class AdminController {
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
-            
+
             if (!ValidationUtil.isValidPrice(book.getPrice())) {
                 model.addAttribute("message", "❌ Error: El precio debe ser mayor a 0");
                 model.addAttribute("messageType", "error");
@@ -445,7 +458,7 @@ public class AdminController {
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
-            
+
             if (!ValidationUtil.isValidQuantity(book.getQuantity())) {
                 model.addAttribute("message", "❌ Error: La cantidad debe ser mayor o igual a 0");
                 model.addAttribute("messageType", "error");
@@ -454,18 +467,18 @@ public class AdminController {
                 model.addAttribute("action", "edit");
                 return "admin/libro-form";
             }
-            
+
             existingBook.setName(book.getName());
             existingBook.setPrice(book.getPrice());
             existingBook.setQuantity(book.getQuantity());
-            
+
             if (existingBook.getBookDetail() != null && type != null) {
                 existingBook.getBookDetail().setType(type);
                 existingBook.getBookDetail().setDetail(detail != null ? detail : "");
             } else if (type != null) {
                 existingBook.setBookDetail(new BookDetail(type, detail != null ? detail : "", 0));
             }
-            
+
             String message = bookService.updateBook(existingBook);
             model.addAttribute("message", "✅ " + message);
             model.addAttribute("messageType", "success");
@@ -477,7 +490,7 @@ public class AdminController {
             model.addAttribute("action", "edit");
             return "admin/libro-form";
         }
-        
+
         Set<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
         model.addAttribute("totalLibros", books.size());
@@ -523,25 +536,45 @@ public class AdminController {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
-        
+
         Set<Book> allBooks = bookService.getAllBooks();
-        
+
         long totalLibros = allBooks.size();
         long librosDisponibles = allBooks.stream().filter(b -> b.getQuantity() > 0).count();
         long librosAgotados = allBooks.stream().filter(b -> b.getQuantity() == 0).count();
         long totalUsuarios = userService.getAllUsers().stream().count();
-        
+
         // Debug: registrar valores
         logger.debug("=== ESTADÍSTICAS DEBUG ===");
         logger.debug("Total libros: {}", totalLibros);
         logger.debug("Disponibles: {}", librosDisponibles);
         logger.debug("Agotados: {}", librosAgotados);
-        
+
+        // Datos para el gráfico de ventas (últimos 7 días)
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.util.List<String> chartLabels = new java.util.ArrayList<>();
+        java.util.List<Long> chartData = new java.util.ArrayList<>();
+
+        for (int i = 6; i >= 0; i--) {
+            java.time.LocalDate date = today.minusDays(i);
+            Date dayStart = Date.from(date.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+            Date dayEnd = Date.from(date.plusDays(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant());
+
+            Long salesCount = purchaseHistoryRepository.countComprasEntre(dayStart, dayEnd);
+
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM");
+            chartLabels.add(date.format(formatter));
+            chartData.add(salesCount != null ? salesCount : 0L);
+        }
+
+        model.addAttribute("chartLabels", chartLabels);
+        model.addAttribute("chartData", chartData);
+
         model.addAttribute("totalLibros", totalLibros);
         model.addAttribute("librosDisponibles", librosDisponibles);
         model.addAttribute("librosAgotados", librosAgotados);
         model.addAttribute("totalUsuarios", totalUsuarios);
-        
+
         return "admin/estadisticas";
     }
 
@@ -586,20 +619,23 @@ public class AdminController {
                 // Actualizar campos editables (NO el username que es PK)
                 user.setEnabled(enabled);
                 if (user.getCustomer() != null) {
-                    if (firstName != null) user.getCustomer().setFirstName(firstName);
-                    if (lastName != null) user.getCustomer().setLastName(lastName);
-                    if (email != null) user.getCustomer().setEmail(email);
+                    if (firstName != null)
+                        user.getCustomer().setFirstName(firstName);
+                    if (lastName != null)
+                        user.getCustomer().setLastName(lastName);
+                    if (email != null)
+                        user.getCustomer().setEmail(email);
                 }
                 // Actualizar solo campos básicos (sin authorities)
                 String message = userService.updateUser(user);
-                
+
                 // Cambiar rol principal después de actualizar el usuario (operación separada)
                 if (role != null && !role.isEmpty()) {
                     // Recargar user desde BD para tener estado fresco
                     User freshUser = userService.getUserByUsername(username);
-                    java.util.List<com.shashirajraja.onlinebookstore.entity.Authority> currentAuthorities = 
-                        authorityRepository.findByUser(freshUser);
-                    
+                    java.util.List<com.shashirajraja.onlinebookstore.entity.Authority> currentAuthorities = authorityRepository
+                            .findByUser(freshUser);
+
                     if (!currentAuthorities.isEmpty()) {
                         String currentRole = currentAuthorities.get(0).getRole();
                         if (!currentRole.equals(role)) {
@@ -607,14 +643,14 @@ public class AdminController {
                             authorityRepository.deleteAll(currentAuthorities);
                             authorityRepository.flush();
                             // Crear nueva authority con el nuevo rol
-                            com.shashirajraja.onlinebookstore.entity.Authority newAuth =
-                                    new com.shashirajraja.onlinebookstore.entity.Authority(freshUser, role);
+                            com.shashirajraja.onlinebookstore.entity.Authority newAuth = new com.shashirajraja.onlinebookstore.entity.Authority(
+                                    freshUser, role);
                             authorityRepository.save(newAuth);
                         }
                     } else {
                         // Crear primera authority si no existe ninguna
-                        com.shashirajraja.onlinebookstore.entity.Authority newAuth =
-                                new com.shashirajraja.onlinebookstore.entity.Authority(freshUser, role);
+                        com.shashirajraja.onlinebookstore.entity.Authority newAuth = new com.shashirajraja.onlinebookstore.entity.Authority(
+                                freshUser, role);
                         authorityRepository.save(newAuth);
                     }
                 }
@@ -640,7 +676,7 @@ public class AdminController {
     public String toggleUsuario(@RequestParam String username, Model model) {
         try {
             String message = userService.toggleUserEnabled(username);
-            
+
             if (message.startsWith("Error")) {
                 model.addAttribute("message", "❌ " + message);
                 model.addAttribute("messageType", "error");
@@ -652,7 +688,7 @@ public class AdminController {
             model.addAttribute("message", "❌ Error al cambiar estado: " + e.getMessage());
             model.addAttribute("messageType", "error");
         }
-        
+
         model.addAttribute("users", userService.getAllUsers());
         return "admin/usuarios";
     }
@@ -663,7 +699,7 @@ public class AdminController {
     public String eliminarUsuario(@RequestParam String username, Model model) {
         try {
             String message = userService.deleteUser(username);
-            
+
             if (message.startsWith("Error")) {
                 model.addAttribute("message", "❌ " + message);
                 model.addAttribute("messageType", "error");
@@ -675,7 +711,7 @@ public class AdminController {
             model.addAttribute("message", "❌ Error al eliminar usuario: " + e.getMessage());
             model.addAttribute("messageType", "error");
         }
-        
+
         model.addAttribute("users", userService.getAllUsers());
         return "admin/usuarios";
     }
@@ -684,14 +720,16 @@ public class AdminController {
     @GetMapping("/usuarios.json")
     @ResponseBody
     @PreAuthorize("hasRole('ADMIN')")
-        public List<UserSummaryDto> usuariosJson() {
+    public List<UserSummaryDto> usuariosJson() {
         return userService.getAllUsers().stream()
-            .map(u -> new UserSummaryDto(
-                u.getUsername(),
-                (u.getAuthorities() != null && !u.getAuthorities().isEmpty()) ? u.getAuthorities().get(0).getRole() : null,
-                u.isEnabled()))
-            .collect(Collectors.toList());
-        }
+                .map(u -> new UserSummaryDto(
+                        u.getUsername(),
+                        (u.getAuthorities() != null && !u.getAuthorities().isEmpty())
+                                ? u.getAuthorities().get(0).getRole()
+                                : null,
+                        u.isEnabled()))
+                .collect(Collectors.toList());
+    }
 
     // ========== ESTADÍSTICAS - JSON ==========
     @GetMapping("/stats.json")

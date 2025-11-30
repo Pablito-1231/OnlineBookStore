@@ -18,8 +18,10 @@
                                 </button>
                             </div>
 
-                            <!-- Stats Grid -->
-                            <div class="dashboard-grid" style="grid-template-columns: repeat(4, 1fr);">
+                            <!-- Stats Grid (Top Row: 4 Cards) -->
+                            <div class="dashboard-grid"
+                                style="grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                                <!-- Card 1: Total Libros -->
                                 <div class="stat-card">
                                     <div class="stat-header">
                                         <div class="stat-icon books"><i class="fas fa-book"></i></div>
@@ -27,6 +29,7 @@
                                     <div class="stat-value">${totalLibros}</div>
                                     <div class="stat-label">Total Libros</div>
                                 </div>
+                                <!-- Card 2: Disponibles -->
                                 <div class="stat-card">
                                     <div class="stat-header">
                                         <div class="stat-icon sales"><i class="fas fa-check"></i></div>
@@ -34,6 +37,7 @@
                                     <div class="stat-value">${librosDisponibles}</div>
                                     <div class="stat-label">Disponibles</div>
                                 </div>
+                                <!-- Card 3: Agotados -->
                                 <div class="stat-card">
                                     <div class="stat-header">
                                         <div class="stat-icon revenue"><i class="fas fa-exclamation-triangle"></i></div>
@@ -41,28 +45,60 @@
                                     <div class="stat-value">${librosAgotados}</div>
                                     <div class="stat-label">Agotados</div>
                                 </div>
+                                <!-- Card 4: Total Usuarios -->
                                 <div class="stat-card">
                                     <div class="stat-header">
                                         <div class="stat-icon users"><i class="fas fa-users"></i></div>
                                     </div>
                                     <div class="stat-value">${totalUsuarios}</div>
-                                    <canvas id="pieChart"></canvas>
+                                    <div class="stat-label">Total Usuarios</div>
                                 </div>
                             </div>
-                </div>
-                </main>
+
+                            <!-- Charts Section (Bottom Row: 2 Columns) -->
+                            <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                                <!-- Sales Chart (Left, Wider) -->
+                                <div class="chart-container"
+                                    style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: 400px;">
+                                    <h3 style="margin-bottom: 1rem; color: #1f2937; font-size: 1.1rem;">Resumen de
+                                        Ventas (Últimos 7 días)</h3>
+                                    <div style="height: 320px; position: relative;">
+                                        <canvas id="salesChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Pie Chart (Right, Narrower) -->
+                                <div class="chart-container"
+                                    style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); height: 400px;">
+                                    <h3 style="margin-bottom: 1rem; color: #1f2937; font-size: 1.1rem;">Distribución de
+                                        Formatos</h3>
+                                    <div style="height: 320px; position: relative;">
+                                        <canvas id="pieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
                 </div>
 
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
-                    // Main Chart
-                    const ctxMain = document.getElementById('mainChart').getContext('2d');
-                    new Chart(ctxMain, {
+                    // Sales Chart
+                    const ctx = document.getElementById('salesChart').getContext('2d');
+                    new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                            labels: [
+                                <c:forEach items="${chartLabels}" var="label" varStatus="status">
+                                    '${label}'${!status.last ? ',' : ''}
+                                </c:forEach>
+                            ],
                             datasets: [{
                                 label: 'Ventas',
-                                data: [12, 19, 3, 5, 2, 3, 10],
+                                data: [
+                                    <c:forEach items="${chartData}" var="data" varStatus="status">
+                                        ${data}${!status.last ? ',' : ''}
+                                    </c:forEach>
+                                ],
                                 backgroundColor: '#4f46e5',
                                 borderRadius: 4,
                                 barThickness: 20
@@ -71,7 +107,9 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            plugins: { legend: { display: false } },
+                            plugins: {
+                                legend: { display: false }
+                            },
                             scales: {
                                 y: {
                                     beginAtZero: true,
