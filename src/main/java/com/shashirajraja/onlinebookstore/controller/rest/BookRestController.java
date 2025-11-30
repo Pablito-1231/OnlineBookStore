@@ -231,7 +231,9 @@ public class BookRestController {
                 book.getPrice(),
                 detail != null ? detail.getType() : null,
                 detail != null ? detail.getDetail() : null,
-                detail != null ? detail.getSold() : 0);
+                detail != null ? detail.getSold() : 0,
+                null, // averageRating - TODO: calculate from ReviewService
+                null); // totalReviews - TODO: calculate from ReviewService
     }
 
     private Book convertToEntity(BookRequestDto dto) {
