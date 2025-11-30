@@ -17,14 +17,14 @@ public class BookResponseDto {
     private String detail;
     private Integer sold;
     private Boolean available;
-    private Double averageRating;
-    private Integer totalReviews;
+    private Double averageRating; // Average rating from reviews
+    private Integer totalReviews; // Total number of reviews
 
     public BookResponseDto() {
     }
 
     public BookResponseDto(Integer id, String name, Integer quantity, Double price,
-            String type, String detail, Integer sold) {
+            String type, String detail, Integer sold, Double averageRating, Integer totalReviews) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -33,6 +33,8 @@ public class BookResponseDto {
         this.detail = detail;
         this.sold = sold;
         this.available = quantity != null && quantity > 0;
+        this.averageRating = averageRating != null ? averageRating : 0.0;
+        this.totalReviews = totalReviews != null ? totalReviews : 0;
     }
 
     // Getters and Setters
