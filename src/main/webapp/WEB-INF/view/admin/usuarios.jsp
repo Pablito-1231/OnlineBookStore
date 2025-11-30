@@ -1,160 +1,130 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="layouts/admin-layout-header.jsp" %>
-    
-    <!-- Header Glassmorphism -->
-    <div class="admin-page-header mb-4 glass-header-main">
-        <div class="d-flex justify-content-between align-items-start">
-            <div>
-                <nav aria-label="breadcrumb" class="mb-2">
-                    <ol class="breadcrumb mb-0 glass-breadcrumb">
-                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
-                        <li class="breadcrumb-item active">Usuarios</li>
-                    </ol>
-                </nav>
-                <h2 class="mb-2 fw-bold"><i class="fas fa-users me-2 text-warning"></i>Gestión de Usuarios</h2>
-                <p class="text-muted mb-0">Administra los usuarios y sus roles en el sistema</p>
-            </div>
-        </div>
-    </div>
+        <c:set var="pageTitle" value="Gestión de Usuarios" scope="request" />
+        <%@ include file="layouts/head-redesign.jsp" %>
 
-    <!-- Mensajes de éxito/error -->
-    <c:if test="${not empty message}">
-        <div class="modern-alert ${messageType == 'success' ? 'success' : 'error'}">
-            <div class="alert-icon">
-                <i class="fas ${messageType == 'success' ? 'fa-check' : 'fa-times'}"></i>
-            </div>
-            <div class="alert-content">
-                <strong>${messageType == 'success' ? '¡Éxito!' : '¡Error!'}</strong>
-                <p>${message}</p>
-            </div>
-            <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </c:if>
+            <body>
+                <div class="app-container">
+                    <%@ include file="sidebar.jsp" %>
 
-    <!-- Tabla de Usuarios -->
-    <div class="glass-card mt-3" style="overflow-x: hidden;">
-        <table class="table table-hover align-middle mb-0 modern-table">
-                    <thead>
-                        <tr>
-                            <th class="ps-4 py-3 fw-semibold">
-                                <i class="fas fa-user me-2 text-secondary"></i>
-                                Usuario
-                            </th>
-                            <th class="py-3 fw-semibold">
-                                <i class="fas fa-id-card me-2 text-secondary"></i>
-                                Información
-                            </th>
-                            <th class="py-3 fw-semibold">
-                                <i class="fas fa-shield-alt me-2 text-secondary"></i>
-                                Roles
-                            </th>
-                            <th class="py-3 fw-semibold">
-                                <i class="fas fa-toggle-on me-2 text-secondary"></i>
-                                Estado
-                            </th>
-                            <th class="text-end pe-4 py-3 fw-semibold">
-                                <i class="fas fa-cogs me-2 text-secondary"></i>
-                                Acciones
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="u" items="${users}">
-                            <tr>
-                                <td class="ps-4">
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-icon-placeholder me-3">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                        <div>
-                                            <div class="fw-bold text-dark">${u.username}</div>
-                                        </div>
+                        <main class="app-main">
+                            <!-- Top Bar -->
+                            <div class="top-bar">
+                                <div class="page-title">
+                                    <h1>Gestión de Usuarios</h1>
+                                    <p>Control de acceso y roles del sistema.</p>
+                                </div>
+                            </div>
+
+                            <!-- Alerts -->
+                            <c:if test="${not empty message}">
+                                <div
+                                    style="background: ${messageType eq 'success' ? '#dcfce7' : '#fee2e2'}; color: ${messageType eq 'success' ? '#166534' : '#991b1b'}; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; border: 1px solid ${messageType eq 'success' ? '#bbf7d0' : '#fecaca'};">
+                                    <i
+                                        class="fas ${messageType eq 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                                    <div>
+                                        <strong style="display: block;">${messageType eq 'success' ? '¡Operación
+                                            Exitosa!' : '¡Error!'}</strong>
+                                        <span style="font-size: 0.9rem;">${message}</span>
                                     </div>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${not empty u.customer}">
-                                            <div class="fw-bold">${u.customer.firstName} ${u.customer.lastName}</div>
-                                            <small class="text-muted"><i class="fas fa-envelope me-1"></i>${u.customer.email}</small>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="text-muted fst-italic">Sin perfil de cliente</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <c:forEach var="auth" items="${u.authorities}">
-                                        <span class="badge ${auth.role == 'ROLE_ADMIN' ? 'bg-danger-subtle text-danger' : 'bg-secondary-subtle text-secondary'} px-3 py-2">
-                                            <i class="fas ${auth.role == 'ROLE_ADMIN' ? 'fa-shield-alt' : 'fa-user'} me-1"></i>
-                                            ${auth.role}
-                                        </span>
-                                    </c:forEach>
-                                    <c:if test="${empty u.authorities}">
-                                        <span class="badge bg-secondary-subtle text-secondary px-3 py-2">Sin Rol</span>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${u.enabled}">
-                                            <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2">
-                                                <i class="fas fa-check-circle me-1"></i>Activo
-                                            </span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="badge rounded-pill bg-secondary-subtle text-secondary px-3 py-2">
-                                                <i class="fas fa-times-circle me-1"></i>Inactivo
-                                            </span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td class="text-end pe-4">
-                                    <div class="btn-group" role="group">
-                                        <c:choose>
-                                            <c:when test="${u.enabled}">
-                                                <a href="${pageContext.request.contextPath}/admin/usuarios/toggle?username=${u.username}" 
-                                                   class="btn btn-sm btn-outline-warning" 
-                                                   title="Deshabilitar usuario">
-                                                    <i class="fas fa-ban"></i>
-                                                </a>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="${pageContext.request.contextPath}/admin/usuarios/toggle?username=${u.username}" 
-                                                   class="btn btn-sm btn-outline-success" 
-                                                   title="Habilitar usuario">
-                                                    <i class="fas fa-check"></i>
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        
-                                                     <a href="${pageContext.request.contextPath}/admin/usuarios/edit?username=${u.username}" 
-                                                         class="btn btn-sm btn-edit" 
-                                           title="Editar usuario">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
+                                </div>
+                            </c:if>
 
-                                        <c:if test="${u.username != 'admin'}">
-                                            <a href="${pageContext.request.contextPath}/admin/usuarios/delete?username=${u.username}" 
-                                               class="btn btn-sm btn-outline-danger" 
-                                               title="Eliminar usuario" 
-                                               onclick="return confirm('¿Estás seguro de eliminar el usuario ${u.username}?')">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-                                        </c:if>
-                                        <c:if test="${u.username == 'admin'}">
-                                            <button class="btn btn-sm btn-outline-secondary" disabled title="No se puede eliminar el admin">
-                                                <i class="fas fa-lock"></i>
-                                            </button>
-                                        </c:if>
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-    </div>
+                            <div class="content-card">
+                                <div class="card-title">Usuarios Registrados</div>
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Usuario</th>
+                                                <th>Información Personal</th>
+                                                <th>Roles</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="u" items="${users}">
+                                                <tr>
+                                                    <td>
+                                                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                                            <div
+                                                                style="width: 32px; height: 32px; background: #eef2ff; color: #4f46e5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem;">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <span style="font-weight: 600;">${u.username}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${not empty u.customer}">
+                                                                <div style="font-weight: 500;">${u.customer.firstName}
+                                                                    ${u.customer.lastName}</div>
+                                                                <div
+                                                                    style="font-size: 0.8rem; color: var(--text-muted);">
+                                                                    ${u.customer.email}</div>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span
+                                                                    style="color: var(--text-light); font-style: italic;">Sin
+                                                                    perfil</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:forEach var="auth" items="${u.authorities}">
+                                                            <span
+                                                                class="badge ${auth.role == 'ROLE_ADMIN' ? 'badge-danger' : 'badge-info'}">
+                                                                ${auth.role == 'ROLE_ADMIN' ? 'ADMIN' : 'CLIENTE'}
+                                                            </span>
+                                                        </c:forEach>
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="badge ${u.enabled ? 'badge-success' : 'badge-warning'}">
+                                                            ${u.enabled ? 'Activo' : 'Inactivo'}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div style="display: flex; gap: 0.5rem;">
+                                                            <!-- Toggle Status -->
+                                                            <a href="${pageContext.request.contextPath}/admin/usuarios/toggle?username=${u.username}"
+                                                                class="btn btn-sm ${u.enabled ? 'btn-secondary' : 'btn-primary'}"
+                                                                title="${u.enabled ? 'Deshabilitar' : 'Habilitar'}">
+                                                                <i class="fas ${u.enabled ? 'fa-ban' : 'fa-check'}"></i>
+                                                            </a>
 
-<%@ include file="layouts/admin-layout-footer.jsp" %>
+                                                            <!-- Edit -->
+                                                            <a href="${pageContext.request.contextPath}/admin/usuarios/edit?username=${u.username}"
+                                                                class="btn btn-sm btn-secondary" title="Editar">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+
+                                                            <!-- Delete -->
+                                                            <c:if test="${u.username != 'admin'}">
+                                                                <a href="${pageContext.request.contextPath}/admin/usuarios/delete?username=${u.username}"
+                                                                    class="btn btn-sm btn-danger" title="Eliminar"
+                                                                    onclick="return confirm('¿Estás seguro de eliminar el usuario ${u.username}?')">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </c:if>
+                                                            <c:if test="${u.username == 'admin'}">
+                                                                <button class="btn btn-sm btn-secondary" disabled
+                                                                    style="opacity: 0.5; cursor: not-allowed;">
+                                                                    <i class="fas fa-lock"></i>
+                                                                </button>
+                                                            </c:if>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </main>
+                </div>
+            </body>
+
+            </html>

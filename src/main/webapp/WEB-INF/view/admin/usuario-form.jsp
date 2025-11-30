@@ -1,155 +1,109 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ include file="layouts/admin-layout-header.jsp" %>
-    
-    <div class="container-fluid p-0">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-3 glass-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/usuarios">Usuarios</a></li>
-                        <li class="breadcrumb-item active">${action eq 'edit' ? 'Editar' : 'Nuevo'}</li>
-                    </ol>
-                </nav>
+        <c:set var="pageTitle" value="${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'}" scope="request" />
+        <%@ include file="layouts/head-redesign.jsp" %>
 
-                <div class="glass-card mt-2">
-                    <div class="glass-header-main p-4">
-                        <h3 class="text-center font-weight-light my-2">
-                            <i class="fas fa-user-edit me-2 text-warning"></i>
-                            ${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'}
-                        </h3>
-                    </div>
-                    <div class="card-body p-5">
-                        
-                        <!-- Mensajes de éxito/error -->
-                        <c:if test="${not empty message}">
-                            <div class="alert alert-${messageType == 'success' ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
-                                <i class="fas fa-${messageType == 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
-                                ${message}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </c:if>
+            <body>
+                <div class="app-container">
+                    <%@ include file="sidebar.jsp" %>
 
-                        <form method="POST" action="${pageContext.request.contextPath}/admin/usuarios/edit/process">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            
-                            <!-- Username original (hidden) -->
-                            <input type="hidden" name="username" value="${user.username}">
-                            <!-- Username solo lectura -->
-                            <div class="mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-user me-2"></i>Username
-                                </label>
-                                <input type="text" class="form-control" 
-                                       value="${user.username}" readonly style="background-color: #f8f9fa;">
-                                <small class="text-muted">El username no puede ser modificado</small>
+                        <main class="app-main">
+                            <div class="top-bar">
+                                <div class="page-title">
+                                    <h1>${action eq 'edit' ? 'Editar Usuario' : 'Nuevo Usuario'}</h1>
+                                    <p>Gestiona la información y permisos del usuario.</p>
+                                </div>
                             </div>
 
-                            <!-- Información del Customer editable -->
-                            <c:if test="${not empty user.customer}">
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <label class="form-label">
-                                            <i class="fas fa-id-card me-2"></i>Nombre
-                                        </label>
-                                        <input type="text" name="firstName" class="form-control" 
-                                               value="${user.customer.firstName}" required
-                                               ${user.username == 'admin' ? 'readonly style="background-color: #f8f9fa;"' : ''}>
+                            <div class="content-card" style="max-width: 800px; margin: 0 auto;">
+                                <form method="POST"
+                                    action="${pageContext.request.contextPath}/admin/usuarios/edit/process">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <input type="hidden" name="username" value="${user.username}">
+
+                                    <div class="form-group">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" value="${user.username}" readonly
+                                            style="background-color: #f9fafb; color: var(--text-muted);">
+                                        <small style="color: var(--text-muted); font-size: 0.8rem;">El nombre de usuario
+                                            no se puede modificar.</small>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">
-                                            <i class="fas fa-id-card me-2"></i>Apellido
-                                        </label>
-                                        <input type="text" name="lastName" class="form-control" 
-                                               value="${user.customer.lastName}" required
-                                               ${user.username == 'admin' ? 'readonly style="background-color: #f8f9fa;"' : ''}>
+
+                                    <c:if test="${not empty user.customer}">
+                                        <div class="dashboard-grid"
+                                            style="grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 0;">
+                                            <div class="form-group">
+                                                <label class="form-label">Nombre</label>
+                                                <input type="text" name="firstName" class="form-control"
+                                                    value="${user.customer.firstName}" required ${user.username=='admin'
+                                                    ? 'readonly' : '' }>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Apellido</label>
+                                                <input type="text" name="lastName" class="form-control"
+                                                    value="${user.customer.lastName}" required ${user.username=='admin'
+                                                    ? 'readonly' : '' }>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control"
+                                                value="${user.customer.email}" required ${user.username=='admin'
+                                                ? 'readonly' : '' }>
+                                        </div>
+                                    </c:if>
+
+                                    <div class="dashboard-grid"
+                                        style="grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 0;">
+                                        <div class="form-group">
+                                            <label class="form-label">Rol</label>
+                                            <select name="role" class="form-control" ${user.username=='admin'
+                                                ? 'disabled' : '' }>
+                                                <option value="ROLE_USER" ${user.authorities[0] !=null &&
+                                                    user.authorities[0].role=='ROLE_USER' ? 'selected' : '' }>Usuario
+                                                </option>
+                                                <option value="ROLE_ADMIN" ${user.authorities[0] !=null &&
+                                                    user.authorities[0].role=='ROLE_ADMIN' ? 'selected' : '' }>
+                                                    Administrador</option>
+                                            </select>
+                                            <c:if test="${user.username == 'admin'}">
+                                                <input type="hidden" name="role" value="${user.authorities[0].role}">
+                                            </c:if>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Estado</label>
+                                            <div
+                                                style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                                <input type="checkbox" name="enabled" id="enabled" ${user.enabled
+                                                    ? 'checked' : '' } ${user.username=='admin' ? 'disabled' : '' }
+                                                    style="width: 20px; height: 20px;">
+                                                <label for="enabled" style="margin: 0; font-weight: 500;">Cuenta
+                                                    Activa</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="mb-4">
-                                    <label class="form-label">
-                                        <i class="fas fa-envelope me-2"></i>Email
-                                    </label>
-                                    <input type="email" name="email" class="form-control" 
-                                           value="${user.customer.email}" required
-                                           ${user.username == 'admin' ? 'readonly style="background-color: #f8f9fa;"' : ''}>
-                                </div>
-                            </c:if>
+                                    <c:if test="${user.username == 'admin'}">
+                                        <div
+                                            style="background: #fef3c7; color: #92400e; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                                            <i class="fas fa-exclamation-triangle"></i> <strong>Advertencia:</strong>
+                                            Este es el usuario administrador principal. Algunas opciones están
+                                            bloqueadas.
+                                        </div>
+                                    </c:if>
 
-                            <!-- Roles -->
-                            <div class="mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-shield-alt me-2"></i>Rol
-                                </label>
-                                <select name="role" class="form-select" ${user.username == 'admin' ? 'disabled style="background-color: #f8f9fa;"' : ''}>
-                                    <option value="ROLE_USER" ${user.authorities[0] != null && user.authorities[0].role == 'ROLE_USER' ? 'selected' : ''}>Usuario</option>
-                                    <option value="ROLE_ADMIN" ${user.authorities[0] != null && user.authorities[0].role == 'ROLE_ADMIN' ? 'selected' : ''}>Administrador</option>
-                                </select>
-                                <c:if test="${user.username == 'admin'}">
-                                    <input type="hidden" name="role" value="${user.authorities[0].role}">
-                                </c:if>
+                                    <div
+                                        style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                                        <a href="${pageContext.request.contextPath}/admin/usuarios"
+                                            class="btn btn-secondary">Cancelar</a>
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <!-- Estado (Habilitado/Deshabilitado) -->
-                            <div class="mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-toggle-on me-2"></i>Estado de la Cuenta
-                                </label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" name="enabled" 
-                                           id="enabled" ${user.enabled ? 'checked' : ''}
-                                           ${user.username == 'admin' ? 'disabled' : ''}>
-                                    <label class="form-check-label" for="enabled">
-                                        <span id="statusLabel">${user.enabled ? 'Activo' : 'Inactivo'}</span>
-                                    </label>
-                                </div>
-                                <small class="text-muted">
-                                    Los usuarios deshabilitados no pueden iniciar sesión
-                                </small>
-                            </div>
-
-                            <!-- Advertencia para usuario admin -->
-                            <c:if test="${user.username == 'admin'}">
-                                <div class="alert alert-warning" role="alert">
-                                    <i class="fas fa-exclamation-triangle me-2"></i>
-                                    <strong>Advertencia:</strong> Este es el usuario administrador principal del sistema.
-                                </div>
-                            </c:if>
-
-                            <!-- Botones -->
-                            <div class="d-flex justify-content-between mt-5">
-                                <a href="${pageContext.request.contextPath}/admin/usuarios" 
-                                   class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>Volver
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Guardar Cambios
-                                </button>
-                            </div>
-                        </form>
-
-                    </div>
+                        </main>
                 </div>
+            </body>
 
-            </div>
-        </div>
-    </div>
-
-<script>
-    // Actualizar label del estado dinámicamente
-    document.addEventListener('DOMContentLoaded', function(){
-        const el = document.getElementById('enabled');
-        if(el){
-            el.addEventListener('change', function() {
-                const label = document.getElementById('statusLabel');
-                if(label) label.textContent = this.checked ? 'Activo' : 'Inactivo';
-            });
-        }
-    });
-</script>
-<%@ include file="layouts/admin-layout-footer.jsp" %>
+            </html>

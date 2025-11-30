@@ -1,67 +1,363 @@
-/* admin-modern-v2.css — Nueva variante moderna y compacta para Admin
-   - Paleta cálida, tipografía moderna, layout CSS Grid
-   - Scoped under .admin-wrapper cuando es posible
-*/
-:root{
-  --bg:#fbf9f7;
-  --card:#fffdfb;
-  --accent:#b57a36;
-  --accent-2:#8f5f2d;
-  --muted:#7b8077;
-  --text:#3e2f22;
-  --glass: rgba(255,255,255,0.6);
+/* ============================================
+   ULTRA MODERN ADMIN DASHBOARD V2
+   Glassmorphism + Gradients + Animations
+   ============================================ */
+
+/* Variables Mejoradas */
+:root {
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --gradient-warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-info: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --glass-white: rgba(255, 255, 255, 0.95);
+    --glass-light: rgba(255, 255, 255, 0.1);
+    --shadow-glow: 0 8px 32px 0 rgba(102, 126, 234, 0.37);
 }
 
-html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:var(--bg);} 
-.admin-wrapper{min-height:100vh}
+/* Fondo Animado del Body */
+body.admin-wrapper {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
 
-/* Topbar */
-.admin-topbar{position:sticky;top:0;z-index:1100;background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(255,250,245,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.04);padding:.5rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.admin-topbar .brand{display:flex;align-items:center;gap:.5rem}
-.admin-topbar .brand h1{font-size:1rem;margin:0;color:var(--accent)}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-/* Sidebar modern */
-.admin-wrapper .glass-sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:linear-gradient(180deg,rgba(255,245,230,0.95),rgba(255,240,225,0.92));padding:1rem 0;border-right:1px solid rgba(181,122,60,0.06);box-shadow:2px 0 18px rgba(88,50,18,0.04);}
-.admin-wrapper .admin-brand{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem}
-.admin-wrapper .admin-brand .title{font-weight:700;color:var(--accent)}
-.admin-wrapper .admin-nav{padding:.5rem}
-.admin-wrapper .admin-nav-item{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;border-radius:10px;color:rgba(0,0,0,0.65);margin:.25rem 0;text-decoration:none}
-.admin-wrapper .admin-nav-item:hover{background:rgba(255,255,255,0.12);color:var(--text)}
-.admin-wrapper .admin-nav-item.active{background:linear-gradient(90deg, rgba(181,122,60,0.12), rgba(181,122,60,0.06));}
-.admin-wrapper .admin-nav-icon{width:30px;text-align:center}
+/* Main Content Area */
+.admin-main {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    max-height: 100vh;
+}
 
-/* Main layout */
-.admin-main{margin-left:240px;padding:1.25rem;min-height:100vh;}
-.admin-page-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}
-.admin-page-header h2{margin:0;font-size:1.4rem}
+/* Sidebar Ultra Modern */
+.sidebar {
+    width: 280px;
+    min-height: 100vh;
+    background: var(--glass-white) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+}
 
-/* Cards */
-.glass-card{background:var(--card);border-radius:12px;padding:1rem;box-shadow:0 8px 24px rgba(46,20,12,0.04);border:1px solid rgba(181,122,60,0.06)}
-.stat-icon-modern{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white}
+.sidebar-brand {
+    background: var(--gradient-primary);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease;
+}
 
-/* Table modern */
-.modern-table{width:100%;border-collapse:collapse;font-size:.95rem}
-.modern-table thead th{background:transparent;color:var(--muted);padding:.9rem;border-bottom:1px solid rgba(0,0,0,0.05);text-align:left}
-.modern-table tbody td{padding:.85rem;border-bottom:1px solid rgba(0,0,0,0.03);vertical-align:middle}
-.modern-table tbody tr:hover{background:linear-gradient(90deg, rgba(255,250,245,0.6), rgba(255,255,255,0.6))}
+.sidebar-brand:hover {
+    transform: scale(1.02);
+}
 
-/* Buttons */
-.btn-v2{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .75rem;border-radius:10px;border:none;font-weight:600}
-.btn-v2.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white}
-.btn-v2.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text)}
+.sidebar-brand h4 {
+    color: white;
+    font-weight: 800;
+    margin: 0;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
 
-/* Action group compact */
-.modern-table .btn-group .btn{width:36px;height:36px;padding:0;border-radius:8px}
+.sidebar-brand small {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
 
-/* Responsive tweaks */
-@media (max-width:992px){ .admin-wrapper .glass-sidebar{transform:translateX(-260px);transition:transform .25s ease}.admin-wrapper .glass-sidebar.show{transform:translateX(0)} .admin-main{margin-left:0;padding:.9rem} }
+/* Navigation Links */
+.nav-link {
+    color: #333 !important;
+    border-radius: 12px;
+    margin: 0.4rem 1rem;
+    padding: 0.9rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
 
-/* Utilities */
-.kv-muted{color:var(--muted)}
-.small{font-size:.85rem}
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-primary);
+    transition: left 0.3s ease;
+    z-index: -1;
+    opacity: 0.1;
+}
 
-/* Make sure theme-unified blue accents are softened inside admin */
-.admin-wrapper .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2)) !important;color:#fff !important}
-.admin-wrapper .text-primary{color:var(--accent) !important}
+.nav-link:hover::before {
+    left: 0;
+}
 
-/* End of admin-modern-v2 */
+.nav-link:hover {
+    color: #667eea !important;
+    transform: translateX(8px);
+    background: rgba(102, 126, 234, 0.08);
+}
+
+.nav-link.active {
+    background: var(--gradient-primary);
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.nav-link i {
+    width: 24px;
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+/* Glass Cards con Efecto WOW */
+.glass-card {
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+.stat-card-hover:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Glassmorphism */
+.glass-header-main {
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.glass-header-main h2 {
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Stat Icons Mejorados */
+.stat-icon-modern {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.glass-icon-card {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.1));
+    border: 2px solid rgba(255, 193, 7, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+.stat-card-hover:hover .stat-icon-modern {
+    transform: scale(1.15) rotate(-5deg);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+}
+
+/* Display Numbers con Animación */
+.display-6 {
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: numberPulse 2s ease-in-out infinite;
+}
+
+@keyframes numberPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Badges Modernos */
+.glass-badge {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 0.4rem 0.9rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+}
+
+/* Breadcrumb Glassmorphism */
+.glass-breadcrumb {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Buttons Ultra Modern */
+.btn {
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.btn-outline-warning {
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.btn-outline-warning:hover {
+    background: #ffc107;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+}
+
+/* Cards Mejoradas */
+.card {
+    border-radius: 20px;
+    border: none;
+    background: var(--glass-white);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+    border-radius: 20px 20px 0 0 !important;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Animaciones de Entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.glass-card {
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.glass-card:nth-child(1) { animation-delay: 0.1s; }
+.glass-card:nth-child(2) { animation-delay: 0.2s; }
+.glass-card:nth-child(3) { animation-delay: 0.3s; }
+.glass-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
+    
+    .admin-main {
+        padding: 1rem;
+    }
+    
+    .stat-icon-modern {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+    }
+}

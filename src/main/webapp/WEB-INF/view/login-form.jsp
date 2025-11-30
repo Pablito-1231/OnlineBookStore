@@ -1,342 +1,204 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="es">
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html>
+            <html lang="es">
 
-<head>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Iniciar Sesión - BookStore</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                    rel="stylesheet">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client-theme.css">
+                <style>
+                    body {
+                        background: #f3f4f6;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 100vh;
+                        padding: 1rem;
+                    }
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    .login-card {
+                        background: white;
+                        border-radius: var(--radius-xl);
+                        box-shadow: var(--shadow-lg);
+                        overflow: hidden;
+                        display: flex;
+                        max-width: 1000px;
+                        width: 100%;
+                        min-height: 600px;
+                    }
 
-  <title>Librería Online - Iniciar Sesión</title>
+                    .login-visual {
+                        flex: 1;
+                        background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+                        padding: 3rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        color: white;
+                        position: relative;
+                    }
 
-    <!-- Bootstrap 5 local -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    
-    .login-container {
-      max-width: 1000px;
-      width: 100%;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      display: flex;
-    }
-    
-    .login-image {
-      flex: 1;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)),
-                  url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800');
-      background-size: cover;
-      background-position: center;
-      padding: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      color: white;
-    }
-    
-    .login-image h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    
-    .login-image p {
-      font-size: 1.1rem;
-      opacity: 0.95;
-      line-height: 1.6;
-    }
-    
-    .login-image i {
-      font-size: 4rem;
-      margin-bottom: 30px;
-      opacity: 0.9;
-    }
-    
-    .login-form {
-      flex: 1;
-      padding: 60px 50px;
-    }
-    
-    .login-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    
-    .login-header h3 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
-    
-    .login-header p {
-      color: #7f8c8d;
-      font-size: 0.95rem;
-    }
-    
-    .alert {
-      border-radius: 10px;
-      padding: 12px 20px;
-      margin-bottom: 25px;
-      border: none;
-      font-size: 0.9rem;
-    }
-    
-    .alert-danger {
-      background: #fee;
-      color: #c33;
-    }
-    
-    .alert-success {
-      background: #efe;
-      color: #3c3;
-    }
-    
-    .form-group {
-      margin-bottom: 25px;
-    }
-    
-    .form-group label {
-      font-weight: 500;
-      color: #2c3e50;
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-      display: block;
-    }
-    
-    .input-wrapper {
-      position: relative;
-    }
-    
-    .form-control {
-      width: 100%;
-      height: 50px;
-      border: 2px solid #e0e6ed;
-      border-radius: 10px;
-      padding: 12px 20px 12px 45px;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-    
-    .form-control:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      outline: none;
-    }
-    
-    .input-icon {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #7f8c8d;
-      font-size: 1rem;
-      pointer-events: none;
-    }
-    
-    .form-check {
-      margin-bottom: 25px;
-    }
-    
-    .form-check-label {
-      color: #7f8c8d;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    
-    .btn-login {
-      width: 100%;
-      height: 50px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .btn-login:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-    }
-    
-    .divider {
-      text-align: center;
-      margin: 30px 0;
-      position: relative;
-    }
-    
-    .divider::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      width: 100%;
-      height: 1px;
-      background: #e0e6ed;
-    }
-    
-    .divider span {
-      background: white;
-      padding: 0 15px;
-      color: #7f8c8d;
-      font-size: 0.85rem;
-      position: relative;
-    }
-    
-    .register-link {
-      text-align: center;
-      margin-top: 25px;
-    }
-    
-    .register-link a {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    
-    .register-link a:hover {
-      color: #764ba2;
-    }
-    
-    @media (max-width: 768px) {
-      .login-image {
-        display: none;
-      }
-      
-      .login-form {
-        padding: 40px 30px;
-      }
-    }
-  </style>
+                    .login-visual::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: url('https://www.transparenttextures.com/patterns/cubes.png');
+                        opacity: 0.1;
+                    }
 
-</head>
+                    .login-form-container {
+                        flex: 1;
+                        padding: 3rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
 
-<body>
+                    .brand-logo {
+                        font-size: 2rem;
+                        font-weight: 800;
+                        margin-bottom: 1rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
 
-  <div class="login-container">
-    
-    <div class="login-image">
-      <i class="fas fa-book-reader"></i>
-      <h2>Librería Online</h2>
-      <p>Descubre miles de libros y vive nuevas aventuras. Tu próxima lectura favorita te está esperando.</p>
-    </div>
-    
-    <div class="login-form">
-      
-      <div class="login-header">
-        <h3>Iniciar Sesión</h3>
-        <p>Ingresa tus credenciales para continuar</p>
-      </div>
-      
-      <c:if test="${param.error != null}">
-        <div class="alert alert-danger">
-          <i class="fas fa-exclamation-circle"></i> Credenciales incorrectas. Verifica tu usuario y contraseña.
-        </div>
-      </c:if>
-      <c:if test="${param.errorMsg != null}">
-        <div class="alert alert-danger">
-          <i class="fas fa-exclamation-circle"></i> ${param.errorMsg}
-        </div>
-      </c:if>
-      
-      <c:if test="${param.logout != null}">
-        <div class="alert alert-success">
-          <i class="fas fa-check-circle"></i> ¡Sesión cerrada exitosamente!
-        </div>
-      </c:if>
-      
-      <c:if test="${param.disabled != null}">
-        <div class="alert alert-danger">
-          <i class="fas fa-user-lock"></i> <strong>Cuenta inhabilitada.</strong> Tu cuenta ha sido deshabilitada por un administrador. Contacta con soporte para más información.
-        </div>
-      </c:if>
-      
-      <c:if test="${message != null}">
-        <div class="alert alert-success">
-          <i class="fas fa-check-circle"></i> ${message}
-        </div>
-      </c:if>
-      
-      <form action="${pageContext.request.contextPath}/authenticateTheUser" method="post">
-        
-        <!-- Token CSRF -->
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        
-        <div class="form-group">
-          <label>Usuario o Correo</label>
-          <div class="input-wrapper">
-            <i class="fas fa-user input-icon"></i>
-            <input type="text" class="form-control" name="username" placeholder="Ingresa tu usuario" required autofocus>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Contraseña</label>
-          <div class="input-wrapper">
-            <i class="fas fa-lock input-icon"></i>
-            <input type="password" class="form-control" name="password" placeholder="Ingresa tu contraseña" required>
-          </div>
-        </div>
-        
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="remember">
-          <label class="form-check-label" for="remember">Recordar mis credenciales</label>
-        </div>
-        
-        <button type="submit" class="btn-login">Ingresar</button>
-        
-      </form>
-      
-      <div class="divider">
-        <span>¿No tienes cuenta?</span>
-      </div>
-      
-      <div class="register-link">
-        <a href="${pageContext.request.contextPath}/register">
-          <i class="fas fa-user-plus"></i> Crear cuenta nueva
-        </a>
-      </div>
-      
-    </div>
-    
-  </div>
+                    .form-group {
+                        margin-bottom: 1.5rem;
+                    }
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    .form-label {
+                        display: block;
+                        margin-bottom: 0.5rem;
+                        font-weight: 500;
+                        color: var(--text-main);
+                    }
 
-</body>
+                    .form-control {
+                        width: 100%;
+                        padding: 0.75rem 1rem;
+                        border: 1px solid var(--border-color);
+                        border-radius: var(--radius-md);
+                        font-family: inherit;
+                        transition: all 0.2s;
+                    }
 
-</html>
+                    .form-control:focus {
+                        outline: none;
+                        border-color: var(--primary);
+                        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                    }
+
+                    .btn-primary {
+                        width: 100%;
+                        padding: 0.75rem;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: var(--radius-md);
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background 0.2s;
+                    }
+
+                    .btn-primary:hover {
+                        background: var(--primary-hover);
+                    }
+
+                    .alert {
+                        padding: 1rem;
+                        border-radius: var(--radius-md);
+                        margin-bottom: 1.5rem;
+                        font-size: 0.9rem;
+                    }
+
+                    .alert-danger {
+                        background: #fee2e2;
+                        color: #991b1b;
+                    }
+
+                    .alert-success {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
+
+                    @media (max-width: 768px) {
+                        .login-visual {
+                            display: none;
+                        }
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="login-card">
+                    <div class="login-visual">
+                        <div class="brand-logo">
+                            <i class="fas fa-book-open"></i> BookStore
+                        </div>
+                        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">Tu próxima aventura
+                            comienza aquí.
+                        </h2>
+                        <p style="font-size: 1.1rem; opacity: 0.9;">Accede a miles de libros, gestiona tus pedidos y
+                            descubre nuevas
+                            historias.</p>
+                    </div>
+
+                    <div class="login-form-container">
+                        <div style="margin-bottom: 2rem;">
+                            <h1
+                                style="font-size: 1.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+                                Bienvenido de nuevo</h1>
+                            <p style="color: var(--text-muted);">Ingresa tus credenciales para continuar</p>
+                        </div>
+
+                        <c:if test="${param.error != null}">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle"></i> Usuario o contraseña incorrectos.
+                            </div>
+                        </c:if>
+                        <c:if test="${param.logout != null}">
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i> Has cerrado sesión correctamente.
+                            </div>
+                        </c:if>
+
+                        <form action="${pageContext.request.contextPath}/authenticateTheUser" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                            <div class="form-group">
+                                <label class="form-label">Usuario</label>
+                                <input type="text" name="username" class="form-control" placeholder="nombre.usuario"
+                                    required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" placeholder="••••••••"
+                                    required>
+                            </div>
+
+                            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                        </form>
+
+                        <div style="margin-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                            ¿No tienes una cuenta? <a href="${pageContext.request.contextPath}/register"
+                                style="color: var(--primary); font-weight: 600; text-decoration: none;">Regístrate
+                                aquí</a>
+                        </div>
+                    </div>
+                </div>
+            </body>
+
+            </html>

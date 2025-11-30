@@ -1,329 +1,136 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="es">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html>
+            <html lang="es">
 
-<head>
+            <c:set var="pageTitle" value="Actualizar Perfil - BookStore" scope="request" />
+            <%@ include file="layouts/client-head.jsp" %>
 
-  <!-- CONFIGURACIÓN UTF-8 PARA EVITAR SÍMBOLOS RAROS -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <body>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    <%@ include file="layouts/client-nav.jsp" %>
 
-  <title>Refugio literario</title>
+                        <div class="container" style="max-width: 800px; margin: 3rem auto; padding: 0 1.5rem;">
 
-  <!-- Fuentes personalizadas -->
-  <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+                            <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                                <h1 class="section-title">Actualizar Perfil</h1>
+                                <p class="section-subtitle">Modifica tu información personal.</p>
+                            </div>
 
-  <!-- Estilos personalizados -->
-  <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/theme-unified.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/customer-profile.css" rel="stylesheet">
+                            <div
+                                style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 2rem;">
 
-  <!-- Estilos para tablas -->
-  <link href="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+                                <c:if test="${message != null}">
+                                    <div class="alert ${message.contains('Error') || message.contains('error') ? 'alert-danger' : 'alert-success'}"
+                                        style="margin-bottom: 2rem; padding: 1rem; border-radius: var(--radius-md); background: ${message.contains('Error') ? '#fee2e2' : '#dcfce7'}; color: ${message.contains('Error') ? '#991b1b' : '#166534'};">
+                                        <i
+                                            class="fas ${message.contains('Error') || message.contains('error') ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                                        <c:out value="${message}" />
+                                    </div>
+                                </c:if>
 
-</head>
+                                <form:form method="POST" modelAttribute="customerData"
+                                    action="${pageContext.request.contextPath}/customers/profile/update/process">
 
-<body id="page-top">
+                                    <form:hidden path="role" value="ROLE_CUSTOMER" />
+                                    <form:hidden path="username" />
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-  <!-- CONTENEDOR PRINCIPAL -->
-  <div id="wrapper">
+                                    <div
+                                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Nombre</label>
+                                            <form:input path="firstName" class="form-control"
+                                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+                                                placeholder="Ingresa tu nombre" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Apellido</label>
+                                            <form:input path="lastName" class="form-control"
+                                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+                                                placeholder="Ingresa tu apellido" />
+                                        </div>
+                                    </div>
 
-    <!-- BARRA LATERAL -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                                        <label class="form-label"
+                                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Usuario</label>
+                                        <input type="text" class="form-control" value="${customerData.username}"
+                                            disabled
+                                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--light); color: var(--text-muted);" />
+                                    </div>
 
-      <!-- Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}/customers">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Tienda de Libros</div>
-      </a>
+                                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                                        <label class="form-label"
+                                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Correo
+                                            Electrónico</label>
+                                        <form:input path="email" class="form-control"
+                                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+                                            placeholder="correo@ejemplo.com" />
+                                    </div>
 
-      <hr class="sidebar-divider my-0">
+                                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                                        <label class="form-label"
+                                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Teléfono</label>
+                                        <form:input path="mobile" class="form-control"
+                                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+                                            placeholder="3001234567" />
+                                    </div>
 
-      <!-- MENU INICIO -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/customers">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Inicio</span>
-        </a>
-      </li>
+                                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                                        <label class="form-label"
+                                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Dirección</label>
+                                        <form:textarea path="address" class="form-control"
+                                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); min-height: 100px;"
+                                            placeholder="Ingresa tu dirección completa" />
+                                    </div>
 
-      <hr class="sidebar-divider">
+                                    <div
+                                        style="background: var(--light); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+                                        <div
+                                            style="display: flex; gap: 0.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                                            <i class="fas fa-info-circle" style="margin-top: 0.2rem;"></i>
+                                            <p style="margin: 0;"><strong>Nota de seguridad:</strong> Debes ingresar tu
+                                                contraseña actual para
+                                                confirmar los cambios.</p>
+                                        </div>
 
-      <div class="sidebar-heading">
-        Interfaz
-      </div>
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Confirmar
+                                                Contraseña</label>
+                                            <form:password path="password" class="form-control"
+                                                style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+                                                placeholder="Ingresa tu contraseña actual" required="required" />
+                                        </div>
+                                    </div>
 
-      <!-- PERFIL -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-user"></i>
-          <span>Perfil</span>
-        </a>
+                                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                                        <a href="${pageContext.request.contextPath}/customers/profile"
+                                            class="btn-secondary"
+                                            style="text-decoration: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); background: var(--light); color: var(--text-main); font-weight: 600;">
+                                            Cancelar
+                                        </a>
+                                        <button type="submit" class="btn-primary"
+                                            style="width: auto; padding: 0.75rem 2rem; border: none; border-radius: var(--radius-md); background: var(--primary); color: white; font-weight: 600; cursor: pointer;"
+                                            onclick="return confirm('¿Deseas actualizar tu perfil?');">
+                                            Guardar Cambios
+                                        </button>
+                                    </div>
 
-        <div id="collapseTwo" class="collapse">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Opciones del perfil:</h6>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/customers/profile">Ver perfil</a>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/customers/profile/update">Actualizar perfil</a>
-          </div>
-        </div>
-      </li>
+                                </form:form>
+                            </div>
 
-      <!-- LIBROS DISPONIBLES -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/books">
-          <i class="fas fa-fw fa-book"></i>
-          <span>Libros disponibles</span></a>
-      </li>
+                        </div>
 
-      <!-- LIBROS COMPRADOS -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/customers/books">
-          <i class="fas fa-fw fa-book"></i>
-          <span>Libros comprados</span></a>
-      </li>
+                        <footer class="client-footer">
+                            <a href="#" class="footer-brand">BookStore</a>
+                            <p>&copy; 2025 BookStore. Todos los derechos reservados.</p>
+                        </footer>
 
-      <!-- CARRITO -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/customers/cart">
-          <i class="fas fa-fw fa-shopping-cart"></i>
-          <span>Carrito</span>
-        </a>
-      </li>
+                </body>
 
-      <!-- TRANSACCIONES -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/customers/transactions">
-          <i class="fas fa-fw fa-shopping-cart"></i>
-          <span>Transacciones</span></a>
-      </li>
-
-      <hr class="sidebar-divider">
-
-      <div class="sidebar-heading">
-        Seguridad
-      </div>
-
-      <!-- CAMBIO DE CONTRASEÑA -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/customers/password">
-          <i class="fas fa-fw fa-key"></i>
-          <span>Cambiar contraseña</span>
-        </a>
-      </li>
-
-      <!-- CERRAR SESIÓN -->
-      <li class="nav-item" onClick="return confirm('¿Seguro que deseas cerrar sesión?')">
-        <a class="nav-link" href="${pageContext.request.contextPath}/logout">
-          <i class="fas fa-fw fa-sign-out-alt"></i>
-          <span>Cerrar sesión</span>
-        </a>
-      </li>
-
-      <hr class="sidebar-divider d-none d-md-block">
-
-    </ul>
-    <!-- FIN DE BARRA LATERAL -->
-
-    <!-- CONTENIDO -->
-    <div id="content-wrapper" class="d-flex flex-column">
-      <div id="content">
-
-        <!-- NAV SUPERIOR -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow">
-
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- BUSCADOR -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3" method="get" action="${pageContext.request.contextPath}/customers/books/search">
-            <div class="input-group">
-              <input type="text" name="name" class="form-control bg-light border-0 small" placeholder="Buscar..." />
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <ul class="navbar-nav ml-auto">
-
-            <!-- INFORMACIÓN DEL USUARIO -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                  <c:out value="${customerData.firstName} ${customerData.lastName}" />
-                </span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-              </a>
-
-              <div class="dropdown-menu dropdown-menu-right shadow">
-                <a class="dropdown-item" href="${pageContext.request.contextPath}/customers/profile">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Perfil
-                </a>
-
-                <div class="dropdown-divider"></div>
-
-                <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar sesión
-                </a>
-              </div>
-            </li>
-          </ul>
-
-        </nav>
-        <!-- FIN NAV -->
-
-        <!-- CONTENIDO PRINCIPAL -->
-        <div class="container-fluid">
-
-          <div class="profile-container">
-            
-            <div class="profile-header">
-              <h1>
-                <i class="fas fa-user-edit"></i>
-                Actualizar Perfil
-              </h1>
-              <p>Modifica tu información personal</p>
-            </div>
-
-            <div class="profile-card">
-              <div class="profile-card-header">
-                <h2>
-                  <i class="fas fa-edit"></i>
-                  Editar Información
-                </h2>
-              </div>
-              
-              <div class="profile-card-body">
-
-                <!-- FORMULARIO DE ACTUALIZACIÓN -->
-                <form:form method="POST" modelAttribute="customerData" action="/customers/profile/update/process">
-                  
-                  <form:hidden path="role" value="ROLE_CUSTOMER" />
-                  <form:hidden path="username" />
-
-                  <!-- Mensaje de estado -->
-                  <c:if test="${message != null}">
-                    <div class="profile-alert ${message.contains('Error') || message.contains('error') ? 'error' : 'success'}">
-                      <i class="fas ${message.contains('Error') || message.contains('error') ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
-                      <c:out value="${message}" />
-                    </div>
-                  </c:if>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-user"></i>
-                      Nombre:
-                    </label>
-                    <form:input path="firstName" class="profile-input" placeholder="Ingresa tu nombre" />
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-user"></i>
-                      Apellido:
-                    </label>
-                    <form:input path="lastName" class="profile-input" placeholder="Ingresa tu apellido" />
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-at"></i>
-                      Usuario:
-                    </label>
-                    <input type="text" class="profile-input readonly" value="${customerData.username}" disabled />
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-envelope"></i>
-                      Correo:
-                    </label>
-                    <form:input path="email" class="profile-input" placeholder="correo@ejemplo.com" />
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-phone"></i>
-                      Teléfono:
-                    </label>
-                    <form:input path="mobile" class="profile-input" placeholder="3001234567" />
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-map-marker-alt"></i>
-                      Dirección:
-                    </label>
-                    <form:textarea path="address" class="profile-input" placeholder="Ingresa tu dirección completa" />
-                  </div>
-
-                  <div class="profile-info">
-                    <i class="fas fa-info-circle"></i>
-                    <p><strong>Nota de seguridad:</strong> Debes ingresar tu contraseña actual para confirmar los cambios.</p>
-                  </div>
-
-                  <div class="profile-field">
-                    <label class="profile-label">
-                      <i class="fas fa-lock"></i>
-                      Confirmar Contraseña:
-                    </label>
-                    <form:password path="password" class="profile-input" placeholder="Ingresa tu contraseña actual" required="required" />
-                  </div>
-
-                  <div class="profile-actions">
-                    <a href="${pageContext.request.contextPath}/customers/profile" 
-                       class="profile-btn profile-btn-secondary">
-                      <i class="fas fa-times"></i>
-                      Cancelar
-                    </a>
-                    <button type="submit" class="profile-btn profile-btn-success"
-                            onclick="return confirm('¿Deseas actualizar tu perfil?');">
-                      <i class="fas fa-save"></i>
-                      Guardar Cambios
-                    </button>
-                  </div>
-
-                </form:form>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-      <!-- FOOTER -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto text-center">
-          <span>Copyright © </span>
-        </div>
-      </footer>
-
-    </div>
-  </div>
-
-  <!-- JS -->
-  <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/sb-admin-2.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="${pageContext.request.contextPath}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
-
-</body>
-</html>
+            </html>

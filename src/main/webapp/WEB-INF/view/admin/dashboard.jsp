@@ -1,168 +1,208 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="layouts/admin-layout-header.jsp" %>
-<fmt:setLocale value="es_CO"/>
-        
-        <!-- Header Glassmorphism -->
-        <div class="admin-page-header mb-4 glass-header-main">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <nav aria-label="breadcrumb" class="mb-2">
-                        <ol class="breadcrumb mb-0 glass-breadcrumb">
-                            <li class="breadcrumb-item active"><i class="fas fa-home me-1"></i>Dashboard</li>
-                        </ol>
-                    </nav>
-                    <h2 class="mb-2 fw-bold"><i class="fas fa-tachometer-alt me-2 text-warning"></i>Panel de Control</h2>
-                    <p class="text-muted mb-0">Resumen general de la actividad de la librería</p>
-                </div>
-                <button class="btn btn-outline-warning shadow-sm" onclick="location.reload()">
-                    <i class="fas fa-sync-alt me-2"></i>Actualizar
-                </button>
-            </div>
-        </div>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+            <c:set var="pageTitle" value="Dashboard" scope="request" />
+            <%@ include file="layouts/head-redesign.jsp" %>
+                <fmt:setLocale value="es_CO" />
 
-        <!-- Estadísticas Glassmorphism -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="glass-card stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern glass-icon-card">
-                                <i class="fas fa-users text-warning"></i>
-                            </div>
-                            <span class="badge glass-badge text-warning">
-                                <i class="fas fa-arrow-up me-1"></i>12%
-                            </span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">${totalUsuarios}</h3>
-                        <p class="text-muted mb-0 small">Usuarios Registrados</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="glass-card stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern glass-icon-card">
-                                <i class="fas fa-book text-warning"></i>
-                            </div>
-                            <span class="badge glass-badge text-warning">
-                                <i class="fas fa-arrow-up me-1"></i>8%
-                            </span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">${librosDisponibles}</h3>
-                        <p class="text-muted mb-0 small">Libros Disponibles</p>
-                    </div>
-                </div>
-            </div>
+                <body>
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-warning-subtle">
-                                <i class="fas fa-shopping-cart text-warning"></i>
-                            </div>
-                            <span class="badge bg-success-subtle text-success">
-                                <i class="fas fa-arrow-up me-1"></i>24%
-                            </span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">${comprasTotales}</h3>
-                        <p class="text-muted mb-0 small">Compras Realizadas</p>
-                    </div>
-                </div>
-            </div>
+                    <div class="app-container">
+                        <!-- SIDEBAR -->
+                        <%@ include file="sidebar.jsp" %>
 
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-danger-subtle">
-                                <i class="fas fa-money-bill-wave text-danger"></i>
-                            </div>
-                            <span class="badge bg-success-subtle text-success">
-                                <i class="fas fa-arrow-up me-1"></i>18%
-                            </span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ingresosTotales}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
-                        <p class="text-muted mb-0 small">Ingresos Totales</p>
-                    </div>
-                </div>
-            </div>
+                            <!-- MAIN CONTENT -->
+                            <main class="app-main">
+                                <!-- TOP BAR -->
+                                <div class="top-bar">
+                                    <div class="page-title">
+                                        <h1>Panel de Control</h1>
+                                        <p>Bienvenido de nuevo, aquí está lo que sucede hoy.</p>
+                                    </div>
+                                    <button class="action-btn" onclick="location.reload()">
+                                        <i class="fas fa-sync-alt"></i> Actualizar Datos
+                                    </button>
+                                </div>
 
-        </div>
+                                <!-- STATS GRID -->
+                                <div class="dashboard-grid">
+                                    <!-- Card 1: Usuarios -->
+                                    <div class="stat-card">
+                                        <div class="stat-header">
+                                            <div class="stat-icon users">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <span class="stat-trend trend-up">
+                                                <i class="fas fa-arrow-up"></i> 12%
+                                            </span>
+                                        </div>
+                                        <div class="stat-value">${totalUsuarios}</div>
+                                        <div class="stat-label">Usuarios Totales</div>
+                                    </div>
 
-        <!-- Indicadores adicionales -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-info-subtle">
-                                <i class="fas fa-calendar-check text-info"></i>
-                            </div>
-                            <span class="badge bg-info-subtle text-info">Mes actual</span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">${comprasMesActual}</h3>
-                        <p class="text-muted mb-0 small">Compras del Mes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-success-subtle">
-                                <i class="fas fa-sack-dollar text-success"></i>
-                            </div>
-                            <span class="badge bg-success-subtle text-success">Mes actual</span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ingresosMesActual}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
-                        <p class="text-muted mb-0 small">Ingresos del Mes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 stat-card-hover">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="stat-icon-modern bg-secondary-subtle">
-                                <i class="fas fa-receipt text-secondary"></i>
-                            </div>
-                            <span class="badge bg-secondary-subtle text-secondary">Promedio del mes</span>
-                        </div>
-                        <h3 class="mb-1 fw-bold display-6">$ <fmt:formatNumber value="${ticketPromedioMes}" type="number" groupingUsed="true" minFractionDigits="0"/> COP</h3>
-                        <p class="text-muted mb-0 small">Ticket Promedio</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    <!-- Card 2: Libros -->
+                                    <div class="stat-card">
+                                        <div class="stat-header">
+                                            <div class="stat-icon books">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <span class="stat-trend trend-up">
+                                                <i class="fas fa-arrow-up"></i> 8%
+                                            </span>
+                                        </div>
+                                        <div class="stat-value">${librosDisponibles}</div>
+                                        <div class="stat-label">Libros en Catálogo</div>
+                                    </div>
 
-        <!-- Acciones Rápidas -->
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom py-3">
-                <h5 class="mb-0 fw-semibold">
-                    <i class="fas fa-bolt me-2 text-warning"></i>Acciones Rápidas
-                </h5>
-            </div>
-            <div class="card-body p-4">
-                <div class="d-flex gap-3 flex-wrap">
-                    <a href="${pageContext.request.contextPath}/admin/libros/add" class="btn btn-primary btn-lg flex-grow-1">
-                        <i class="fas fa-plus-circle me-2"></i>Agregar Libro
-                    </a>
-                    <a href="${pageContext.request.contextPath}/admin/libros" class="btn btn-outline-success btn-lg flex-grow-1">
-                        <i class="fas fa-book me-2"></i>Ver Catálogo
-                    </a>
-                    <a href="${pageContext.request.contextPath}/admin/usuarios" class="btn btn-outline-warning btn-lg flex-grow-1">
-                        <i class="fas fa-users-cog me-2"></i>Gestionar Usuarios
-                    </a>
-                    <a href="${pageContext.request.contextPath}/admin/estadisticas" class="btn btn-outline-secondary btn-lg flex-grow-1">
-                        <i class="fas fa-chart-line me-2"></i>Ver Reportes
-                    </a>
-                </div>
-            </div>
-        </div>
+                                    <!-- Card 3: Ventas -->
+                                    <div class="stat-card">
+                                        <div class="stat-header">
+                                            <div class="stat-icon sales">
+                                                <i class="fas fa-shopping-bag"></i>
+                                            </div>
+                                            <span class="stat-trend trend-up">
+                                                <i class="fas fa-arrow-up"></i> 24%
+                                            </span>
+                                        </div>
+                                        <div class="stat-value">${comprasTotales}</div>
+                                        <div class="stat-label">Ventas Realizadas</div>
+                                    </div>
 
-    </main>
-<%@ include file="layouts/admin-layout-footer.jsp" %>
+                                    <!-- Card 4: Ingresos -->
+                                    <div class="stat-card">
+                                        <div class="stat-header">
+                                            <div class="stat-icon revenue">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </div>
+                                            <span class="stat-trend trend-up">
+                                                <i class="fas fa-arrow-up"></i> 18%
+                                            </span>
+                                        </div>
+                                        <div class="stat-value">$
+                                            <fmt:formatNumber value="${ingresosTotales}" type="number"
+                                                groupingUsed="true" minFractionDigits="0" />
+                                        </div>
+                                        <div class="stat-label">Ingresos Totales</div>
+                                    </div>
+                                </div>
+
+                                <!-- CONTENT GRID -->
+                                <div class="content-grid">
+                                    <!-- Chart Section -->
+                                    <div class="content-card">
+                                        <div class="card-title">
+                                            <span>Resumen de Ventas</span>
+                                            <select
+                                                style="padding: 0.25rem; border-radius: 4px; border: 1px solid #ddd;">
+                                                <option>Últimos 6 meses</option>
+                                                <option>Este año</option>
+                                            </select>
+                                        </div>
+                                        <div style="position: relative; height: 300px; width: 100%;">
+                                            <canvas id="salesChart"></canvas>
+                                        </div>
+                                    </div>
+
+                                    <!-- Quick Actions -->
+                                    <div class="content-card">
+                                        <div class="card-title">Acciones Rápidas</div>
+                                        <div class="actions-grid">
+                                            <a href="${pageContext.request.contextPath}/admin/libros/add"
+                                                class="quick-action-card">
+                                                <div class="quick-action-icon"><i class="fas fa-plus-circle"></i></div>
+                                                <div class="quick-action-text">Nuevo Libro</div>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/admin/usuarios"
+                                                class="quick-action-card">
+                                                <div class="quick-action-icon"><i class="fas fa-user-plus"></i></div>
+                                                <div class="quick-action-text">Gestionar Usuarios</div>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/admin/estadisticas"
+                                                class="quick-action-card">
+                                                <div class="quick-action-icon"><i class="fas fa-file-alt"></i></div>
+                                                <div class="quick-action-text">Ver Reportes</div>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/admin/reviews"
+                                                class="quick-action-card">
+                                                <div class="quick-action-icon"><i class="fas fa-star"></i></div>
+                                                <div class="quick-action-text">Moderar Reseñas</div>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                            style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                                            <div class="card-title" style="font-size: 1rem; margin-bottom: 1rem;">
+                                                Métricas del
+                                                Mes</div>
+                                            <div
+                                                style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                <span style="color: var(--text-muted);">Ventas este mes</span>
+                                                <span style="font-weight: 600;">${comprasMesActual}</span>
+                                            </div>
+                                            <div
+                                                style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                <span style="color: var(--text-muted);">Ingresos este mes</span>
+                                                <span style="font-weight: 600; color: var(--success);">$
+                                                    <fmt:formatNumber value="${ingresosMesActual}" type="number"
+                                                        groupingUsed="true" minFractionDigits="0" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </main>
+                    </div>
+
+                    <script>
+                        // Configuración del Gráfico de Ventas
+                        const ctx = document.getElementById('salesChart').getContext('2d');
+                        const salesChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                                datasets: [{
+                                    label: 'Ventas ($)',
+                                    data: [12000, 19000, 15000, 25000, 22000, 30000], // Datos de ejemplo
+                                    borderColor: '#4f46e5',
+                                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    fill: true,
+                                    pointBackgroundColor: '#ffffff',
+                                    pointBorderColor: '#4f46e5',
+                                    pointBorderWidth: 2,
+                                    pointRadius: 4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        grid: {
+                                            borderDash: [2, 4],
+                                            color: '#f3f4f6'
+                                        },
+                                        ticks: {
+                                            callback: function (value) {
+                                                return '$' + value / 1000 + 'k';
+                                            }
+                                        }
+                                    },
+                                    x: {
+                                        grid: {
+                                            display: false
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </body>
+
+                </html>

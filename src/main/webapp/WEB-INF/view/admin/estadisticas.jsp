@@ -1,92 +1,113 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <c:set var="pageTitle" value="Análisis de Ventas" scope="request" />
+        <%@ include file="layouts/head-redesign.jsp" %>
 
-<%@ include file="layouts/admin-layout-header.jsp" %>
-    
-    <!-- Header Glassmorphism -->
-    <div class="admin-page-header mb-4 glass-header-main">
-        <div class="d-flex justify-content-between align-items-start">
-            <div>
-                <h2 class="mb-1"><i class="fas fa-chart-bar me-2 text-warning"></i>Estadísticas del Sistema</h2>
-                <p class="text-muted mb-0">Visión general del rendimiento de la librería</p>
-            </div>
-        </div>
-    </div>
+            <body>
+                <div class="app-container">
+                    <%@ include file="sidebar.jsp" %>
 
-    <!-- Estadísticas principales Glassmorphism -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="glass-card h-100">
-                <div class="glass-icon-card">
-                    <i class="fas fa-book text-warning"></i>
-                </div>
-                <div class="admin-stat-value">${totalLibros}</div>
-                <div class="admin-stat-label">Total de Libros</div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="glass-card h-100">
-                <div class="glass-icon-card">
-                    <i class="fas fa-check-circle text-warning"></i>
-                </div>
-                <div class="admin-stat-value">${librosDisponibles}</div>
-                <div class="admin-stat-label">Libros Disponibles</div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="glass-card h-100">
-                <div class="glass-icon-card">
-                    <i class="fas fa-exclamation-triangle text-warning"></i>
-                </div>
-                <div class="admin-stat-value">${librosAgotados}</div>
-                <div class="admin-stat-label">Libros Agotados</div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="glass-card h-100">
-                <div class="glass-icon-card">
-                    <i class="fas fa-users text-warning"></i>
-                </div>
-                <div class="admin-stat-value">${totalUsuarios}</div>
-                <div class="admin-stat-label">Usuarios Registrados</div>
-            </div>
-        </div>
-    </div>
+                        <main class="app-main">
+                            <div class="top-bar">
+                                <div class="page-title">
+                                    <h1>Análisis y Reportes</h1>
+                                    <p>Visión detallada del rendimiento del negocio.</p>
+                                </div>
+                                <button class="action-btn" onclick="location.reload()">
+                                    <i class="fas fa-sync-alt"></i> Actualizar
+                                </button>
+                            </div>
 
-    <!-- Charts Section (Placeholder for future) -->
-    <div class="row">
-        <div class="col-lg-8 mb-4">
-            <div class="card shadow-sm border-0 rounded-lg">
-                <div class="card-header bg-white py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Resumen de Actividad</h6>
+                            <!-- Stats Grid -->
+                            <div class="dashboard-grid" style="grid-template-columns: repeat(4, 1fr);">
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon books"><i class="fas fa-book"></i></div>
+                                    </div>
+                                    <div class="stat-value">${totalLibros}</div>
+                                    <div class="stat-label">Total Libros</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon sales"><i class="fas fa-check"></i></div>
+                                    </div>
+                                    <div class="stat-value">${librosDisponibles}</div>
+                                    <div class="stat-label">Disponibles</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon revenue"><i class="fas fa-exclamation-triangle"></i></div>
+                                    </div>
+                                    <div class="stat-value">${librosAgotados}</div>
+                                    <div class="stat-label">Agotados</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header">
+                                        <div class="stat-icon users"><i class="fas fa-users"></i></div>
+                                    </div>
+                                    <div class="stat-value">${totalUsuarios}</div>
+                                    <canvas id="pieChart"></canvas>
+                                </div>
+                            </div>
                 </div>
-                <div class="card-body">
-                    <div class="text-center py-5 text-muted">
-                        <i class="fas fa-chart-area fa-3x mb-3"></i>
-                        <p>Gráficos detallados próximamente...</p>
-                    </div>
+                </main>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow-sm border-0 rounded-lg">
-                <div class="card-header bg-white py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Distribución por Tipo</h6>
-                </div>
-                <div class="card-body">
-                    <div class="text-center py-5 text-muted">
-                        <i class="fas fa-chart-pie fa-3x mb-3"></i>
-                        <p>Gráfico circular próximamente...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Información adicional -->
-    <div class="alert alert-info border-0 shadow-sm rounded-lg">
-        <i class="fas fa-info-circle me-2"></i>
-        <strong>Nota:</strong> Las estadísticas se actualizan en tiempo real según los datos en la base de datos.
-    </div>
+                <script>
+                    // Main Chart
+                    const ctxMain = document.getElementById('mainChart').getContext('2d');
+                    new Chart(ctxMain, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                            datasets: [{
+                                label: 'Ventas',
+                                data: [12, 19, 3, 5, 2, 3, 10],
+                                backgroundColor: '#4f46e5',
+                                borderRadius: 4,
+                                barThickness: 20
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: '#f3f4f6', borderDash: [2, 2] },
+                                    border: { display: false }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    border: { display: false }
+                                }
+                            }
+                        }
+                    });
 
-<%@ include file="layouts/admin-layout-footer.jsp" %>
+                    // Pie Chart
+                    const ctxPie = document.getElementById('pieChart').getContext('2d');
+                    new Chart(ctxPie, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['E-Book', 'Tapa Blanda', 'Tapa Dura'],
+                            datasets: [{
+                                data: [30, 50, 20],
+                                backgroundColor: ['#4f46e5', '#10b981', '#f59e0b'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                            },
+                            cutout: '75%'
+                        }
+                    });
+                </script>
+            </body>
+
+            </html>

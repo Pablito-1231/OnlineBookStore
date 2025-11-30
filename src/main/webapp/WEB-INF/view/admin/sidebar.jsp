@@ -1,60 +1,61 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!-- Sidebar Moderna -->
-
-<aside class="admin-sidebar glass-sidebar">
-    <div class="admin-sidebar-header glass-header">
-        <a href="${pageContext.request.contextPath}/admin/dashboard" class="admin-brand">
-            <div class="admin-brand-icon glass-icon">
-                <i class="fas fa-book"></i>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <aside class="app-sidebar">
+        <div class="sidebar-header">
+            <div class="brand-logo">
+                <i class="fas fa-book-open"></i>
             </div>
-            <div class="admin-brand-text">
-                <h2>Admin Panel</h2>
-                <p>Librería Online</p>
+            <div class="brand-name">BookStore Admin</div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Principal</div>
+            <a href="${pageContext.request.contextPath}/admin/dashboard"
+                class="nav-item ${pageContext.request.requestURI.contains('/dashboard') ? 'active' : ''}">
+                <i class="fas fa-home nav-icon"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <div class="nav-section-label">Gestión</div>
+            <a href="${pageContext.request.contextPath}/admin/libros"
+                class="nav-item ${pageContext.request.requestURI.contains('/libros') ? 'active' : ''}">
+                <i class="fas fa-book nav-icon"></i>
+                <span>Catálogo de Libros</span>
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/usuarios"
+                class="nav-item ${pageContext.request.requestURI.contains('/usuarios') ? 'active' : ''}">
+                <i class="fas fa-users nav-icon"></i>
+                <span>Usuarios & Clientes</span>
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/roles"
+                class="nav-item ${pageContext.request.requestURI.contains('/roles') ? 'active' : ''}">
+                <i class="fas fa-user-shield nav-icon"></i>
+                <span>Roles y Permisos</span>
+            </a>
+
+            <div class="nav-section-label">Reportes</div>
+            <a href="${pageContext.request.contextPath}/admin/estadisticas"
+                class="nav-item ${pageContext.request.requestURI.contains('/estadisticas') ? 'active' : ''}">
+                <i class="fas fa-chart-pie nav-icon"></i>
+                <span>Análisis de Ventas</span>
+            </a>
+
+            <div class="nav-section-label">Configuración</div>
+            <a href="${pageContext.request.contextPath}/admin/change-password"
+                class="nav-item ${pageContext.request.requestURI.contains('/change-password') ? 'active' : ''}">
+                <i class="fas fa-key nav-icon"></i>
+                <span>Cambiar Contraseña</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile-mini">
+                <div class="user-avatar">AD</div>
+                <div style="flex: 1">
+                    <div style="font-weight: 600; font-size: 0.9rem; color: white;">Administrador</div>
+                    <div style="font-size: 0.75rem; color: var(--text-light);">admin@bookstore.com</div>
+                </div>
+                <a href="${pageContext.request.contextPath}/logout" style="color: var(--text-light);"><i
+                        class="fas fa-sign-out-alt"></i></a>
             </div>
-        </a>
-    </div>
-    <nav class="admin-nav">
-        <div class="admin-nav-section">
-            <div class="admin-nav-title">Principal</div>
-            <a href="${pageContext.request.contextPath}/admin/dashboard" 
-               class="admin-nav-item ${pageContext.request.requestURI.contains('dashboard') ? 'active' : ''}">
-                <i class="fas fa-home admin-nav-icon"></i>
-                <span class="admin-nav-text">Dashboard</span>
-            </a>
         </div>
-        <div class="admin-nav-section">
-            <div class="admin-nav-title">Gestión</div>
-            <a href="${pageContext.request.contextPath}/admin/libros" 
-               class="admin-nav-item ${pageContext.request.requestURI.contains('libros') || pageContext.request.requestURI.contains('libro-form') ? 'active' : ''}">
-                <i class="fas fa-book admin-nav-icon"></i>
-                <span class="admin-nav-text">Libros</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/admin/usuarios" 
-               class="admin-nav-item ${pageContext.request.requestURI.contains('usuarios') || pageContext.request.requestURI.contains('usuario-form') ? 'active' : ''}">
-                <i class="fas fa-users admin-nav-icon"></i>
-                <span class="admin-nav-text">Usuarios</span>
-            </a>
-        </div>
-        <div class="admin-nav-section">
-            <div class="admin-nav-title">Análisis</div>
-            <a href="${pageContext.request.contextPath}/admin/estadisticas" 
-               class="admin-nav-item ${pageContext.request.requestURI.contains('estadisticas') ? 'active' : ''}">
-                <i class="fas fa-chart-bar admin-nav-icon"></i>
-                <span class="admin-nav-text">Estadísticas</span>
-            </a>
-        </div>
-        <div class="admin-nav-section">
-            <a href="${pageContext.request.contextPath}/admin/change-password" 
-               class="admin-nav-item ${pageContext.request.requestURI.contains('change-password') ? 'active' : ''}">
-                <i class="fas fa-key admin-nav-icon"></i>
-                <span class="admin-nav-text">Cambiar contraseña</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/logout" class="admin-nav-item logout">
-                <i class="fas fa-sign-out-alt admin-nav-icon"></i>
-                <span class="admin-nav-text">Cerrar Sesión</span>
-            </a>
-        </div>
-    </nav>
-</aside>
+    </aside>

@@ -1,90 +1,94 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<%@ include file="layouts/admin-layout-header.jsp" %>
-    
-    <div class="container-fluid p-0">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                
-                <div class="glass-card mt-4">
-                    <div class="glass-header-main p-4">
-                        <h3 class="text-center font-weight-light my-2">
-                            <i class="fas fa-book-open me-2 text-warning"></i>
-                            ${action eq 'edit' ? 'Editar Libro' : 'Agregar Nuevo Libro'}
-                        </h3>
+            <c:set var="pageTitle" value="${action eq 'edit' ? 'Editar Libro' : 'Nuevo Libro'}" scope="request" />
+            <%@ include file="layouts/head-redesign.jsp" %>
+
+                <body>
+                    <div class="app-container">
+                        <%@ include file="sidebar.jsp" %>
+
+                            <main class="app-main">
+                                <div class="top-bar">
+                                    <div class="page-title">
+                                        <h1>${action eq 'edit' ? 'Editar Libro' : 'Agregar Nuevo Libro'}</h1>
+                                        <p>Completa la información del libro para el catálogo.</p>
+                                    </div>
+                                </div>
+
+                                <div class="content-card" style="max-width: 800px; margin: 0 auto;">
+                                    <form:form modelAttribute="book" method="POST"
+                                        action="${pageContext.request.contextPath}${action eq 'edit' ? '/admin/libros/edit/process' : '/admin/libros/add/process'}">
+
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <c:if test="${action eq 'edit'}">
+                                            <form:hidden path="id" />
+                                        </c:if>
+
+                                        <div class="dashboard-grid"
+                                            style="grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 0;">
+                                            <div class="form-group">
+                                                <label class="form-label">Nombre del Libro</label>
+                                                <form:input path="name" class="form-control"
+                                                    placeholder="Ej. El Principito" required="true" />
+                                                <form:errors path="name"
+                                                    cssStyle="color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem; display: block;" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Tipo / Formato</label>
+                                                <select name="bookDetail.type" class="form-control" required>
+                                                    <option value="">-- Selecciona --</option>
+                                                    <option value="EBOOK" ${bookDetail.type eq 'EBOOK' ? 'selected' : ''
+                                                        }>E-Book</option>
+                                                    <option value="PAPERBACK" ${bookDetail.type eq 'PAPERBACK'
+                                                        ? 'selected' : '' }>Tapa Blanda</option>
+                                                    <option value="HARDCOVER" ${bookDetail.type eq 'HARDCOVER'
+                                                        ? 'selected' : '' }>Tapa Dura</option>
+                                                    <option value="AUDIOBOOK" ${bookDetail.type eq 'AUDIOBOOK'
+                                                        ? 'selected' : '' }>Audiolibro</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="dashboard-grid"
+                                            style="grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 0;">
+                                            <div class="form-group">
+                                                <label class="form-label">Precio (COP)</label>
+                                                <form:input path="price" type="number" class="form-control"
+                                                    placeholder="0" required="true" />
+                                                <form:errors path="price"
+                                                    cssStyle="color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem; display: block;" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">Cantidad en Stock</label>
+                                                <form:input path="quantity" type="number" class="form-control"
+                                                    placeholder="0" required="true" />
+                                                <form:errors path="quantity"
+                                                    cssStyle="color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem; display: block;" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Descripción / Detalles</label>
+                                            <textarea name="bookDetail.detail" class="form-control" rows="4"
+                                                placeholder="Sinopsis o detalles del libro...">${bookDetail.detail}</textarea>
+                                        </div>
+
+                                        <div
+                                            style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                                            <a href="${pageContext.request.contextPath}/admin/libros"
+                                                class="btn btn-secondary">Cancelar</a>
+                                            <button type="submit" class="btn btn-primary">
+                                                ${action eq 'edit' ? 'Actualizar Libro' : 'Guardar Libro'}
+                                            </button>
+                                        </div>
+                                    </form:form>
+                                </div>
+                            </main>
                     </div>
-                    <div class="card-body p-5">
-                        <form:form modelAttribute="book" method="POST" 
-                                   action="${pageContext.request.contextPath}${action eq 'edit' ? '/admin/libros/edit/process' : '/admin/libros/add/process'}">
-                            
-                            <!-- Token CSRF explícito para compatibilidad con ngrok -->
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            
-                            <!-- ID (solo para editar) -->
-                            <c:if test="${action eq 'edit'}">
-                                <form:hidden path="id"/>
-                            </c:if>
+                </body>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <form:input path="name" type="text" class="form-control" id="inputName" placeholder="Nombre del libro" required="true"/>
-                                        <label for="inputName">Nombre del Libro</label>
-                                        <form:errors path="name" class="text-danger small"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select name="bookDetail.type" class="form-select" id="inputType" required>
-                                            <option value="">-- Selecciona --</option>
-                                            <option value="EBOOK" ${bookDetail.type eq 'EBOOK' ? 'selected' : ''}>E-Book</option>
-                                            <option value="PAPERBACK" ${bookDetail.type eq 'PAPERBACK' ? 'selected' : ''}>Tapa Blanda</option>
-                                            <option value="HARDCOVER" ${bookDetail.type eq 'HARDCOVER' ? 'selected' : ''}>Tapa Dura</option>
-                                            <option value="AUDIOBOOK" ${bookDetail.type eq 'AUDIOBOOK' ? 'selected' : ''}>Audiolibro</option>
-                                        </select>
-                                        <label for="inputType">Tipo de Libro</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <form:input path="price" type="number" step="1" class="form-control" id="inputPrice" placeholder="Precio" required="true"/>
-                                        <label for="inputPrice">Precio (COP)</label>
-                                        <form:errors path="price" class="text-danger small"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <form:input path="quantity" type="number" class="form-control" id="inputQty" placeholder="Cantidad" required="true"/>
-                                        <label for="inputQty">Cantidad en Stock</label>
-                                        <form:errors path="quantity" class="text-danger small"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-floating mb-4">
-                                <textarea name="bookDetail.detail" class="form-control" id="inputDetail" placeholder="Detalles" style="height: 100px">${bookDetail.detail}</textarea>
-                                <label for="inputDetail">Descripción / Detalles</label>
-                            </div>
-
-                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/libros">
-                                    <i class="fas fa-arrow-left"></i> Cancelar
-                                </a>
-                                <button type="submit" class="btn btn-primary px-4">
-                                    ${action eq 'edit' ? 'Actualizar Libro' : 'Guardar Libro'} <i class="fas fa-save ms-1"></i>
-                                </button>
-                            </div>
-                        </form:form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-<%@ include file="layouts/admin-layout-footer.jsp" %>
+                </html>

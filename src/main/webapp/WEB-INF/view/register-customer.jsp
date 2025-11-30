@@ -1,165 +1,249 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html>
+            <html lang="es">
 
-<html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Registro - BookStore</title>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+                    rel="stylesheet">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client-theme.css">
+                <style>
+                    body {
+                        background: #f3f4f6;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 100vh;
+                        padding: 1rem;
+                    }
 
-<head>
+                    .login-card {
+                        background: white;
+                        border-radius: var(--radius-xl);
+                        box-shadow: var(--shadow-lg);
+                        overflow: hidden;
+                        display: flex;
+                        max-width: 1000px;
+                        width: 100%;
+                        min-height: 700px;
+                        /* Taller for registration */
+                    }
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+                    .login-visual {
+                        flex: 1;
+                        background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+                        padding: 3rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        color: white;
+                        position: relative;
+                    }
 
-  <title>Registro</title>
+                    .login-visual::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: url('https://www.transparenttextures.com/patterns/cubes.png');
+                        opacity: 0.1;
+                    }
 
-    <!-- Bootstrap 5 local -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Estilos modernos -->
-  <link type="text/css" href="${pageContext.request.contextPath}/css/forms-modern.css" rel="stylesheet">
+                    .login-form-container {
+                        flex: 1;
+                        padding: 3rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        overflow-y: auto;
+                    }
 
-</head>
+                    .brand-logo {
+                        font-size: 2rem;
+                        font-weight: 800;
+                        margin-bottom: 1rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
 
-<body class="form-page">
+                    .form-group {
+                        margin-bottom: 1rem;
+                    }
 
-  <div class="form-container">
+                    .form-label {
+                        display: block;
+                        margin-bottom: 0.25rem;
+                        font-weight: 500;
+                        color: var(--text-main);
+                        font-size: 0.9rem;
+                    }
 
-    <!-- Lado izquierdo - Imagen decorativa -->
-    <div class="form-image-side">
-      <div class="image-content">
-        <div class="form-image-icon">
-          <i class="fas fa-book-reader"></i>
-        </div>
-        <h2 class="form-image-title">Únete a Nuestra Comunidad</h2>
-        <p class="form-image-text">
-          Descubre miles de libros, accede a ofertas exclusivas y vive nuevas aventuras literarias.
-          Regístrate ahora y comienza tu viaje en el mundo de los libros.
-        </p>
-      </div>
-    </div>
+                    .form-control {
+                        width: 100%;
+                        padding: 0.6rem 1rem;
+                        border: 1px solid var(--border-color);
+                        border-radius: var(--radius-md);
+                        font-family: inherit;
+                        transition: all 0.2s;
+                    }
 
-    <!-- Lado derecho - Formulario -->
-    <div class="form-content-side">
-      
-      <div class="form-header">
-        <h2>Crear Cuenta Nueva</h2>
-        <p>Completa tus datos para registrarte</p>
-      </div>
+                    .form-control:focus {
+                        outline: none;
+                        border-color: var(--primary);
+                        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                    }
 
-      <!-- Mensajes -->
-      <c:if test="${message != null}">
-        <div class="form-alert success">
-          <i class="fas fa-check-circle"></i>
-          <span><c:out value="${message}"/></span>
-        </div>
-      </c:if>
+                    .btn-primary {
+                        width: 100%;
+                        padding: 0.75rem;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: var(--radius-md);
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background 0.2s;
+                        margin-top: 1rem;
+                    }
 
-      <!-- Formulario de registro -->
-      <form:form action="${pageContext.request.contextPath}/register/customer" method="POST" modelAttribute="customerData">
-        <!-- Token CSRF -->
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    .btn-primary:hover {
+                        background: var(--primary-hover);
+                    }
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Nombre</label>
-            <div class="input-wrapper">
-              <i class="fas fa-user input-icon"></i>
-              <form:input type="text" class="form-control-modern" path="firstName" placeholder="Tu nombre" required="required"/>
-            </div>
-          </div>
+                    .alert {
+                        padding: 1rem;
+                        border-radius: var(--radius-md);
+                        margin-bottom: 1.5rem;
+                        font-size: 0.9rem;
+                    }
 
-          <div class="form-group">
-            <label>Apellido</label>
-            <div class="input-wrapper">
-              <i class="fas fa-user input-icon"></i>
-              <form:input type="text" class="form-control-modern" path="lastName" placeholder="Tu apellido" required="required"/>
-            </div>
-          </div>
-        </div>
+                    .alert-success {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Correo Electrónico</label>
-            <div class="input-wrapper">
-              <i class="fas fa-envelope input-icon"></i>
-              <form:input type="email" class="form-control-modern" path="email" placeholder="correo@ejemplo.com" required="required"/>
-            </div>
-          </div>
+                    .row {
+                        display: flex;
+                        gap: 1rem;
+                    }
 
-          <div class="form-group">
-            <label>Teléfono Móvil</label>
-            <div class="input-wrapper">
-              <i class="fas fa-phone input-icon"></i>
-              <form:input type="tel" class="form-control-modern" path="mobile" placeholder="Tu número" required="required"/>
-            </div>
-          </div>
-        </div>
+                    .col {
+                        flex: 1;
+                    }
 
-        <div class="form-group">
-          <label>Dirección</label>
-          <div class="input-wrapper">
-            <i class="fas fa-map-marker-alt input-icon"></i>
-            <form:input type="text" class="form-control-modern" path="address" placeholder="Tu dirección completa" required="required"/>
-          </div>
-        </div>
+                    @media (max-width: 768px) {
+                        .login-visual {
+                            display: none;
+                        }
+                    }
+                </style>
+            </head>
 
-        <div class="form-group">
-          <label>Nombre de Usuario</label>
-          <div class="input-wrapper">
-            <i class="fas fa-at input-icon"></i>
-            <form:input type="text" class="form-control-modern" path="username" placeholder="Elige un nombre de usuario" required="required"/>
-          </div>
-        </div>
+            <body>
+                <div class="login-card">
+                    <div class="login-visual">
+                        <div class="brand-logo">
+                            <i class="fas fa-book-open"></i> BookStore
+                        </div>
+                        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">Únete a nuestra comunidad.
+                        </h2>
+                        <p style="font-size: 1.1rem; opacity: 0.9;">Descubre miles de libros, accede a ofertas
+                            exclusivas y vive
+                            nuevas aventuras literarias.</p>
+                    </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Contraseña</label>
-            <div class="input-wrapper">
-              <i class="fas fa-lock input-icon"></i>
-              <form:input type="password" class="form-control-modern" path="password" placeholder="••••••••" required="required"/>
-            </div>
-          </div>
+                    <div class="login-form-container">
+                        <div style="margin-bottom: 2rem;">
+                            <h1
+                                style="font-size: 1.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+                                Crear
+                                Cuenta</h1>
+                            <p style="color: var(--text-muted);">Completa tus datos para registrarte</p>
+                        </div>
 
-          <div class="form-group">
-            <label>Confirmar Contraseña</label>
-            <div class="input-wrapper">
-              <i class="fas fa-lock input-icon"></i>
-              <form:input type="password" class="form-control-modern" path="confirmPassword" placeholder="••••••••" required="required"/>
-            </div>
-          </div>
-        </div>
+                        <c:if test="${message != null}">
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i>
+                                <c:out value="${message}" />
+                            </div>
+                        </c:if>
 
-        <form:input type="hidden" path="role" value="ROLE_CUSTOMER"/>
+                        <form:form action="${pageContext.request.contextPath}/register/customer" method="POST"
+                            modelAttribute="customerData">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-        <button type="submit" class="btn-modern">
-          <i class="fas fa-user-plus"></i> Crear Mi Cuenta
-        </button>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label class="form-label">Nombre</label>
+                                    <form:input path="firstName" class="form-control" placeholder="Tu nombre"
+                                        required="required" />
+                                </div>
+                                <div class="col form-group">
+                                    <label class="form-label">Apellido</label>
+                                    <form:input path="lastName" class="form-control" placeholder="Tu apellido"
+                                        required="required" />
+                                </div>
+                            </div>
 
-      </form:form>
+                            <div class="form-group">
+                                <label class="form-label">Correo Electrónico</label>
+                                <form:input path="email" type="email" class="form-control"
+                                    placeholder="correo@ejemplo.com" required="required" />
+                            </div>
 
-      <div class="form-divider">
-        <span>¿Ya tienes cuenta?</span>
-      </div>
+                            <div class="form-group">
+                                <label class="form-label">Teléfono</label>
+                                <form:input path="mobile" type="tel" class="form-control" placeholder="Tu número"
+                                    required="required" />
+                            </div>
 
-      <div class="form-link">
-        <a href="${pageContext.request.contextPath}/login">
-          <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-        </a>
-      </div>
+                            <div class="form-group">
+                                <label class="form-label">Dirección</label>
+                                <form:input path="address" class="form-control" placeholder="Tu dirección completa"
+                                    required="required" />
+                            </div>
 
-    </div>
+                            <div class="form-group">
+                                <label class="form-label">Usuario</label>
+                                <form:input path="username" class="form-control"
+                                    placeholder="Elige un nombre de usuario" required="required" />
+                            </div>
 
-  </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label class="form-label">Contraseña</label>
+                                    <form:input path="password" type="password" class="form-control"
+                                        placeholder="••••••••" required="required" />
+                                </div>
+                                <div class="col form-group">
+                                    <label class="form-label">Confirmar</label>
+                                    <form:input path="confirmPassword" type="password" class="form-control"
+                                        placeholder="••••••••" required="required" />
+                                </div>
+                            </div>
 
-  <!-- Scripts Bootstrap -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                            <form:hidden path="role" value="ROLE_CUSTOMER" />
 
-</body>
+                            <button type="submit" class="btn-primary">Registrarse</button>
+                        </form:form>
 
-</html>
+                        <div style="margin-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                            ¿Ya tienes una cuenta? <a href="${pageContext.request.contextPath}/login"
+                                style="color: var(--primary); font-weight: 600; text-decoration: none;">Iniciar
+                                Sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </body>
+
+            </html>
