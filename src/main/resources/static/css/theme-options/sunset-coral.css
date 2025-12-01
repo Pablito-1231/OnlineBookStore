@@ -1,0 +1,46 @@
+/* 🌅 OPCIÓN 1: SUNSET CORAL (Coral Atardecer) */
+/* Vibe: Cálido, acogedor, moderno y juvenil */
+
+:root {
+    /* Color Palette - Sunset Coral */
+    --primary: #FF6B6B;
+    --primary-hover: #FF5252;
+    --secondary: #FFB88C;
+    --success: #51CF66;
+    --info: #FF8787;
+    --warning: #FFA94D;
+    --danger: #FA5252;
+    --light: #FFF4E6;
+    --dark: #2C3E50;
+    --white: #ffffff;
+    --text-main: #2C3E50;
+    --text-muted: #6C7A89;
+    --border-color: #FFE5D9;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(255, 107, 107, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(255, 107, 107, 0.15), 0 2px 4px -1px rgba(255, 107, 107, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(255, 107, 107, 0.2), 0 4px 6px -2px rgba(255, 107, 107, 0.15);
+
+    /* Radius */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+body {
+    background-color: #FFF9F5;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+}
+
+.hero-btn {
+    background: white;
+    color: var(--primary);
+}
+
+.product-card:hover {
+    border-color: var(--primary);
+}

@@ -19,7 +19,7 @@
                             </div>
 
                             <div
-                                style="background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 2rem;">
+                                style="background: var(--card-background); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 2rem;">
 
                                 <div style="text-align: center; margin-bottom: 2rem;">
                                     <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;">

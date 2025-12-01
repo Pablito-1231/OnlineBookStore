@@ -41,7 +41,7 @@
                             <c:choose>
                                 <c:when test="${empty shoppingItems or totalQuantity eq 0}">
                                     <div
-                                        style="text-align: center; padding: 4rem; background: white; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+                                        style="text-align: center; padding: 4rem; background: var(--card-background); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
                                         <div style="font-size: 4rem; color: var(--text-muted); margin-bottom: 1rem;">
                                             <i class="fas fa-shopping-cart"></i>
                                         </div>

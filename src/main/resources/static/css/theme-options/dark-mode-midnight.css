@@ -1,0 +1,86 @@
+/* 🌃 DARK MODE: MIDNIGHT BLUE (Azul Medianoche) */
+/* Vibe: Profesional, tranquilo, enfocado */
+
+:root {
+    /* Color Palette - Dark Mode Midnight Blue */
+    --primary: #3B82F6;
+    --primary-hover: #2563EB;
+    --secondary: #60A5FA;
+    --success: #10B981;
+    --info: #06B6D4;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --light: #1E293B;
+    --dark: #0F172A;
+    --white: #F1F5F9;
+    --text-main: #F1F5F9;
+    --text-muted: #94A3B8;
+    --border-color: #334155;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+
+    /* Radius */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+body {
+    background-color: #0F172A;
+}
+
+.client-navbar {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 50%, #3B82F6 100%);
+}
+
+.product-card {
+    background: #1E293B;
+    border: 1px solid var(--border-color);
+}
+
+.product-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.product-image {
+    background: #0F172A;
+}
+
+.client-footer {
+    background: #0F172A;
+    border-top: 1px solid var(--border-color);
+}
+
+.cart-item-card {
+    background: #1E293B;
+    border: 1px solid var(--border-color);
+}
+
+.cart-item-thumbnail {
+    background: #0F172A;
+}
+
+.cart-summary {
+    background: #1E293B;
+}
+
+.form-control {
+    background: #0F172A;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}

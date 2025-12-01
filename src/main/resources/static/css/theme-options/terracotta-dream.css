@@ -1,0 +1,46 @@
+/* 🏜️ OPCIÓN 4: TERRACOTTA DREAM (Sueño Terracota) */
+/* Vibe: Artesanal, cálido, acogedor y vintage moderno */
+
+:root {
+    /* Color Palette - Terracotta Dream */
+    --primary: #E07A5F;
+    --primary-hover: #D16B52;
+    --secondary: #D4A5A5;
+    --success: #81B29A;
+    --info: #F2CC8F;
+    --warning: #E8B4B8;
+    --danger: #C1666B;
+    --light: #FAF8F3;
+    --dark: #3D2C2E;
+    --white: #ffffff;
+    --text-main: #3D2C2E;
+    --text-muted: #6B5B5C;
+    --border-color: #F0EBE3;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(224, 122, 95, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(224, 122, 95, 0.15), 0 2px 4px -1px rgba(224, 122, 95, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(224, 122, 95, 0.2), 0 4px 6px -2px rgba(224, 122, 95, 0.15);
+
+    /* Radius */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+body {
+    background-color: #FFFCF7;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #E07A5F 0%, #D4A5A5 100%);
+}
+
+.hero-btn {
+    background: white;
+    color: var(--primary);
+}
+
+.product-card:hover {
+    border-color: var(--primary);
+}

@@ -1,0 +1,50 @@
+/* 🌙 OPCIÓN 3: MIDNIGHT PURPLE (Púrpura Medianoche) */
+/* Vibe: Lujoso, creativo, misterioso y premium */
+
+:root {
+    /* Color Palette - Midnight Purple */
+    --primary: #6C5CE7;
+    --primary-hover: #5F4FD1;
+    --secondary: #A29BFE;
+    --success: #00B894;
+    --info: #74B9FF;
+    --warning: #FFD93D;
+    --danger: #FF6B9D;
+    --light: #F8F7FF;
+    --dark: #2D3561;
+    --white: #ffffff;
+    --text-main: #2D3561;
+    --text-muted: #6C7A9B;
+    --border-color: #E8E7F5;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(108, 92, 231, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(108, 92, 231, 0.15), 0 2px 4px -1px rgba(108, 92, 231, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(108, 92, 231, 0.2), 0 4px 6px -2px rgba(108, 92, 231, 0.15);
+
+    /* Radius */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+body {
+    background-color: #FCFCFF;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+}
+
+.hero-btn {
+    background: var(--warning);
+    color: var(--dark);
+}
+
+.product-card:hover {
+    border-color: var(--primary);
+}
+
+.product-category {
+    color: var(--warning) !important;
+}

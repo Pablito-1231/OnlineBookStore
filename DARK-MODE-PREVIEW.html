@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa Modo Oscuro - BookStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0F172A;
+            padding: 2rem;
+            color: #F1F5F9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #F1F5F9;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #94A3B8;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .theme-card {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-header {
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .theme-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-vibe {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .theme-colors {
+            padding: 1.5rem;
+        }
+
+        .color-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-info {
+            flex: 1;
+        }
+
+        .color-name {
+            font-weight: 600;
+            color: #F1F5F9;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            color: #94A3B8;
+            font-size: 0.85rem;
+        }
+
+        .theme-preview {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #F1F5F9;
+        }
+
+        .preview-elements {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .preview-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .preview-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid;
+            font-size: 0.9rem;
+        }
+
+        /* Elegant Dark */
+        .elegant-dark {
+            background: #1F2937;
+            border-color: #374151;
+        }
+
+        .elegant-dark .theme-header {
+            background: linear-gradient(135deg, #4C1D95 0%, #5B21B6 50%, #6D28D9 100%);
+        }
+
+        .elegant-dark .theme-colors {
+            background: #1F2937;
+        }
+
+        .elegant-dark .preview-btn {
+            background: #818CF8;
+        }
+
+        .elegant-dark .preview-btn:hover {
+            background: #6366F1;
+        }
+
+        .elegant-dark .preview-card {
+            border-color: #374151;
+            background: #111827;
+            color: #F9FAFB;
+        }
+
+        /* Midnight Blue */
+        .midnight-blue {
+            background: #1E293B;
+            border-color: #334155;
+        }
+
+        .midnight-blue .theme-header {
+            background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 50%, #3B82F6 100%);
+        }
+
+        .midnight-blue .theme-colors {
+            background: #1E293B;
+        }
+
+        .midnight-blue .preview-btn {
+            background: #3B82F6;
+        }
+
+        .midnight-blue .preview-btn:hover {
+            background: #2563EB;
+        }
+
+        .midnight-blue .preview-card {
+            border-color: #334155;
+            background: #0F172A;
+            color: #F1F5F9;
+        }
+
+        /* AMOLED */
+        .amoled {
+            background: #0A0A0A;
+            border-color: #2A2A2A;
+        }
+
+        .amoled .theme-header {
+            background: linear-gradient(135deg, #000000 0%, #1A1A1A 50%, #00D9FF 100%);
+        }
+
+        .amoled .theme-colors {
+            background: #0A0A0A;
+        }
+
+        .amoled .preview-btn {
+            background: #00D9FF;
+            color: #000000;
+        }
+
+        .amoled .preview-btn:hover {
+            background: #00B8D4;
+        }
+
+        .amoled .preview-card {
+            border-color: #2A2A2A;
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        /* Warm Dark */
+        .warm-dark {
+            background: #292524;
+            border-color: #44403C;
+        }
+
+        .warm-dark .theme-header {
+            background: linear-gradient(135deg, #7C2D12 0%, #9A3412 50%, #F97316 100%);
+        }
+
+        .warm-dark .theme-colors {
+            background: #292524;
+        }
+
+        .warm-dark .preview-btn {
+            background: #F97316;
+        }
+
+        .warm-dark .preview-btn:hover {
+            background: #EA580C;
+        }
+
+        .warm-dark .preview-card {
+            border-color: #44403C;
+            background: #1C1917;
+            color: #FEF7F3;
+        }
+
+        .instructions {
+            background: #1E293B;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            border: 1px solid #334155;
+        }
+
+        .instructions h2 {
+            color: #F1F5F9;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            color: #94A3B8;
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: #0F172A;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #60A5FA;
+        }
+
+        .benefit-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60A5FA;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🌙 Vista Previa Modo Oscuro</h1>
+        <p class="subtitle">Elige el tema oscuro perfecto para tu BookStore</p>
+
+        <div class="theme-grid">
+            <!-- Elegant Dark -->
+            <div class="theme-card elegant-dark">
+                <div class="theme-header">
+                    <div class="theme-title">🌑 Elegant</div>
+                    <div class="theme-vibe">Sofisticado, moderno, premium</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #818CF8;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#818CF8</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #1F2937;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#1F2937</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #111827;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Dark</div>
+                            <div class="color-code">#111827</div>
+                        </div>
+                    </div>
+                    <div class="benefit-badge">✨ Fácil para los ojos</div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Midnight Blue -->
+            <div class="theme-card midnight-blue">
+                <div class="theme-header">
+                    <div class="theme-title">🌃 Midnight Blue</div>
+                    <div class="theme-vibe">Profesional, tranquilo, enfocado</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #3B82F6;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#3B82F6</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #1E293B;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#1E293B</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #0F172A;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Dark</div>
+                            <div class="color-code">#0F172A</div>
+                        </div>
+                    </div>
+                    <div class="benefit-badge">💼 Profesional</div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AMOLED -->
+            <div class="theme-card amoled">
+                <div class="theme-header">
+                    <div class="theme-title">🖤 AMOLED</div>
+                    <div class="theme-vibe">Negro puro, máximo contraste</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #00D9FF;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#00D9FF</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #0A0A0A;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#0A0A0A</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #000000;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Pure Black</div>
+                            <div class="color-code">#000000</div>
+                        </div>
+                    </div>
+                    <div class="benefit-badge">🔋 Ahorra batería</div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warm Dark -->
+            <div class="theme-card warm-dark">
+                <div class="theme-header">
+                    <div class="theme-title">🔥 Warm</div>
+                    <div class="theme-vibe">Acogedor, cálido, confortable</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #F97316;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#F97316</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #292524;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#292524</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #1C1917;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Dark</div>
+                            <div class="color-code">#1C1917</div>
+                        </div>
+                    </div>
+                    <div class="benefit-badge">😌 Menos fatiga visual</div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>📋 Cómo Aplicar un Tema Oscuro</h2>
+            <ol>
+                <li>Elige el tema oscuro que más te guste de las opciones de arriba</li>
+                <li>Dime cuál prefieres (por ejemplo: "Me gusta AMOLED")</li>
+                <li>Yo actualizaré automáticamente el archivo <code>client-theme.css</code></li>
+                <li>Los cambios se aplicarán inmediatamente en tu aplicación</li>
+            </ol>
+            <br>
+            <p style="color: #94A3B8; font-size: 0.9rem;">
+                💡 <strong>Tip:</strong> También puedes combinar un tema oscuro con cualquiera de las paletas de colores
+                claras que viste anteriormente.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+/* 🌑 DARK MODE: ELEGANT (Oscuro Elegante) */
+/* Vibe: Sofisticado, moderno, premium y fácil para los ojos */
+
+:root {
+    /* Color Palette - Dark Mode Elegant */
+    --primary: #818CF8;
+    --primary-hover: #6366F1;
+    --secondary: #A78BFA;
+    --success: #34D399;
+    --info: #60A5FA;
+    --warning: #FBBF24;
+    --danger: #F87171;
+    --light: #1F2937;
+    --dark: #111827;
+    --white: #F9FAFB;
+    --text-main: #F9FAFB;
+    --text-muted: #9CA3AF;
+    --border-color: #374151;
+
+    /* Shadows - Adapted for dark mode */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+
+    /* Radius */
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+}
+
+body {
+    background-color: #0F172A;
+    color: var(--text-main);
+}
+
+/* Navbar - Dark */
+.client-navbar {
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Hero Section - Dark */
+.hero-section {
+    background: linear-gradient(135deg, #4C1D95 0%, #5B21B6 50%, #6D28D9 100%);
+}
+
+/* Product Cards - Dark */
+.product-card {
+    background: #1F2937;
+    border: 1px solid var(--border-color);
+}
+
+.product-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
+}
+
+.product-image {
+    background: #111827;
+}
+
+/* Footer - Dark */
+.client-footer {
+    background: #111827;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Cart Items - Dark */
+.cart-item-card {
+    background: #1F2937;
+    border: 1px solid var(--border-color);
+}
+
+.cart-item-thumbnail {
+    background: #111827;
+}
+
+.cart-summary {
+    background: #1F2937;
+}
+
+/* Form Controls - Dark */
+.form-control {
+    background: #111827;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+}

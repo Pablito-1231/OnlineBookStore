@@ -16,6 +16,11 @@
                         <i class="fas fa-shopping-cart"></i> Carrito
                     </a>
 
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
                     <div style="position: relative; margin-left: 1rem;">
                         <a href="${pageContext.request.contextPath}/customers/profile" class="nav-link"
                             style="display: flex; align-items: center; gap: 0.5rem;">

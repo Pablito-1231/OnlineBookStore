@@ -16,4 +16,7 @@
 
         <!-- Theme CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client-theme.css">
+
+        <!-- Theme Switcher JS (loaded early to prevent flash) -->
+        <script src="${pageContext.request.contextPath}/js/theme-switcher.js"></script>
     </head>

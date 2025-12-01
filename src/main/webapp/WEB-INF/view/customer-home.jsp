@@ -28,31 +28,33 @@
                         <div
                             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
                             <div
-                                style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
+                                style="background: var(--card-background); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
                                 <div style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;">
                                     <i class="fas fa-shopping-cart"></i>
                                 </div>
-                                <div style="font-size: 1.5rem; font-weight: 700;">${cartCount != null ? cartCount : 0}
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">${cartCount
+                                    != null ? cartCount : 0}
                                 </div>
                                 <div style="color: var(--text-muted);">Items en Carrito</div>
                             </div>
 
                             <div
-                                style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
+                                style="background: var(--card-background); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
                                 <div style="font-size: 2rem; color: var(--success); margin-bottom: 0.5rem;">
                                     <i class="fas fa-book-reader"></i>
                                 </div>
-                                <div style="font-size: 1.5rem; font-weight: 700;">${purchasedCount != null ?
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">
+                                    ${purchasedCount != null ?
                                     purchasedCount : 0}</div>
                                 <div style="color: var(--text-muted);">Libros Comprados</div>
                             </div>
 
                             <div
-                                style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
+                                style="background: var(--card-background); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); text-align: center;">
                                 <div style="font-size: 2rem; color: var(--warning); margin-bottom: 0.5rem;">
                                     <i class="fas fa-star"></i>
                                 </div>
-                                <div style="font-size: 1.5rem; font-weight: 700;">Premium</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">Premium</div>
                                 <div style="color: var(--text-muted);">Membresía</div>
                             </div>
                         </div>

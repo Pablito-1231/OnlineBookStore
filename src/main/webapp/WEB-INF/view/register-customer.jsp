@@ -15,6 +15,10 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client-theme.css">
                 <style>
+                    * {
+                        box-sizing: border-box;
+                    }
+
                     body {
                         background: #f3f4f6;
                         display: flex;
@@ -30,10 +34,10 @@
                         box-shadow: var(--shadow-lg);
                         overflow: hidden;
                         display: flex;
-                        max-width: 1000px;
+                        max-width: 1200px;
+                        /* Increased width */
                         width: 100%;
                         min-height: 700px;
-                        /* Taller for registration */
                     }
 
                     .login-visual {
@@ -59,8 +63,10 @@
                     }
 
                     .login-form-container {
-                        flex: 1;
-                        padding: 3rem;
+                        flex: 1.2;
+                        /* Slightly wider form area */
+                        padding: 3rem 4rem;
+                        /* More padding */
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
@@ -134,16 +140,23 @@
 
                     .row {
                         display: flex;
-                        gap: 1rem;
+                        gap: 1.5rem;
+                        /* Increased gap */
                     }
 
                     .col {
                         flex: 1;
+                        min-width: 0;
+                        /* Prevent overflow */
                     }
 
                     @media (max-width: 768px) {
                         .login-visual {
                             display: none;
+                        }
+
+                        .login-form-container {
+                            padding: 2rem;
                         }
                     }
                 </style>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa de Paletas de Colores - BookStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #2C3E50;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .theme-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-header {
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .theme-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-vibe {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .theme-colors {
+            padding: 1.5rem;
+        }
+
+        .color-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-info {
+            flex: 1;
+        }
+
+        .color-name {
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .theme-preview {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2C3E50;
+        }
+
+        .preview-elements {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .preview-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preview-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid;
+            font-size: 0.9rem;
+        }
+
+        /* Sunset Coral */
+        .sunset-coral .theme-header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+        }
+
+        .sunset-coral .preview-btn {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .sunset-coral .preview-btn:hover {
+            background: #FF5252;
+        }
+
+        .sunset-coral .preview-card {
+            border-color: #FFB88C;
+            background: #FFF4E6;
+        }
+
+        /* Forest Sage */
+        .forest-sage .theme-header {
+            background: linear-gradient(135deg, #4A7C59 0%, #6B9080 100%);
+        }
+
+        .forest-sage .preview-btn {
+            background: #4A7C59;
+            color: white;
+        }
+
+        .forest-sage .preview-btn:hover {
+            background: #3D6B4A;
+        }
+
+        .forest-sage .preview-card {
+            border-color: #81A684;
+            background: #F5F1E8;
+        }
+
+        /* Midnight Purple */
+        .midnight-purple .theme-header {
+            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+        }
+
+        .midnight-purple .preview-btn {
+            background: #6C5CE7;
+            color: white;
+        }
+
+        .midnight-purple .preview-btn:hover {
+            background: #5F4FD1;
+        }
+
+        .midnight-purple .preview-card {
+            border-color: #A29BFE;
+            background: #F8F7FF;
+        }
+
+        /* Terracotta Dream */
+        .terracotta-dream .theme-header {
+            background: linear-gradient(135deg, #E07A5F 0%, #D4A5A5 100%);
+        }
+
+        .terracotta-dream .preview-btn {
+            background: #E07A5F;
+            color: white;
+        }
+
+        .terracotta-dream .preview-btn:hover {
+            background: #D16B52;
+        }
+
+        .terracotta-dream .preview-card {
+            border-color: #D4A5A5;
+            background: #FAF8F3;
+        }
+
+        .instructions {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .instructions h2 {
+            color: #2C3E50;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #E07A5F;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎨 Vista Previa de Paletas de Colores</h1>
+        <p class="subtitle">Elige la paleta que más te guste para tu BookStore</p>
+
+        <div class="theme-grid">
+            <!-- Sunset Coral -->
+            <div class="theme-card sunset-coral">
+                <div class="theme-header">
+                    <div class="theme-title">🌅 Sunset Coral</div>
+                    <div class="theme-vibe">Cálido, acogedor, moderno y juvenil</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #FF6B6B;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#FF6B6B</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #FFB88C;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Secondary</div>
+                            <div class="color-code">#FFB88C</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #FFF4E6;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#FFF4E6</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #2C3E50;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Text</div>
+                            <div class="color-code">#2C3E50</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forest Sage -->
+            <div class="theme-card forest-sage">
+                <div class="theme-header">
+                    <div class="theme-title">🌿 Forest Sage</div>
+                    <div class="theme-vibe">Natural, elegante, sofisticado</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #4A7C59;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#4A7C59</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #81A684;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Secondary</div>
+                            <div class="color-code">#81A684</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #F5F1E8;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#F5F1E8</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #2D3436;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Text</div>
+                            <div class="color-code">#2D3436</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Midnight Purple -->
+            <div class="theme-card midnight-purple">
+                <div class="theme-header">
+                    <div class="theme-title">🌙 Midnight Purple</div>
+                    <div class="theme-vibe">Lujoso, creativo, premium</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #6C5CE7;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#6C5CE7</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #FFD93D;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Accent (Gold)</div>
+                            <div class="color-code">#FFD93D</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #F8F7FF;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#F8F7FF</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #2D3561;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Text</div>
+                            <div class="color-code">#2D3561</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terracotta Dream -->
+            <div class="theme-card terracotta-dream">
+                <div class="theme-header">
+                    <div class="theme-title">🏜️ Terracotta Dream</div>
+                    <div class="theme-vibe">Artesanal, cálido, vintage moderno</div>
+                </div>
+                <div class="theme-colors">
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #E07A5F;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Primary</div>
+                            <div class="color-code">#E07A5F</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #D4A5A5;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Secondary</div>
+                            <div class="color-code">#D4A5A5</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #FAF8F3;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Background</div>
+                            <div class="color-code">#FAF8F3</div>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <div class="color-swatch" style="background: #3D2C2E;"></div>
+                        <div class="color-info">
+                            <div class="color-name">Text</div>
+                            <div class="color-code">#3D2C2E</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-preview">
+                    <div class="preview-title">Vista Previa:</div>
+                    <div class="preview-elements">
+                        <button class="preview-btn">Agregar al Carrito</button>
+                        <div class="preview-card">Tarjeta de Producto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>📋 Cómo Aplicar una Paleta</h2>
+            <ol>
+                <li>Elige la paleta que más te guste de las opciones de arriba</li>
+                <li>Dime cuál prefieres (por ejemplo: "Me gusta Sunset Coral")</li>
+                <li>Yo actualizaré automáticamente el archivo <code>client-theme.css</code> con los nuevos colores</li>
+                <li>Podrás ver los cambios inmediatamente en tu aplicación</li>
+            </ol>
+        </div>
+    </div>
+</body>
+
+</html>

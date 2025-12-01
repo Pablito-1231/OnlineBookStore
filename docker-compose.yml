@@ -38,6 +38,7 @@ services:
       MAIL_USERNAME: barretopabloandres@gmail.com
       MAIL_PASSWORD: bdebbeawajknkyym
       AUTO_CREATE_DB: "false"
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin2025!}
     ports:
       - "8080:8080"
     depends_on:
