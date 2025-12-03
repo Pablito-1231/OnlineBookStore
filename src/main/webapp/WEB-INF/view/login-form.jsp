@@ -15,6 +15,10 @@
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/client-theme.css">
                 <style>
+                    * {
+                        box-sizing: border-box;
+                    }
+
                     body {
                         background: #f3f4f6;
                         display: flex;

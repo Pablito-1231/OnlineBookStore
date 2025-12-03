@@ -15,9 +15,15 @@
                             <main class="app-main">
                                 <!-- TOP BAR -->
                                 <div class="top-bar">
-                                    <div class="page-title">
-                                        <h1>Panel de Control</h1>
-                                        <p>Bienvenido de nuevo, aquí está lo que sucede hoy.</p>
+                                    <div class="page-title" style="display: flex; align-items: center;">
+                                        <button class="action-btn sidebar-toggle" onclick="toggleSidebar()"
+                                            style="background: transparent; border: none; font-size: 1.5rem; padding: 0; margin-right: 1rem; color: var(--text-main);">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div>
+                                            <h1>Panel de Control</h1>
+                                            <p>Bienvenido de nuevo, aquí está lo que sucede hoy.</p>
+                                        </div>
                                     </div>
                                     <button class="action-btn" onclick="location.reload()">
                                         <i class="fas fa-sync-alt"></i> Actualizar Datos
